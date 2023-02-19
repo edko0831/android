@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:stretchColumns="1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableRow
+        android:layout_width="193dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView0"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textSize="21sp"
+            android:text="@string/id_number" />
+
+        <TextView
+            android:id="@+id/textView_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:text="" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:text="@string/name" />
+
+        <EditText
+            android:id="@+id/textEdit_name"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_span="2"
+            android:autofillHints=""
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:hint="@string/name"
+            android:inputType="text"
+            android:textColorHint="#546E7A"
+            android:textSize="21sp" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:layout_column="0"
+            android:text="@string/description" />
+
+        <EditText
+            android:id="@+id/textEdit_description"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textSize="21sp"
+            android:layout_span="2"
+            android:autofillHints=""
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:hint="@string/description"
+            android:inputType="text"
+            android:textColorHint="#546E7A" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:layout_column="0"
+            android:text="@string/picture_id" />
+
+        <EditText
+            android:id="@+id/textEdit_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textSize="21sp"
+            android:autofillHints=""
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:hint="@string/picture_id"
+            android:inputType="text"
+            android:textColorHint="#546E7A" />
+
+        <ImageButton
+            android:id="@+id/imageButton_open"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="@string/not_text" />
+
+
+    </TableRow>
+</TableLayout>
