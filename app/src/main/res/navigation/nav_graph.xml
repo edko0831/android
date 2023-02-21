@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainActivity">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.mydacha2.MainActivity"
+        android:label="MainActivity"
+        tools:layout="@layout/activity_main_new">
+
+        <action
+            android:id="@+id/action_mainActivity_to_MyObject"
+            app:destination="@id/myObject" />
+
+    </activity>
+
+    <activity
+        android:id="@+id/myObject"
+        android:name="com.example.mydacha2.myActivity.MyObject"
+        android:label="MyObject"
+        tools:layout="@layout/activity_my_object">
+
+        <action
+            android:id="@+id/action_MyObject_to_AddObjectActivity"
+            app:destination="@id/addObjectActivity" />
+
+    </activity>
+
+    <activity
+        android:id="@+id/addObjectActivity"
+        android:name="com.example.mydacha2.myActivity.AddObjectActivity"
+        android:label="AddObjectActivity"
+        tools:layout="@layout/activity_add_object">
+
+        <action
+            android:id="@+id/action_AddObjectActivity_to_MyObject"
+            app:destination="@id/myObject" />
+
+    </activity>
+
+  </navigation>

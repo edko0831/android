@@ -19,8 +19,14 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
+        android:id="@+id/control_point"
+        android:orderInCategory="100"
+        android:title="@string/action_point"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_close"
         android:orderInCategory="100"
         android:title="@string/action_close"
         app:showAsAction="never" />
+
 </menu>

@@ -156,7 +156,6 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
             finish();
         } else if (id == R.id.buttonCancel) {
             finish();
-            //startActivity(new Intent(this, MyObject.class));
         }
     }
 

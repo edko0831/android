@@ -4,10 +4,10 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
 import com.example.mydacha2.DAO.ControlPointDAO;
-import com.example.mydacha2.Entity.СontrolPoint;
+import com.example.mydacha2.Entity.ControlPoint;
 
 
-@Database(entities = {СontrolPoint.class}, version = 1, exportSchema = false)
+@Database(entities = {ControlPoint.class}, version = 1, exportSchema = false)
 public abstract class ControlPointDataBase  extends RoomDatabase {
     public abstract ControlPointDAO controlPointDAO();
 }

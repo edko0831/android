@@ -6,23 +6,24 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.mydacha2.Entity.СontrolPoint;
+
+import com.example.mydacha2.Entity.ControlPoint;
 
 import java.util.List;
 
 @Dao
 public interface ControlPointDAO {
     @Query("Select * From control_point ")
-    List<СontrolPoint> select();
+    List<ControlPoint> select();
 
     @Query(value = "Select * From control_point Where id = :id")
-    СontrolPoint selectId(int id);
+    ControlPoint selectId(int id);
 
     @Insert
-    void insert(СontrolPoint items);
+    void insert(ControlPoint items);
     @Update
-    void update(СontrolPoint items);
+    void update(ControlPoint items);
     @Delete
-    void delete(СontrolPoint item);
+    void delete(ControlPoint item);
 
 }

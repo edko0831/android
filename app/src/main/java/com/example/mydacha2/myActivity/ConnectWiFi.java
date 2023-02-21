@@ -29,7 +29,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
 import com.example.mydacha2.fragment.ConnectFragment;
-import com.example.mydacha2.fragment.LampFragment;
 
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
     private static final String LOG_TAG = "WiFi connect";
     FrameLayout frameLayout;
     ConnectFragment connectFragment;
-    LampFragment lampFragment;
+
     private WifiManager wifiManager;
     public List<ScanResult> availNetworks;
     private WifiBroadcastReceiver wifiReceiver;
@@ -83,26 +82,25 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
     private void askAndStartScanWifi() {
         // With Android Level >= 23, you have to ask the user
         // for permission to Call.
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) { // 23
-            int permission1 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        // 23
+        int permission1 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
 
-            // Check for permissions
-            if (permission1 != PackageManager.PERMISSION_GRANTED) {
+        // Check for permissions
+        if (permission1 != PackageManager.PERMISSION_GRANTED) {
 
-                Log.d(LOG_TAG, "Requesting Permissions");
+            Log.d(LOG_TAG, "Requesting Permissions");
 
-                // Request permissions
-                ActivityCompat.requestPermissions(this,
-                        new String[]{
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_WIFI_STATE,
-                                Manifest.permission.ACCESS_NETWORK_STATE
-                        }, MY_REQUEST_CODE);
-                return;
-            }
-            Log.d(LOG_TAG, "Permissions Already Granted");
+            // Request permissions
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_WIFI_STATE,
+                            Manifest.permission.ACCESS_NETWORK_STATE
+                    }, MY_REQUEST_CODE);
+            return;
         }
+        Log.d(LOG_TAG, "Permissions Already Granted");
         this.doStartScanWifi();
     }
 
@@ -143,7 +141,7 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.d(LOG_TAG, "onRequestPermissionsResult");
 
@@ -210,7 +208,7 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
 
     public void showNetworks(List<ScanResult> availNetworks) {
         this.availNetworks = availNetworks;
-        if (availNetworks.stream().count() > 0) {
+        if ((long) availNetworks.size() > 0) {
             connectFragment.showNetworks(availNetworks);
             connectFragment.showNetworksDetails(availNetworks);
         }
@@ -254,7 +252,7 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
             }
         }
 /*
-        Snackbar.make(this.frameLayout, "Сканирование...", Snackbar.LENGTH_SHORT)
+        Snack.make(this.frameLayout, "Сканирование...", Snack.LENGTH_SHORT)
                 .setAction("Action", null)
                 .show();
 

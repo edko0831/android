@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.mydacha2">
+    package="com.example.mydacha2" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -29,7 +29,14 @@
         android:roundIcon="@drawable/point_mac_logo_12332"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyDacha2"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".myActivity.AddControlPointActivity"
+            android:exported="false" />
+        <activity
+            android:name=".myActivity.ui.login.LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login" />
         <activity
             android:name=".myActivity.AddObjectActivity"
             android:exported="false" />
@@ -49,7 +56,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

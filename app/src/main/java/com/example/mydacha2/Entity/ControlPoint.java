@@ -5,14 +5,13 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "control_point")
-public class СontrolPoint {
+public class ControlPoint {
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    public int id;
+    public Long id;
     public String name;
     public String description;
-    public int imgId;
-    public String ipaddress;
-
-
+    public String type_point;
+    public String picture_url;
+    public String executable_code;
 }

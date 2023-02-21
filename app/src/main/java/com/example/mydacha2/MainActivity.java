@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mydacha2.fragment.MainActivityNewFragment;
 import com.example.mydacha2.myActivity.ConnectWiFi;
+import com.example.mydacha2.myActivity.AddControlPointActivity;
 import com.example.mydacha2.myActivity.MyObject;
 import com.example.mydacha2.myActivity.SettingActivity;
 import com.example.mydacha2.supportclass.MyClickListener;
@@ -98,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
         } else if (id == R.id.connect) {
             Intent connectWiFi = new Intent(this, ConnectWiFi.class);
             startActivity(connectWiFi);
-       //   } else if (id == R.id.lamp) {
-       //     LampFragment lampFragment = new LampFragment();
-       //     setFragment(lampFragment);
+        } else if (id == R.id.control_point) {
+            Intent controlPointActivity = new Intent(this, AddControlPointActivity.class);
+            startActivity(controlPointActivity);
           //  Toast.makeText(this, getString(R.string.lamp_blank_fragment), Toast.LENGTH_LONG).show();
         } else if (id == R.id.myObjet) {
             Intent intent1 = new Intent(this, MyObject.class);
