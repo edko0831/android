@@ -5,19 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/constraintLayout"
-    tools:context=".MainActivity">
+    android:layout_marginEnd="@dimen/base_margin"
+    android:layout_marginStart="@dimen/base_margin"
+    tools:context=".myActivity.ConnectWiFi">
 
         <TextView
             android:id="@+id/textView_object"
-            android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:layout_marginTop="16dp"
-            android:background="#F1F3E7"
-            android:gravity="center"
-            android:text="@string/not_text"
-            android:textColor="#0C0C0C"
-            android:textSize="36sp"
-            android:textStyle="bold"
+            style="@style/header_style"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

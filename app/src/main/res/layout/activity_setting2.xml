@@ -5,178 +5,144 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".myActivity.SettingActivity"
+    android:layout_marginEnd="@dimen/base_margin"
+    android:layout_marginStart="@dimen/base_margin"
     tools:ignore="ExtraText">
 
     <TextView
         android:id="@+id/textView_object"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-        android:background="#F1F3E7"
-        android:gravity="center"
-        android:text="@string/not_text"
-        android:textColor="#0C0C0C"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        style="@style/header_style"
         app:textAllCaps="false"
-        tools:ignore="TextViewEdits" />
+        tools:ignore="MissingConstraints,TextViewEdits"
+        tools:layout_editor_absoluteY="16dp" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="36dp"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView_object"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_marginTop="@dimen/layout_marginTop">
 
-
-        <TextView
-            android:id="@+id/viewTex_wifi_net"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:gravity="center_vertical"
-            android:text="@string/wifi_net"
-            android:textColorHighlight="#090909" />
-
-        <EditText
-            android:id="@+id/editText_wifi_net"
-            android:layout_width="160dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/wifi_net"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:singleLine="true"
-            android:textColorHint="#546E7A"
-            tools:ignore="DuplicateSpeakableTextCheck" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="36dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
-        tools:layout_editor_absoluteX="0dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordWrapper"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editUserName"
-            android:layout_marginTop="3dp">
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editUserName"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/viewTex_wifi_net"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:hint="@string/user_name"
-                android:inputType="text"
-                android:minHeight="48dp"
-                android:singleLine="true"
-                android:textColorHint="#546E7A"
-                tools:ignore="DuplicateSpeakableTextCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editText_wifi_net"
+                android:layout_marginTop="3dp">
 
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/editText_wifi_net"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/wifi_net"
+                    android:inputType="text"
+                    android:minHeight="48dp"
+                    android:singleLine="true"
+                    android:textColorHint="#546E7A"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="36dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editUserName"
+                android:layout_marginTop="3dp">
 
-        <TextView
-            android:id="@+id/textIP"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:gravity="center_vertical"
-            android:text="@string/ip_name" />
+                <EditText
+                    android:id="@+id/editUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/user_name"
+                    android:inputType="text"
+                    android:minHeight="48dp"
+                    android:singleLine="true"
+                    android:textColorHint="#546E7A"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTexIP"
-            android:layout_width="160dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/ip_name"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:singleLine="true"
-            android:textColorHint="#546E7A"
-            tools:ignore="DuplicateSpeakableTextCheck" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="36dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textIP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTexIP"
+                android:layout_marginTop="3dp">
 
-        <TextView
-            android:id="@+id/text_input_password"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:gravity="center_vertical"
-            android:text="@string/password" />
+                <EditText
+                    android:id="@+id/editTexIP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                     android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/ip_name"
+                    android:inputType="text"
+                    android:minHeight="48dp"
+                    android:singleLine="true"
+                    android:textColorHint="#546E7A"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextTextPassword"
-            android:layout_width="160dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:singleLine="true"
-            android:textColorHint="#546E7A"
-            tools:ignore="DuplicateSpeakableTextCheck" />
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/onpass"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:accessibilityLiveRegion="polite"
-            android:button="@mipmap/icons8_not_show_48_1_foreground"
-            android:checked="false"
-            android:gravity="center_vertical"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextTextPassword"
+                    android:layout_marginTop="3dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+                    <EditText
+                        android:id="@+id/editTextTextPassword"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        android:singleLine="true"
+                        android:textColorHint="#546E7A"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/onpass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:accessibilityLiveRegion="polite"
+                    android:button="@mipmap/icons8_not_show_48_1_foreground"
+                    android:checked="false"
+                    android:gravity="center_vertical"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:baselineAligned="true"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

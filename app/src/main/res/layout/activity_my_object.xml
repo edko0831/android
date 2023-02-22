@@ -4,51 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/text_margin"
+    android:layout_marginEnd="@dimen/base_margin"
+    android:layout_marginStart="@dimen/base_margin"
     tools:context=".myActivity.MyObject">
 
     <TextView
         android:id="@+id/textView_object"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-        android:background="#F1F3E7"
-        android:gravity="center"
-        android:text="@string/not_text"
-        android:textColor="#0C0C0C"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        style="@style/header_style"
         app:textAllCaps="false"
-        tools:ignore="TextViewEdits" />
+        tools:ignore="MissingConstraints,TextViewEdits"
+        tools:layout_editor_absoluteY="16dp"/>
 
     <LinearLayout
         android:id="@+id/linearLayout_change"
         android:layout_width="match_parent"
-        android:layout_height="487dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/layout_marginTop"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView_object"
-        app:layout_constraintTop_toBottomOf="@+id/textView_object"
-        app:layout_constraintVertical_bias="0.094">
+        app:layout_constraintTop_toBottomOf="@+id/textView_object">
 
         <FrameLayout
             android:id="@+id/frameLayoutMyObject"
             android:layout_width="match_parent"
-            android:layout_height="367dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <FrameLayout
             android:id="@+id/frameLayoutMyObjectButton"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
 
     </LinearLayout>
 

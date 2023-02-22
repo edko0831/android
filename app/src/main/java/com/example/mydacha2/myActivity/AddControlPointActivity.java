@@ -42,6 +42,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
     EditText name;
     EditText description;
     EditText picture;
+    EditText execute_code;
     private ControlPoint controlPoint = new ControlPoint();
     ControlPointDAO controlPointDAO;
     TextView textView;
@@ -105,7 +106,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         textView = findViewById(R.id.textView_object);
         textView.setText(R.string.object_control_add);
         textName =  findViewById(R.id.text_name);
-
+        execute_code = findViewById(R.id.text_executable_code);
         name.addTextChangedListener(textWatcher);
 
         LinearLayout linearButton = findViewById(R.id.linearLayoutButton);
@@ -130,7 +131,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
             spinnerList.add( myListTypePoint.getPoint());
         }
         
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, spinnerList);
         spinnerTypePoint = findViewById(R.id.spinner_type_point);
         spinnerTypePoint.setAdapter(arrayAdapter);
@@ -182,7 +183,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         description.setText(controlPoint.description);
         picture.setText(controlPoint.picture_url);
         spinnerTypePoint.setText(controlPoint.type_point);
-
+        execute_code.setText(controlPoint.executable_code);
     }
 
     @Override
@@ -230,7 +231,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         controlPoint.description = description.getText().toString();
         controlPoint.picture_url = picture.getText().toString();
         controlPoint.type_point = spinnerTypePoint.getText().toString();
-
+        controlPoint.executable_code = execute_code.getText().toString();
 
         if (controlPoint.id == null) {
             controlPointDAO.insert(controlPoint);

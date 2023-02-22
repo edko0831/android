@@ -25,4 +25,16 @@
         <item name="boxCornerRadiusTopEnd">3dp</item>
         <item name="boxCornerRadiusTopStart">3dp</item>
     </style>
+
+    <style name="header_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">68dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textSize">@dimen/text_title_size</item>
+        <item name="android:textColor">#0C0C0C</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">#F1F3E7</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/not_text</item>
+    </style>
 </resources>

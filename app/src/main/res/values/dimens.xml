@@ -7,6 +7,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="base_margin">16dp</dimen>
     <dimen name="text_title_size">28sp</dimen>
-    <dimen name="layout_marginTop">25dp</dimen>
+    <dimen name="layout_marginTop">15dp</dimen>
 
 </resources>
