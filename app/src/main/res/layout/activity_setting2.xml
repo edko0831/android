@@ -36,7 +36,7 @@
 
                 <EditText
                     android:id="@+id/editText_wifi_net"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:autofillHints=""
                     android:ems="10"
@@ -93,7 +93,7 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout4"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                  android:orientation="horizontal">
 
@@ -106,9 +106,9 @@
 
                     <EditText
                         android:id="@+id/editTextTextPassword"
-                        android:layout_width="160dp"
+                        android:layout_width="223dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_weight="4"
                         android:autofillHints=""
                         android:ems="10"
                         android:hint="@string/password"
@@ -121,13 +121,16 @@
 
                 <CheckBox
                     android:id="@+id/onpass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="73dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:accessibilityLiveRegion="polite"
                     android:button="@mipmap/icons8_not_show_48_1_foreground"
                     android:checked="false"
-                    android:gravity="center_vertical"
+                    android:gravity="left|top"
                     tools:ignore="TouchTargetSizeCheck" />
+
+
             </LinearLayout>
 
             <LinearLayout

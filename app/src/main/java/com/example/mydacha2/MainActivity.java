@@ -18,13 +18,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mydacha2.fragment.MainActivityNewFragment;
 import com.example.mydacha2.myActivity.ConnectWiFi;
-import com.example.mydacha2.myActivity.AddControlPointActivity;
+import com.example.mydacha2.myActivity.ListControlPointActivity;
 import com.example.mydacha2.myActivity.MyObject;
 import com.example.mydacha2.myActivity.SettingActivity;
 import com.example.mydacha2.supportclass.MyClickListener;
 import com.example.mydacha2.supportclass.MyListMain;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MyClickListener {
     WifiManager wifiManager;
@@ -52,35 +50,26 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
             wifiManager.setWifiEnabled(true);
         }
 
-       connectToNetwork();
-    }
-
-    private void connectToNetwork() {
-
         SharedPreferences sharedPreferences =  getSharedPreferences("myDacha", MODE_PRIVATE);
 
         String ipNodeServer = sharedPreferences.getString("ipNodeServer", "");
         if(ipNodeServer.isEmpty()){
             return;
         }
-        String nameNodeServer = sharedPreferences.getString("nameNodeServer", "");
-        String networkPass = sharedPreferences.getString("passwordNodeServer", "");
+        String ssid = sharedPreferences.getString("nameNodeServer", "");
+        String password = sharedPreferences.getString("passwordNodeServer", "");
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        List<WifiConfiguration> list = this.wifiManager.getConfiguredNetworks();
-        if (list.isEmpty()){return;}
-        for( WifiConfiguration config : list ) {
-            if (config.SSID != null && config.SSID.equals("\"" + nameNodeServer + "\"")) {
-                this.wifiManager.disconnect();
-                config.wepKeys[0] = "\"" + networkPass + "\"";
-                config.preSharedKey = "\""+ networkPass +"\"";
-                this.wifiManager.enableNetwork(config.networkId, true);
-                this.wifiManager.reconnect();
-                break;
-            }
-        }
+       // List<WifiConfiguration> list = this.wifiManager.getConfiguredNetworks();
+        WifiConfiguration wifiConfig = new WifiConfiguration();
+        wifiConfig.SSID = "\"" + ssid + "\""; // Название Wi-Fi сети
+        wifiConfig.preSharedKey = "\"" + password + "\""; // Пароль для Wi-Fi сети
+        int netId = wifiManager.addNetwork(wifiConfig);
+        wifiManager.disconnect();
+        wifiManager.enableNetwork(netId, true);
+        wifiManager.reconnect();
     }
 
     @Override
@@ -100,8 +89,8 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
             Intent connectWiFi = new Intent(this, ConnectWiFi.class);
             startActivity(connectWiFi);
         } else if (id == R.id.control_point) {
-            Intent controlPointActivity = new Intent(this, AddControlPointActivity.class);
-            startActivity(controlPointActivity);
+            Intent listControlPointActivity = new Intent(this, ListControlPointActivity.class);
+            startActivity(listControlPointActivity);
           //  Toast.makeText(this, getString(R.string.lamp_blank_fragment), Toast.LENGTH_LONG).show();
         } else if (id == R.id.myObjet) {
             Intent intent1 = new Intent(this, MyObject.class);

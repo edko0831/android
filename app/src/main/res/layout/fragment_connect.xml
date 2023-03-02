@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/layout_marginTop"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.ConnectFragment">
 
@@ -15,12 +16,7 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="253dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="#F3F4EB"
-            android:contentDescription="@string/sv_fg_connect"
+            android:layout_height="453dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,10 +27,6 @@
                 android:id="@+id/linearLayout_scanResults"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5sp"
-                android:layout_marginTop="5sp"
-                android:layout_marginRight="5sp"
-                android:layout_marginBottom="5sp"
                 android:orientation="vertical">
 
             </LinearLayout>
@@ -57,31 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/scrollView"
             tools:ignore="MissingConstraints,TextContrastCheck" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonSet">
-
-            <TextView
-                android:id="@+id/textView_scanResults"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#F1F3E7"
-                android:hint="@string/tv_fg_connect"
-                android:inputType="textMultiLine"
-                android:textColorHint="#546E7A"
-                tools:ignore="TextViewEdits" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+       </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>

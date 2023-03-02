@@ -52,9 +52,9 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
             wifiManager.setWifiEnabled(true);
         }
         // Instantiate broadcast receiver
-        this.wifiReceiver = new WifiBroadcastReceiver();
+       // this.wifiReceiver = new WifiBroadcastReceiver();
         // Register the receiver
-        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        //registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 //        Log.i(TAG, "Start scan...");
     }
 
@@ -68,22 +68,14 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
         textView.setText(R.string.connectWiFi_page);
 
         this.wifiManager = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        // Instantiate broadcast receiver
-        this.wifiReceiver = new WifiBroadcastReceiver();
-        // Register the receiver
-        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
         connectFragment = new ConnectFragment(this);
-
         setFragment(connectFragment);
 
     }
 
     private void askAndStartScanWifi() {
-        // With Android Level >= 23, you have to ask the user
-        // for permission to Call.
-        // 23
-        int permission1 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+         int permission1 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
 
         // Check for permissions
         if (permission1 != PackageManager.PERMISSION_GRANTED) {
@@ -101,11 +93,11 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
             return;
         }
         Log.d(LOG_TAG, "Permissions Already Granted");
-        this.doStartScanWifi();
-    }
 
-    private void doStartScanWifi() {
         this.wifiManager.startScan();
+        List<ScanResult> results = wifiManager.getScanResults();
+        showNetworks(results);
+
     }
 
     @Override
@@ -210,7 +202,7 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
         this.availNetworks = availNetworks;
         if ((long) availNetworks.size() > 0) {
             connectFragment.showNetworks(availNetworks);
-            connectFragment.showNetworksDetails(availNetworks);
+         //   connectFragment.showNetworksDetails(availNetworks);
         }
     }
 

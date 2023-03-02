@@ -11,9 +11,11 @@
     <TextView
         android:id="@+id/textView_object"
         style="@style/header_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:textAllCaps="false"
-        tools:ignore="MissingConstraints,TextViewEdits"
-        tools:layout_editor_absoluteY="16dp"/>
+        tools:ignore="MissingConstraints,TextViewEdits" />
 
     <LinearLayout
         android:id="@+id/linearLayout_change"
@@ -21,6 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/layout_marginTop"
+        android:layout_marginBottom="@dimen/layout_marginTop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_object">
@@ -28,15 +31,16 @@
         <FrameLayout
             android:id="@+id/frameLayoutMyObject"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="500dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/frameLayoutMyObjectButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal" />
 
     </LinearLayout>
 

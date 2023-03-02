@@ -23,28 +23,30 @@
         android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/layout_marginTop"
         app:layout_constraintTop_toBottomOf="@+id/textView_object">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/viewView_id"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:layout_below="@id/textView_id"
             android:layout_marginTop="3dp"
-            tools:ignore="NotSibling">
+            tools:ignore="MissingConstraints">
 
-            <TextView
+            <EditText
                 android:id="@+id/textView_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text=""
+                android:hint="@string/id"
                 android:textColorHighlight="#090909" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_user_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textEdit_name"
             android:layout_marginTop="3dp"
@@ -56,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:ems="10"
-                android:hint="@string/name"
+                android:hint="@string/id"
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:singleLine="true"
@@ -66,7 +68,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/viewEdit_description"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textEdit_description"
             android:layout_marginTop="3dp"
@@ -92,7 +94,7 @@
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         android:orientation="horizontal"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
@@ -106,7 +108,7 @@
 
             <EditText
                 android:id="@+id/textEdit_picture"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:ems="10"
@@ -115,12 +117,16 @@
                 android:minHeight="48dp"
                 android:singleLine="true"
                 android:textColorHint="#546E7A"
+                android:layout_weight="2"
                 tools:ignore="DuplicateSpeakableTextCheck" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <ImageButton
             android:id="@+id/imageButton_open"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0"
             android:contentDescription="@string/not_text" />
 
     </LinearLayout>
@@ -131,6 +137,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:baselineAligned="true"
+        android:layout_centerVertical="true"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

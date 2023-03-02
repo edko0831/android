@@ -13,7 +13,10 @@ public class ControlPointRepository {
 
     public ControlPointRepository(Context context) {
         String DB_NAME = "db_myDacha";
-        controlPoint = Room.databaseBuilder(context, ControlPointDataBase.class, DB_NAME).allowMainThreadQueries().build();
+        controlPoint = Room.databaseBuilder(context, ControlPointDataBase.class, DB_NAME)
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
     }
 
     public ControlPointDataBase getControlPoint() {

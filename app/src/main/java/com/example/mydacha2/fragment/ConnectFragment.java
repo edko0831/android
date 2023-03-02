@@ -42,7 +42,7 @@ public class ConnectFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button buttonSet = view.findViewById(R.id.buttonSet);
         linearLayoutScanResults = (LinearLayout) view.findViewById(R.id.linearLayout_scanResults);
-        textViewScanResults = (TextView) view.findViewById(R.id.textView_scanResults);
+     //   textViewScanResults = (TextView) view.findViewById(R.id.textView_scanResults);
         buttonSet.setOnClickListener(myButtonClickListener);
     }
 
@@ -63,7 +63,7 @@ public class ConnectFragment extends Fragment {
 
             Button button = new Button(getActivity());
 
-            button.setText(networkSSID + " ("+networkCapabilities+")");
+            button.setText(networkSSID + " " + result.level) ;
             this.linearLayoutScanResults.addView(button);
 
             button.setOnClickListener(v -> {

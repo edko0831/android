@@ -106,7 +106,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         textView = findViewById(R.id.textView_object);
         textView.setText(R.string.object_control_add);
         textName =  findViewById(R.id.text_name);
-        execute_code = findViewById(R.id.text_executable_code);
+        execute_code = findViewById(R.id.textEdit_executable_code);
         name.addTextChangedListener(textWatcher);
 
         LinearLayout linearButton = findViewById(R.id.linearLayoutButton);
@@ -220,7 +220,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         }
 
         if( spinnerTypePoint.getText().toString().isEmpty()){
-            spinnerTypePoint.setError(getResources().getString(R.string.not_name));
+            spinnerTypePoint.setError(getResources().getString(R.string.not_type_point));
             return false;
         }
 

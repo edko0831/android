@@ -15,7 +15,9 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,13 +40,14 @@ import com.example.mydacha2.Entity.ObjectControl;
 import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
 import com.example.mydacha2.repository.ObjectControlRepository;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
 public class AddObjectActivity extends AppCompatActivity implements View.OnClickListener{
-    TextView id;
+    EditText id;
     EditText name;
     EditText description;
     EditText picture;
@@ -53,6 +56,7 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
     TextView textView;
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
     private static final String LOG_TAG = "AndroidExample";
+    TextInputLayout textName;
 
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -77,6 +81,20 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
                 }
             });
 
+    TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            textName.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {}
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +111,9 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
         picture = findViewById(R.id.textEdit_picture);
         textView = findViewById(R.id.textView_object);
         textView.setText(R.string.object_control_add);
+        textName = findViewById(R.id.text_user_name);
+
+        name.addTextChangedListener(textWatcher);
 
         LinearLayout linearButton = findViewById(R.id.linearLayoutButton);
         View viewButton = getLayoutInflater().inflate(R.layout.buttonlayout, null);
@@ -152,15 +173,21 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.buttonSave) {
-            setNewObjectControl();
-            finish();
+            if (setNewObjectControl()) {
+                finish();
+            }
         } else if (id == R.id.buttonCancel) {
             finish();
         }
     }
 
-    private void setNewObjectControl() {
+    private boolean setNewObjectControl() {
 
+        if(name.getText().toString().isEmpty()){
+            textName.setError(getResources().getString(R.string.not_name));
+            return false;
+        }
+        String r = id.getText().toString();
         if (!id.getText().toString().isEmpty()){
             objectControl.id = Long.parseLong(id.getText().toString());
         }
@@ -178,6 +205,7 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
             intentResult.putExtra("id", objectControl.id);
             setResult(RESULT_OK, intentResult);
         }
+        return true;
     }
 
     private void askPermissionAndBrowseFile()  {
@@ -381,7 +409,7 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
             try {
                 InputStream inputStream = context.getContentResolver().openInputStream(uri);
                 FileOutputStream outputStream = new FileOutputStream(file);
-                int read = 0;
+                int read;
                 int maxBufferSize = 1024 * 1024;  // 1 * 1024 * 1024;
                 int bytesAvailable = inputStream.available();
 
@@ -413,7 +441,7 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
             try {
                 InputStream inputStream = context.getContentResolver().openInputStream(uri);
                 FileOutputStream outputStream = new FileOutputStream(file);
-                int read = 0;
+                int read;
                 int maxBufferSize = 1024 * 1024;   // 1 * 1024 * 1024
                 int bytesAvailable = inputStream.available();
 

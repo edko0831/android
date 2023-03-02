@@ -82,8 +82,10 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="action_point">Элементы</string>
     <string name="not_name">"Не заполнено поле наименование"</string>
+    <string name="not_type_point">"Не заполнено поле тип элемента"</string>
     <string name="type_point">"Тип элемента"</string>
     <string name="executable_code">"Выпоняемый код"</string>
+    <string name="list_control_point_page">Список элементов</string>
 
 
 </resources>

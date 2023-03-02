@@ -121,10 +121,10 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
 
-            this.imageView = (ImageView) itemView.findViewById(R.id.imageView);
-            this.textView = (TextView) itemView.findViewById(R.id.textView);
-            this.editText = (EditText) itemView.findViewById(R.id.id_object);
-            this.checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
+            this.imageView = itemView.findViewById(R.id.imageView);
+            this.textView = itemView.findViewById(R.id.textView);
+            this.editText = itemView.findViewById(R.id.id_object);
+            this.checkBox = itemView.findViewById(R.id.checkBox);
             editText.setVisibility(EditText.INVISIBLE);
 
             linearLayout = itemView.findViewById(R.id.linearLayout);
