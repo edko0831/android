@@ -28,7 +28,6 @@ public class MyControlPointAdapter extends  RecyclerView.Adapter<MyControlPointA
     public final MyCheckedChangeListener myCheckedChangeListener;
     public final List<Long> selectControlPoint = new ArrayList<>();
 
-
     public MyControlPointAdapter(List<MyListControlPoint> listData, MyClickListener myClickListener, MyCheckedChangeListener myCheckedChangeListener) {
         this.controlPoints = listData;
         this.myClickListener = myClickListener;

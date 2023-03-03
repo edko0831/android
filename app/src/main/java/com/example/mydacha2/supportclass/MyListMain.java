@@ -30,8 +30,4 @@ public class MyListMain {
     public void setName(String name) {
         this.name = name;
     }
-
-    public void setImgId(int imgId) {
-        this.imgId = imgId;
-    }
 }

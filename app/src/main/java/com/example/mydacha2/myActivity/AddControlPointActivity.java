@@ -110,6 +110,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         name.addTextChangedListener(textWatcher);
 
         LinearLayout linearButton = findViewById(R.id.linearLayoutButton);
+        @SuppressLint("InflateParams")
         View viewButton = getLayoutInflater().inflate(R.layout.buttonlayout, null);
         linearButton.addView(viewButton);
 
@@ -123,18 +124,18 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
 
        Bundle arguments = getIntent().getExtras();
 
-        if(arguments != null){
-            setFields(arguments);
-        }
-
         for (MyListTypePoint myListTypePoint: MyListTypePoint.getListTypePoint()){
-            spinnerList.add( myListTypePoint.getPoint());
+            spinnerList.add(myListTypePoint.getPoint());
         }
         
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, spinnerList);
         spinnerTypePoint = findViewById(R.id.spinner_type_point);
         spinnerTypePoint.setAdapter(arrayAdapter);
+
+        if(arguments != null){
+            setFields(arguments);
+        }
     }
 
     private void askPermissionAndBrowseFile()  {
