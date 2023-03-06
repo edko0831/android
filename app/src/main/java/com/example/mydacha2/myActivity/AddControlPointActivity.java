@@ -29,7 +29,8 @@ import com.example.mydacha2.DAO.ControlPointDAO;
 import com.example.mydacha2.Entity.ControlPoint;
 import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
-import com.example.mydacha2.repository.ControlPointRepository;
+import com.example.mydacha2.repository.App;
+import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.example.mydacha2.supportclass.MyListTypePoint;
 import com.google.android.material.textfield.TextInputLayout;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -119,8 +120,8 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         buttonSave.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
 
-        ControlPointRepository controlPointRepository = new ControlPointRepository(this);
-        controlPointDAO = controlPointRepository.getControlPoint().controlPointDAO();
+        AppDatabase db = App.getInstance(this).getDatabase();
+        controlPointDAO = db.controlPointDAO();
 
        Bundle arguments = getIntent().getExtras();
 

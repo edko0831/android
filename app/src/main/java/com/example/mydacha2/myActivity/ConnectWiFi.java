@@ -4,12 +4,16 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiNetworkSpecifier;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -39,30 +43,12 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
 
     private WifiManager wifiManager;
     public List<ScanResult> availNetworks;
-    private WifiBroadcastReceiver wifiReceiver;
     private static final int MY_REQUEST_CODE = 123;
-    private SharedPreferences sharedPreferences;
-    private View baseView;
-
-
-    public void initWiFi() {
-
-        wifiManager = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        if (!wifiManager.isWifiEnabled()) {
-            wifiManager.setWifiEnabled(true);
-        }
-        // Instantiate broadcast receiver
-       // this.wifiReceiver = new WifiBroadcastReceiver();
-        // Register the receiver
-        //registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-//        Log.i(TAG, "Start scan...");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect_wi_fi);
-        baseView = findViewById(R.id.constraintLayout);
         frameLayout = findViewById(R.id.frameLayout);
         TextView textView = findViewById(R.id.textView_object);
         textView.setText(R.string.connectWiFi_page);
@@ -102,7 +88,6 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onStop() {
-        this.unregisterReceiver(this.wifiReceiver);
         super.onStop();
     }
 
@@ -152,7 +137,6 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
@@ -186,104 +170,106 @@ public class ConnectWiFi extends AppCompatActivity implements View.OnClickListen
                 ConnectWiFi.this.availNetworks = wifiManager.getScanResults();
                 ConnectWiFi.this.showNetworks(availNetworks);
 
-          //      List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
-          //      showNetworksConfigured(list);
             } else {
                 Log.d(LOG_TAG, "Scan not OK");
             }
         }
     }
 
-    public void showNetworksConfigured(List<WifiConfiguration> availNetworks){
-        connectFragment.showNetworks1(availNetworks);
-    }
 
     public void showNetworks(List<ScanResult> availNetworks) {
         this.availNetworks = availNetworks;
         if ((long) availNetworks.size() > 0) {
             connectFragment.showNetworks(availNetworks);
-         //   connectFragment.showNetworksDetails(availNetworks);
-        }
+         }
     }
 
     public void connectToNetwork(String networkCapabilities, String networkSSID) {
         Toast.makeText(this, "Connecting to network: " + networkSSID, Toast.LENGTH_SHORT).show();
-
+        SharedPreferences sharedPreferences = getSharedPreferences("myDacha", MODE_PRIVATE);
         String networkPass = sharedPreferences.getString("passwordNodeServer", "");
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            // Проверяем наличие разрешения на использование Wi-Fi
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // Если разрешения нет, запрашиваем его
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_REQUEST_CODE);
+            }
 
-        WifiConfiguration wifiConfig = new WifiConfiguration();
-        wifiConfig.SSID = "\"" + networkSSID + "\"";
+            // Создаем экземпляр WifiManager
+            // WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
-        if (networkCapabilities.toUpperCase().contains("WEP")) { // WEP Network.
-            Toast.makeText(this, "WEP Network", Toast.LENGTH_SHORT).show();
+            // Включаем Wi-Fi (если еще не включен)
+            //  if (!wifiManager.isWifiEnabled()) {
+            //     wifiManager.setWifiEnabled(true);
+            //}
 
-            wifiConfig.wepKeys[0] = "\"" + networkPass + "\"";
-            wifiConfig.wepTxKeyIndex = 0;
-            wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-            wifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        } else if (networkCapabilities.toUpperCase().contains("WPA")) { // WPA Network
-            Toast.makeText(this, "WPA Network", Toast.LENGTH_SHORT).show();
-            wifiConfig.preSharedKey = "\"" + networkPass + "\"";
-        } else { // OPEN Network.
-            Toast.makeText(this, "OPEN Network", Toast.LENGTH_SHORT).show();
-            wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        }
+            // Создаем экземпляр WifiNetworkSpecifier.Builder для подключения к сети
+            WifiNetworkSpecifier.Builder builder = new WifiNetworkSpecifier.Builder();
 
-        this.wifiManager.addNetwork(wifiConfig);
+            // Устанавливаем SSID и пароль для сети
+            builder.setSsid(networkSSID);
+            builder.setWpa2Passphrase(networkPass);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        List<WifiConfiguration> list = this.wifiManager.getConfiguredNetworks();
-        for (WifiConfiguration config : list) {
-            if (config.SSID != null && config.SSID.equals("\"" + networkSSID + "\"")) {
-                this.wifiManager.disconnect();
-                this.wifiManager.enableNetwork(config.networkId, true);
-                this.wifiManager.reconnect();
-                break;
+            // Создаем экземпляр WifiNetworkSpecifier
+            WifiNetworkSpecifier wifiNetworkSpecifier = builder.build();
+
+            // Создаем экземпляр NetworkRequest.Builder
+            NetworkRequest.Builder networkRequestBuilder = new NetworkRequest.Builder();
+
+            // Устанавливаем тип соединения
+            networkRequestBuilder.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
+
+            // Устанавливаем спецификацию сети
+            networkRequestBuilder.setNetworkSpecifier(wifiNetworkSpecifier);
+
+            // Создаем экземпляр ConnectivityManager
+            ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            // Запрашиваем подключение к сети
+            connectivityManager.requestNetwork(networkRequestBuilder.build(), new ConnectivityManager.NetworkCallback() {
+                @Override
+                public void onAvailable(@io.reactivex.rxjava3.annotations.NonNull Network network) {
+                    Toast.makeText(ConnectWiFi.this, "Подключение успешно", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onUnavailable() {
+                    Toast.makeText(ConnectWiFi.this, "Подключение не удалось", Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            WifiConfiguration wifiConfig = new WifiConfiguration();
+            wifiConfig.SSID = "\"" + networkSSID + "\"";
+
+            if (networkCapabilities.toUpperCase().contains("WEP")) { // WEP Network.
+                Toast.makeText(this, "WEP Network", Toast.LENGTH_SHORT).show();
+
+                wifiConfig.wepKeys[0] = "\"" + networkPass + "\"";
+                wifiConfig.wepTxKeyIndex = 0;
+                wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                wifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+            } else if (networkCapabilities.toUpperCase().contains("WPA")) { // WPA Network
+                Toast.makeText(this, "WPA Network", Toast.LENGTH_SHORT).show();
+                wifiConfig.preSharedKey = "\"" + networkPass + "\"";
+            } else { // OPEN Network.
+                Toast.makeText(this, "OPEN Network", Toast.LENGTH_SHORT).show();
+                wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            }
+
+            this.wifiManager.addNetwork(wifiConfig);
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            List<WifiConfiguration> list = this.wifiManager.getConfiguredNetworks();
+            for (WifiConfiguration config : list) {
+                if (config.SSID != null && config.SSID.equals("\"" + networkSSID + "\"")) {
+                    this.wifiManager.disconnect();
+                    this.wifiManager.enableNetwork(config.networkId, true);
+                    this.wifiManager.reconnect();
+                    break;
+                }
             }
         }
-/*
-        Snack.make(this.frameLayout, "Сканирование...", Snack.LENGTH_SHORT)
-                .setAction("Action", null)
-                .show();
-
-
-        MyDialogFragment.showMessage(MainActivity.this, "Подключение", "Подключение установлено", R.drawable.lamp_off, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-*/
-        //      setFragment(lampFragment);
-    }
-
-    public void detectWifi() {
-        WifiManager wifiManager1 = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        wifiManager1.startScan();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        List<ScanResult> wifiList = wifiManager1.getScanResults();
-
-        Log.d("TAG", wifiList.toString());
-
-        List<WifiConfiguration> list = this.wifiManager.getConfiguredNetworks();
-
-   //    this.nets = new Element[wifiList.size()];
-
-        for (int i = 0; i<list.size(); i++){
-            String item = list.get(i).toString();
-            String[] vector_item = item.split(",");
-            String item_essid = vector_item[0];
-            String item_capabilities = vector_item[2];
-            String item_level = vector_item[3];
-            String ssid = item_essid.split(": ")[1];
-            String security = item_capabilities.split(": ")[1];
-            String level = item_level.split(":")[1];
-        //    nets[i] = new Element(ssid, security, level);
-        }
-
     }
 }

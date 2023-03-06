@@ -27,7 +27,8 @@ import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
 import com.example.mydacha2.fragment.ItemFragment;
 import com.example.mydacha2.fragment.RoundButton;
-import com.example.mydacha2.repository.ObjectControlRepository;
+import com.example.mydacha2.repository.App;
+import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.example.mydacha2.supportclass.MyListObjectControl;
 import com.example.mydacha2.supportclass.OnSelectedButtonListener;
 
@@ -87,8 +88,8 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
 
         textView = findViewById(R.id.textView_object);
 
-        ObjectControlRepository objectControlRepository = new ObjectControlRepository(this);
-        objectControlsDAO = objectControlRepository.getObjectControl().ObjectControlsDAO();
+        AppDatabase db = App.getInstance(this).getDatabase();
+        objectControlsDAO = db.ObjectControlsDAO();
         objectControlList = new ArrayList<>();
       //  selectObjectControlList = new ArrayList<>();
 

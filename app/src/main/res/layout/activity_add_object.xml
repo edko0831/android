@@ -41,6 +41,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:hint="@string/id"
+                android:autofillHints=""
+                android:ems="10"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:singleLine="true"
                 android:textColorHighlight="#090909" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:ems="10"
-                android:hint="@string/id"
+                android:hint="@string/name"
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:singleLine="true"

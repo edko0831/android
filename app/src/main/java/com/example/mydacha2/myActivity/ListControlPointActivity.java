@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -15,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mydacha2.DAO.ControlPointDAO;
 import com.example.mydacha2.Entity.ControlPoint;
+import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
-import com.example.mydacha2.repository.ControlPointRepository;
+import com.example.mydacha2.repository.App;
+import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.example.mydacha2.supportclass.MyCheckedChangeListener;
 import com.example.mydacha2.supportclass.MyClickListener;
 import com.example.mydacha2.supportclass.MyControlPointAdapter;
@@ -111,7 +115,31 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
         selectControlPoint.clear();
         setAdapter();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_list_control_point, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingActivity.class));
+            // Toast.makeText(this, getString(R.string.action_settings), Toast.LENGTH_LONG).show();
+        } else if (id == R.id.connect) {
+            startActivity(new Intent(this, ConnectWiFi.class));
+        } else if (id == R.id.home_page) {
+            startActivity(new Intent(this, MainActivity.class));
+            // Toast.makeText(this, getString(R.string.object_control), Toast.LENGTH_LONG).show();
+        }  else if (id == R.id.action_close) {
+            this.finishAffinity();
+        }  else if (id == R.id.myObjet) {
+            startActivity(new Intent(this, MyObject.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -128,8 +156,8 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
     }
 
     private List<MyListControlPoint> setMyControlPoint() {
-        ControlPointRepository controlPointRepository = new ControlPointRepository(this);
-        controlPointDAO = controlPointRepository.getControlPoint().controlPointDAO();
+        AppDatabase db = App.getInstance(this).getDatabase();
+        controlPointDAO = db.controlPointDAO();
         List<ControlPoint> listControlPointDAO = controlPointDAO.select();
 
         List<MyListControlPoint> myListControlPoint = new ArrayList<>();

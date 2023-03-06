@@ -39,7 +39,8 @@ import com.example.mydacha2.DAO.ObjectControlsDAO;
 import com.example.mydacha2.Entity.ObjectControl;
 import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
-import com.example.mydacha2.repository.ObjectControlRepository;
+import com.example.mydacha2.repository.App;
+import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
@@ -124,8 +125,8 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
         buttonSave.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
 
-        ObjectControlRepository objectControlRepository = new ObjectControlRepository(this);
-        objectControlsDAO = objectControlRepository.getObjectControl().ObjectControlsDAO();
+        AppDatabase db = App.getInstance(this).getDatabase();
+        objectControlsDAO = db.ObjectControlsDAO();
 
         Bundle arguments = getIntent().getExtras();
 
