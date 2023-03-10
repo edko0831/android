@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
@@ -36,6 +37,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiresApi(api = 33)
 public class MyObject extends AppCompatActivity implements OnSelectedButtonListener {
     private static final String LOG_TAG = "MyObject";
     FrameLayout frameLayout;
@@ -75,8 +77,7 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    this,
+            ActivityCompat.requestPermissions(this,
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
@@ -99,7 +100,7 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.d(LOG_TAG, "onRequestPermissionsResult");
 
@@ -117,23 +118,24 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
             }
         }
     }
-     @Override
-     protected void onSaveInstanceState(@NonNull Bundle outState) {
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
          super.onSaveInstanceState(outState);
          outState.putSerializable("selectObject", (Serializable) selectObject);
      }
 
-     @Override
-     protected void onStop() {
+    @Override
+    protected void onStop() {
          super.onStop();
      }
 
-     @Override
-     protected void onStart() {
+    @Override
+    protected void onStart() {
          super.onStart();
      }
 
-     @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_my_object, menu);
         return true;
@@ -218,7 +220,7 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
         }
     }
 
-     private void deleteObject(List<Long> selectObject) {
+    private void deleteObject(List<Long> selectObject) {
        for (int i = 0; i<selectObject.size(); i++ ) {
            objectControlsDAO.deleteId(selectObject.get(i).intValue());
        }
@@ -230,7 +232,7 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
         mStartForResult.launch(intent);
     }
 
-     public void setFragmentUpdate(List<Long> selectObject) {
+    public void setFragmentUpdate(List<Long> selectObject) {
           for (int i = 0; i<selectObject.size(); i++ ) {
              Intent intent = new Intent(this, AddObjectActivity.class);
              intent.putExtra("id", selectObject.get(i).longValue());

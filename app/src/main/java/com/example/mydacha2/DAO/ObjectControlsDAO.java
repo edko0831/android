@@ -15,8 +15,8 @@ public interface ObjectControlsDAO {
     @Query("Select * From object_control ")
     List<ObjectControl> select();
 
-    @Query(value = "Select * From object_control Where id = :id")
-    ObjectControl selectId(int id);
+    @Query(value = "Select * From object_control Where id_object = :id_object")
+    ObjectControl selectId(int id_object);
 
     @Insert
     void insert(ObjectControl items);
@@ -25,8 +25,8 @@ public interface ObjectControlsDAO {
     @Delete
     void delete(ObjectControl item);
 
-    @Query("DELETE FROM object_control Where id = :id")
-    void deleteId(int id);
+    @Query("DELETE FROM object_control Where id_object = :id_object")
+    void deleteId(int id_object);
 
     @Query("Select count(*) From object_control ")
     int count();

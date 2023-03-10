@@ -58,20 +58,11 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         holder.checkBox.setVisibility(CheckBox.INVISIBLE);
 
         if (imgUrl != null && !imgUrl.isEmpty()) {
-          //  Matrix matrix = new Matrix();
-          //  float scale= 48;
-          //  matrix.postScale(scale, scale);
             Bitmap originalBitmap = BitmapFactory.decodeFile(imgUrl);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 100;
 
-
             holder.imageView.setImageBitmap(originalBitmap);
-
-            //  Bitmap originalBitmap = BitmapFactory.decodeFile(imgUrl, options);
-            //  Bitmap originalBitmap1 = Bitmap.createScaledBitmap(originalBitmap, 48, 48, true);
-            //  Bitmap bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth()/2, originalBitmap.getHeight()/2, matrix, true);
-
         } else {
             holder.imageView.setImageResource(android.R.drawable.ic_dialog_map);
         }

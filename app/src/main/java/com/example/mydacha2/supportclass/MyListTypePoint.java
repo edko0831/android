@@ -1,5 +1,7 @@
 package com.example.mydacha2.supportclass;
 
+import android.content.Context;
+
 import com.example.mydacha2.R;
 
 public class MyListTypePoint {
@@ -13,14 +15,14 @@ public class MyListTypePoint {
         this.icons = icons;
     }
 
-    public static MyListTypePoint[] getListTypePoint(){
+    public static MyListTypePoint[] getListTypePoint(Context context){
         return new MyListTypePoint[]{
-                new MyListTypePoint(1L, "object_control", R.mipmap.icons8_object_controls_94_foreground),
-                new MyListTypePoint(2L, "connectWiFi", R.mipmap.icons8_search_satellites_94_foreground),
-                new MyListTypePoint(3L, "action_settings", R.mipmap.icons8_gear_94_foreground),
-                new MyListTypePoint(4L, "Dialer", android.R.drawable.ic_dialog_dialer),
-                new MyListTypePoint(5L, "Alert", android.R.drawable.ic_dialog_alert),
-                new MyListTypePoint(6L, "Map", android.R.drawable.ic_dialog_map)
+                new MyListTypePoint(1L, context.getString(R.string.lamp), R.mipmap.icons8_object_controls_94_foreground),
+                new MyListTypePoint(2L, context.getString(R.string.two_lamp), R.mipmap.icons8_search_satellites_94_foreground),
+                new MyListTypePoint(3L, context.getString(R.string.socket), R.mipmap.icons8_gear_94_foreground),
+                new MyListTypePoint(4L, context.getString(R.string.thermometer), android.R.drawable.ic_dialog_dialer),
+                new MyListTypePoint(5L, context.getString(R.string.tv), android.R.drawable.ic_dialog_alert),
+                new MyListTypePoint(6L, context.getString(R.string.conditioner), android.R.drawable.ic_dialog_map)
         };
 
     }

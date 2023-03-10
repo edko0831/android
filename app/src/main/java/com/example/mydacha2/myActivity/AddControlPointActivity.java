@@ -125,7 +125,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
 
        Bundle arguments = getIntent().getExtras();
 
-        for (MyListTypePoint myListTypePoint: MyListTypePoint.getListTypePoint()){
+        for (MyListTypePoint myListTypePoint: MyListTypePoint.getListTypePoint(this)){
             spinnerList.add(myListTypePoint.getPoint());
         }
         
@@ -180,7 +180,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         long getId = arguments.getLong("id");
         controlPoint = controlPointDAO.selectId((int) getId);
         textView.setText(R.string.object_control_update);
-        id.setText(controlPoint.id.toString());
+        id.setText(controlPoint.id_control.toString());
         name.setText(controlPoint.name);
         description.setText(controlPoint.description);
         picture.setText(controlPoint.picture_url);
@@ -227,7 +227,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         }
 
         if (!id.getText().toString().isEmpty()) {
-            controlPoint.id = Long.parseLong(id.getText().toString());
+            controlPoint.id_control = Long.parseLong(id.getText().toString());
         }
         controlPoint.name = name.getText().toString();
         controlPoint.description = description.getText().toString();
@@ -235,14 +235,14 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         controlPoint.type_point = spinnerTypePoint.getText().toString();
         controlPoint.executable_code = execute_code.getText().toString();
 
-        if (controlPoint.id == null) {
+        if (controlPoint.id_control == null) {
             controlPointDAO.insert(controlPoint);
             Intent intentResult = new Intent();
             setResult(RESULT_OK, intentResult);
         } else {
             controlPointDAO.update(controlPoint);
             Intent intentResult = new Intent();
-            intentResult.putExtra("id", controlPoint.id);
+            intentResult.putExtra("id", controlPoint.id_control);
             setResult(RESULT_OK, intentResult);
         }
 

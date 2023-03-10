@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginEnd="@dimen/base_margin"
+    android:layout_marginStart="@dimen/base_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView"
+            style="@style/header_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textAllCaps="false"
+            tools:ignore="TextViewEdits" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="12dp">
+
+        <ImageView
+            android:id="@+id/panorama"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/not_picture"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    </HorizontalScrollView>
+
+
+</RelativeLayout>

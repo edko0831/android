@@ -140,7 +140,7 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
         long getId = arguments.getLong("id");
         objectControl = objectControlsDAO.selectId((int) getId);
         textView.setText(R.string.object_control_update);
-        id.setText(objectControl.id.toString());
+        id.setText(objectControl.id_object.toString());
         name.setText(objectControl.name);
         description.setText(objectControl.description);
         picture.setText(objectControl.picture_url);
@@ -188,22 +188,22 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
             textName.setError(getResources().getString(R.string.not_name));
             return false;
         }
-        String r = id.getText().toString();
+      //  String r = id.getText().toString();
         if (!id.getText().toString().isEmpty()){
-            objectControl.id = Long.parseLong(id.getText().toString());
+            objectControl.id_object = Long.parseLong(id.getText().toString());
         }
         objectControl.name = name.getText().toString();
         objectControl.description = description.getText().toString();
         objectControl.picture_url = picture.getText().toString();
 
-        if (objectControl.id == null) {
+        if (objectControl.id_object == null) {
             objectControlsDAO.insert(objectControl);
             Intent intentResult = new Intent();
             setResult(RESULT_OK, intentResult);
         } else {
             objectControlsDAO.update(objectControl);
             Intent intentResult = new Intent();
-            intentResult.putExtra("id", objectControl.id);
+            intentResult.putExtra("id", objectControl.id_object);
             setResult(RESULT_OK, intentResult);
         }
         return true;

@@ -1,9 +1,13 @@
 package com.example.mydacha2.fragment;
 
-import static com.example.mydacha2.R.*;
+import static com.example.mydacha2.R.layout;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,12 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.example.mydacha2.R;
 import com.example.mydacha2.supportclass.MyClickListener;
 import com.example.mydacha2.supportclass.MyListMain;
 import com.example.mydacha2.supportclass.MyMainAdapter;

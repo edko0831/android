@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class ObjectControl {
 
     @PrimaryKey(autoGenerate = true)
-    public Long id;
+    public Long id_object;
     public String name;
     public String description;
     public Integer picture_id;

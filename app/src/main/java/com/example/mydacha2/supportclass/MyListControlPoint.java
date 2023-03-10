@@ -18,6 +18,6 @@ public class MyListControlPoint {
     }
 
     public long getId() {
-        return controlPoint.id;
+        return controlPoint.id_control;
     }
 }

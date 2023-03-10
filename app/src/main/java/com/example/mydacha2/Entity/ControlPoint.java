@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 public class ControlPoint {
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    public Long id;
+    public Long id_control;
     public String name;
     public String description;
     public String type_point;

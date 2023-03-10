@@ -24,6 +24,6 @@ public class MyListObjectControl {
     }
 
     public long getId() {
-        return ObjectControl.id;
+        return ObjectControl.id_object;
     }
 }

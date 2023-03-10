@@ -16,8 +16,8 @@ public interface ControlPointDAO {
     @Query("Select * From control_point ")
     List<ControlPoint> select();
 
-    @Query(value = "Select * From control_point Where id = :id")
-    ControlPoint selectId(int id);
+    @Query(value = "Select * From control_point Where id_control = :id_control")
+    ControlPoint selectId(int id_control);
 
     @Insert
     void insert(ControlPoint items);
