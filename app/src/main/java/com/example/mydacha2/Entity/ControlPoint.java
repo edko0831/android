@@ -14,4 +14,9 @@ public class ControlPoint {
     public String type_point;
     public String picture_url;
     public String executable_code;
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }

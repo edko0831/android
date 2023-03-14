@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
         return true;
     }
 
+    @RequiresApi(api = 33)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -208,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    @RequiresApi(api = 33)
     @Override
     public void onItemClick(Long position) {
         if (position == 3) {

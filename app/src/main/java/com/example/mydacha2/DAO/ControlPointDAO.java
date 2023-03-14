@@ -26,4 +26,6 @@ public interface ControlPointDAO {
     @Delete
     void delete(ControlPoint item);
 
+    @Query(value = "Select * From control_point Where name = :name")
+    ControlPoint selectName(String name);
 }

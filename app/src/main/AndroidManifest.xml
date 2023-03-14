@@ -37,6 +37,9 @@
             android:name=".myActivity.ListControlPointActivity"
             android:exported="false" />
         <activity
+            android:name=".myActivity.AddObjectControlWithControlPoint"
+            android:exported="false" />
+        <activity
             android:name=".myActivity.ManagementObject"
             android:exported="false" />
         <activity
