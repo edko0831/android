@@ -6,9 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +13,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.mydacha2.R;
 
-import java.io.IOException;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+//import okhttp3.OkHttpClient;
+//import okhttp3.Request;
+//import okhttp3.Response;
 
 
 public class LampFragment extends Fragment implements View.OnClickListener{
@@ -33,14 +32,14 @@ public class LampFragment extends Fragment implements View.OnClickListener{
     private final long set_timer = 960000;
     private final long step_timer = 60000;
     private ImageView imageViewLamp;
-    private Request request;
-    private OkHttpClient client;
+ //   private Request request;
+ //   private OkHttpClient client;
     private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        client = new OkHttpClient();
+      //  client = new OkHttpClient();
 
    }
 
@@ -108,7 +107,7 @@ public class LampFragment extends Fragment implements View.OnClickListener{
 
         Runnable runnable = new Runnable() {
             @Override
-            public void run() {
+            public void run() {/*
                 request = new Request.Builder()
                         .url(String.format("http://%s/%s", url, post))
                         .build();
@@ -120,6 +119,8 @@ public class LampFragment extends Fragment implements View.OnClickListener{
                 } catch (IOException e){
 
                 }
+                */
+
             }
         };
 

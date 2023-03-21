@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -20,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mydacha2.DAO.ObjectControlWithControlPointDAO;
 import com.example.mydacha2.DAO.ObjectControlsDAO;
-import com.example.mydacha2.Entity.ControlPoint;
 import com.example.mydacha2.Entity.ObjectControl;
 import com.example.mydacha2.Entity.ObjectControlControlPoint;
 import com.example.mydacha2.MainActivity;
@@ -34,7 +32,6 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
     private List<ObjectControlControlPoint> objectControlControlPoint;
     ImageView picture;
     ObjectControl objectControl;
-    ControlPoint selectControlPoint;
     Long getId;
     Long x;
     Long y;
@@ -43,9 +40,6 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                 if(result.getResultCode() == Activity.RESULT_OK){
                     Intent intent = result.getData();
                     assert intent != null;
-                    long id = intent.getLongExtra("id", -1);
-                    if (id != - 1 ){
-                    }
                 }
             });
     @SuppressLint("ClickableViewAccessibility")
@@ -108,29 +102,29 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
         return super.onOptionsItemSelected(item);
     }
     private Integer getControlPointByPosition(){
-        Integer returnValue = - 1;
+        int returnValue = - 1;
         for (ObjectControlControlPoint cp: objectControlControlPoint){
-            if(x == cp.position_x){
-                if (cp.position_y == y){
-                    if(cp.controlPoint.type_point.equals("")) {
-
-                        Toast.makeText(this, "Clicked at x=" + x.toString() + ", y=" + y.toString(), Toast.LENGTH_LONG).show();
-                    }
+            int delta = getResources().getInteger(R.integer.deltaPosition);
+            if(cp.position_x >= x - delta && cp.position_x <= x + delta){
+                if (cp.position_y >= y - delta && cp.position_y <= y + delta){
+                    returnValue = objectControlControlPoint.indexOf(cp);
+                      //  Toast.makeText(this, "Clicked at x=" + x + ", y=" + y, Toast.LENGTH_LONG).show();
                 }
             }
         }
         return returnValue;
     }
 
-
     @Override
     public boolean onLongClick(View v) {
-        if(getControlPointByPosition() > 0){
+        Integer poz = getControlPointByPosition();
+        if(poz >= 0){
+            ObjectControlControlPoint occp = objectControlControlPoint.get(poz);
             Intent intent = new Intent(this, AddObjectControlWithControlPoint.class);
-            intent.putExtra("id_control", selectControlPoint.id_control.longValue());
-            intent.putExtra("id_object_point", objectControlControlPoint.get(0).control_point_id);
+            intent.putExtra("id_control", occp.controlPoint.id_control.longValue());
+            intent.putExtra("id_object_point", occp.control_point_id);
             intent.putExtra("id_object", getId);
-            intent.putExtra("name", selectControlPoint.name);
+            intent.putExtra("name", occp.controlPoint.name);
             intent.putExtra("x", x);
             intent.putExtra("y", y);
             intent.putExtra("nameObject", objectControl.name);
@@ -153,8 +147,18 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
 
     @Override
     public void onClick(View v) {
-        if(getControlPointByPosition() > 0){
-
+        Integer poz = getControlPointByPosition();
+        if(poz >= 0){
+            ObjectControlControlPoint occp = objectControlControlPoint.get(poz);
+            String type_point = occp.controlPoint.type_point;
+            String l = getResources().getString(R.string.lamp);
+            if(type_point.equals(l)){
+              //  startActivity(new Intent(this, OneLamp.class));
+                Intent intent = new Intent(this, OneLamp.class);
+                intent.putExtra("id", occp.controlPoint.id_control);
+                mStartForResult.launch(intent);
+            }
         }
     }
 }
+

@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 @Database(entities = {
         ControlPoint.class,
         ObjectControl.class,
-        ObjectControlWithControlPoint.class}, version = 3, exportSchema = false)
+        ObjectControlWithControlPoint.class}, version = 4, exportSchema = false)
 public abstract class AppDatabase  extends RoomDatabase {
 
     public abstract ControlPointDAO controlPointDAO();
@@ -40,6 +40,13 @@ public abstract class AppDatabase  extends RoomDatabase {
                     "   control_point_id INT, " +
                     "   position_x REAL, " +
                     "   position_y REAL)");
+        }
+    };
+
+    public static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE control_point ADD COLUMN topic TEXT");
         }
     };
 }

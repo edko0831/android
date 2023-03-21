@@ -53,7 +53,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.annotation:annotation:1.5.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
@@ -67,7 +66,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
     //noinspection GradleDependency
     implementation 'com.jakewharton:butterknife:10.2.3'
     //noinspection GradleDependency
@@ -91,9 +90,14 @@ dependencies {
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:$room_version"
 
-    implementation "com.github.hedzr:android-file-chooser:v1.1.14"
+   // implementation "com.github.hedzr:android-file-chooser:v1.1.14"
     implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
 
    // implementation 'com.google.vr:sdk-panowidget:1.180.0'
+
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2'
+    implementation('org.eclipse.paho:org.eclipse.paho.android.service:1.0.2') {
+        exclude module: 'support-v4'
+    }
 
 }

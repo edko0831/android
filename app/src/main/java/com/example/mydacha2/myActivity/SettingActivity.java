@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mydacha2.MainActivity;
@@ -23,6 +24,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private CheckBox checkBox;
     private EditText editTextPassword;
     private EditText editTexIP;
+    private EditText editPort;
     private EditText editTextWifiNet;
     private EditText editUserName;
     private SharedPreferences sharedPreferences;
@@ -42,6 +44,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         editTexIP = findViewById(R.id.editTexIP);
         editTextWifiNet = findViewById(R.id.editText_wifi_net);
         editUserName = findViewById(R.id.editUserName);
+        editPort = findViewById(R.id.editPort);
+
         buttonSave.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
         checkBox = findViewById(R.id.onpass);
@@ -71,6 +75,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         return true;
     }
 
+    @RequiresApi(api = 33)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -137,6 +142,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             editor.putString("passwordNodeServer", editTextPassword.getText().toString());
         }
 
+        editor.putString("port", editPort.getText().toString());
+
         editor.apply();
         return true;
     }
@@ -151,9 +158,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         String ipNodeServer = sharedPreferences.getString("ipNodeServer", "");
         String userNodeServer = sharedPreferences.getString("userNodeServer", "");
         String passwordNodeServer = sharedPreferences.getString("passwordNodeServer", "");
+        String port = sharedPreferences.getString("port", "");
 
         editTextWifiNet.setText(nameNodeServer);
         editTexIP.setText(ipNodeServer);
+        editPort.setText(port);
         editUserName.setText(userNodeServer);
         editTextPassword.setText(passwordNodeServer);
     }

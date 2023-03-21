@@ -13,8 +13,10 @@ public class ControlPoint {
     public String description;
     public String type_point;
     public String picture_url;
+    public String topic;
     public String executable_code;
 
+    @NonNull
     @Override
     public String toString(){
         return name;

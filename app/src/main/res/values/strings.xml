@@ -94,6 +94,8 @@
     <string name="conditioner">Кондиционер</string>
     <string name="not_picture">Нет картинкки</string>
     <string name="add_point">Дабавить элемент</string>
+    <string name="topic">Topic</string>
+    <string name="port">Порт</string>
 
 
 </resources>

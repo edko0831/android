@@ -44,6 +44,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
     EditText description;
     EditText picture;
     EditText execute_code;
+    EditText topic;
     private ControlPoint controlPoint = new ControlPoint();
     ControlPointDAO controlPointDAO;
     TextView textView;
@@ -108,6 +109,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         textView.setText(R.string.object_control_add);
         textName =  findViewById(R.id.text_name);
         execute_code = findViewById(R.id.textEdit_executable_code);
+        topic = findViewById(R.id.textEdit_topic);
         name.addTextChangedListener(textWatcher);
 
         LinearLayout linearButton = findViewById(R.id.linearLayoutButton);
@@ -186,6 +188,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         picture.setText(controlPoint.picture_url);
         spinnerTypePoint.setText(controlPoint.type_point);
         execute_code.setText(controlPoint.executable_code);
+        topic.setText(controlPoint.topic);
     }
 
     @Override
@@ -234,6 +237,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         controlPoint.picture_url = picture.getText().toString();
         controlPoint.type_point = spinnerTypePoint.getText().toString();
         controlPoint.executable_code = execute_code.getText().toString();
+        controlPoint.topic = topic.getText().toString();
 
         if (controlPoint.id_control == null) {
             controlPointDAO.insert(controlPoint);

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="animeMills">500</integer>
+    <integer name="deltaPosition">100</integer>
+    <integer name="set_timer">960000</integer>
+    <integer name="step_timer">60000</integer>
 </resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".myActivity.OneLamp">
+
+        <TextView
+            android:id="@+id/textView_point"
+            style="@style/header_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textAllCaps="false"
+            tools:ignore="TextViewEdits" />
+
+        <ImageView
+            android:id="@+id/imageViewLamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/iv_wc_lamp_name"
+            app:layout_constraintTop_toBottomOf="@+id/textView_point"
+            android:layout_marginTop="@dimen/layout_marginTop"
+            app:srcCompat="@drawable/lamp_off"
+            tools:ignore="ImageContrastCheck" />
+
+        <ImageButton
+            android:id="@+id/imageButtonSet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/bt_wc_off_name"
+            android:layout_marginTop="@dimen/layout_marginTop"
+            android:background="@null"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewLamp"
+            app:srcCompat="@mipmap/icons8_off_94_foreground" />
+
+           <TextView
+            android:id="@+id/textViewTamer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_marginTop"
+             android:textAlignment="center"
+            android:textColor="#F3DA03"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSet" />
+</LinearLayout>
+
+
