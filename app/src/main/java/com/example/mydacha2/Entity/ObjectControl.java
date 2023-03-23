@@ -1,5 +1,6 @@
 package com.example.mydacha2.Entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey;
 public class ObjectControl {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     public Long id_object;
     public String name;
     public String description;

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="@dimen/base_margin"
+    android:layout_marginEnd="@dimen/base_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".myActivity.AddControlPointActivity">
+
+    <TextView
+        android:id="@+id/textView_object"
+        style="@style/header_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textAllCaps="false"
+        tools:ignore="TextViewEdits" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/textView_object">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_id"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text=""
+                android:inputType="none"
+                android:textColor="#090909" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp">
+
+                <EditText
+                    android:id="@+id/textEdit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/name"
+                    android:imeOptions="actionGo"
+                    android:inputType="none"
+                    android:minHeight="48dp"
+                    android:singleLine="true"
+                    android:textColorHint="@color/textColorHint"
+                    tools:ignore="DuplicateSpeakableTextCheck,SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinner_type_point"
+                style="@style/CustomDropDownTilStyle"
+                android:hint="@string/type_point"
+                android:textColorHint="@color/textColorHint"
+                app:met_floatingLabel="highlight"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/textEdit_x"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/name"
+                android:imeOptions="actionGo"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:singleLine="true"
+                android:textColorHint="@color/textColorHint"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
+            <EditText
+                android:id="@+id/textEdit_y"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/name"
+                android:imeOptions="actionGo"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:singleLine="true"
+                android:textColorHint="@color/textColorHint"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="30dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView"
+        app:layout_constraintVertical_bias="0.0" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

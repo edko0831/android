@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 @Database(entities = {
         ControlPoint.class,
         ObjectControl.class,
-        ObjectControlWithControlPoint.class}, version = 4, exportSchema = false)
+        ObjectControlWithControlPoint.class}, version = 6, exportSchema = false)
 public abstract class AppDatabase  extends RoomDatabase {
 
     public abstract ControlPointDAO controlPointDAO();
@@ -27,26 +27,36 @@ public abstract class AppDatabase  extends RoomDatabase {
     public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE control_point ADD COLUMN executable_code TEXT");
+            database.execSQL("CREATE TABLE control_point " +
+                    " ( id_control INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "   name TEXT, " +
+                    "   description TEXT, " +
+                    "   type_point TEXT, " +
+                    "   picture_url TEXT )");
         }
     };
 
     public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE object_control_with_control_point" +
-                    " (  id_object_point INT PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                    "   object_control_id INT, " +
-                    "   control_point_id INT, " +
-                    "   position_x REAL, " +
-                    "   position_y REAL)");
+            database.execSQL("ALTER TABLE control_point ADD COLUMN executable_code TEXT");
         }
     };
 
     public static final Migration MIGRATION_3_4 = new Migration(3, 4) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE control_point ADD COLUMN topic TEXT");
+            database.execSQL("CREATE TABLE object_with_point" +
+                    " (id_object_point INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                    " object_id INTEGER, point_id INTEGER," +
+                    " position_x REAL, position_y REAL)");
+        }
+    };
+
+    public static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(" ALTER TABLE control_point ADD COLUMN topic TEXT");
         }
     };
 }

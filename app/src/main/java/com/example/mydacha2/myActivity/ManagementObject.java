@@ -128,6 +128,7 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
             intent.putExtra("x", x);
             intent.putExtra("y", y);
             intent.putExtra("nameObject", objectControl.name);
+           // intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             mStartForResult.launch(intent);
 
         } else {
