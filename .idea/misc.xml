@@ -39,7 +39,7 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_add_object.xml" value="0.1796875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_add_object_control_with_control_point.xml" value="0.146875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_connect_wi_fi.xml" value="0.1" />
-        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_control_point.xml" value="0.22" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_control_point.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_control_point2.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_list_control_point.xml" value="0.1796875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -70,6 +70,7 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/fragment_setting.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/layout_test.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/list_item.xml" value="0.1" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/list_item_new.xml" value="0.16145833333333334" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/ltoolbar.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/round_button.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/settings_activity.xml" value="0.1796875" />

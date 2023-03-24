@@ -11,5 +11,13 @@
     <color name="green_500">#4E8A08</color>
     <color name="button_700">#B30006</color>
     <color name="textColorHint">#546E7A</color>
+    <color name="textInputOutlineColor">#FBB8AC</color>
+    <color name="colorPrimary">#E0E0E0</color>
+    <color name="colorPrimaryDark">#FBB8AC</color>
+    <color name="colorAccent">#FEDBD0</color>
+    <color name="textColorPrimary">#442C2E</color>
+    <color name="toolbarIconColor">@color/textColorPrimary</color>
+    <color name="loginPageBackgroundColor">#FFFFFF</color>
+    <color name="productGridBackgroundColor">#FFFFFF</color>
 
-  </resources>
+</resources>
