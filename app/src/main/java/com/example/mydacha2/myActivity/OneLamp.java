@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +25,8 @@ import com.example.mydacha2.supportclass.MyMqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import java.util.Objects;
 
 public class OneLamp extends AppCompatActivity {
     private TextView textViewTamer;
@@ -58,13 +63,13 @@ public class OneLamp extends AppCompatActivity {
         ControlPointDAO controlPointDAO = db.controlPointDAO();
         ControlPoint controlPoint = controlPointDAO.selectId((int) getId);
         textViewPoint.setText(controlPoint.name);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         topic = controlPoint.topic;
         myMqttConnectOptions = new MyMqttConnectOptions();
         myMqttConnectOptions.setSubscriptionTopic(controlPoint.topic);
-      //  String serverURI = "tcp://" + sharedPreferences.getString("ipNodeServer", "") +
-      //          ":" + sharedPreferences.getString("port", "");
-        String serverURI ="tcp://broker.mqttdashboard.com:1883";
+        String serverURI = "tcp://" + sharedPreferences.getString("ipNodeServer", "") + ":" + sharedPreferences.getString("port", "");
         myMqttConnectOptions.setServerUri(serverURI);
         myMqttConnectOptions.setUsername(sharedPreferences.getString("userNodeServer", ""));
         myMqttConnectOptions.setPassword(sharedPreferences.getString("passwordNodeServer", ""));
@@ -83,9 +88,8 @@ public class OneLamp extends AppCompatActivity {
             public void connectionLost(Throwable throwable) {}
 
             @Override
-            public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-               // Toast.makeText(OneLamp.this,mqttMessage.toString(),Toast.LENGTH_LONG).show();
-              //  dataReceived.setText(mqttMessage.toString());
+            public void messageArrived(String topic, MqttMessage mqttMessage) {
+              Toast.makeText(OneLamp.this,mqttMessage.toString(),Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -93,7 +97,7 @@ public class OneLamp extends AppCompatActivity {
         });
     }
 
-    public void onClickButton(View v) {
+     public void onClickButton(View v) {
         if (v.getId() == R.id.imageButtonSet) {
             if (on_off) {
                 on_off = false;
@@ -139,6 +143,18 @@ public class OneLamp extends AppCompatActivity {
         myMQTTClient.disconnect();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+             return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+        }
+        return  true;
+    }
 
 }

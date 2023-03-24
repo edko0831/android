@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +29,7 @@ import com.example.mydacha2.supportclass.MyListControlPoint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ListControlPointActivity extends AppCompatActivity implements MyClickListener, MyCheckedChangeListener {
     ControlPointDAO controlPointDAO;
@@ -52,6 +54,9 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_control_point);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         TextView textView = findViewById(R.id.textView_object);
         textView.setText(R.string.list_control_point_page);
@@ -121,6 +126,7 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
         return true;
     }
 
+    @RequiresApi(api = 33)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -136,6 +142,8 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
             this.finishAffinity();
         }  else if (id == R.id.myObjet) {
             startActivity(new Intent(this, MyObject.class));
+        } else if (id == android.R.id.home) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

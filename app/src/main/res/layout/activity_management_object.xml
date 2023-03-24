@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginEnd="@dimen/base_margin"
     android:layout_marginStart="@dimen/base_margin"
+    android:id="@+id/relativeLayoutManagement"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <TextView
@@ -17,20 +18,30 @@
             tools:ignore="TextViewEdits" />
 
     <HorizontalScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="12dp">
 
-        <ImageView
-            android:id="@+id/panorama"
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPanorama"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/not_picture"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            <ImageView
+                android:id="@+id/panorama"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/not_picture"
+                />
+
+        </RelativeLayout>
+
 
     </HorizontalScrollView>
-
 
 </RelativeLayout>

@@ -2,7 +2,6 @@ package com.example.mydacha2.supportclass;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.eclipse.paho.client.mqttv3.DisconnectedBufferOptions;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -97,7 +96,7 @@ public class MyMQTTClient {
 
     public void published(String message, String topic){
             mqttAndroidClient.publish(topic, message.getBytes(),0,false);
-            Toast.makeText(context,"Published Message",Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(context,"Published Message",Toast.LENGTH_SHORT).show();
     }
 
     public void disconnect(){
@@ -105,12 +104,12 @@ public class MyMQTTClient {
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Toast.makeText(context,"Disconnected!!",Toast.LENGTH_LONG).show();
+                //    Toast.makeText(context,"Disconnected!!",Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Toast.makeText(context,"Could not diconnect!!",Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(context,"Could not diconnect!!",Toast.LENGTH_LONG).show();
                 }
             });
     }

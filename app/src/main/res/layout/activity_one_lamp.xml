@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     tools:context=".myActivity.OneLamp">
 
         <TextView

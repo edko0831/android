@@ -2,14 +2,19 @@ package com.example.mydacha2.myActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -27,11 +32,15 @@ import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
 
 import java.util.List;
+import java.util.Objects;
 
 public class  ManagementObject extends AppCompatActivity implements View.OnLongClickListener, View.OnClickListener {
     private List<ObjectControlControlPoint> objectControlControlPoint;
     ImageView picture;
+    HorizontalScrollView scrollView;
     ObjectControl objectControl;
+    ObjectControlWithControlPointDAO objectControlWithControlPointDAO;
+    RelativeLayout relativeLayoutPanorama;
     Long getId;
     Long x;
     Long y;
@@ -40,6 +49,7 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                 if(result.getResultCode() == Activity.RESULT_OK){
                     Intent intent = result.getData();
                     assert intent != null;
+                    setControlPoint();
                 }
             });
     @SuppressLint("ClickableViewAccessibility")
@@ -48,6 +58,8 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_management_object);
         picture = findViewById(R.id.panorama);
+        scrollView = findViewById(R.id.scrollView);
+        relativeLayoutPanorama = findViewById(R.id.relativeLayoutPanorama);
 
         Bundle arguments = getIntent().getExtras();
         getId = arguments.getLong("id");
@@ -58,14 +70,7 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
         objectControlControlPoint = objectControlWithControlPointDAO.selectId(Math.toIntExact(getId));
         TextView textView = findViewById(R.id.textView);
         textView.setText(objectControl.name);
-        String imgUrl = objectControl.picture_url;
-        if (imgUrl != null && !imgUrl.isEmpty()) {
-            Bitmap originalBitmap = BitmapFactory.decodeFile(imgUrl);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 100;
 
-            picture.setImageBitmap(originalBitmap);
-        }
         picture.setOnClickListener(this);
         picture.setOnLongClickListener(this);
         picture.setOnTouchListener((v, event) -> {
@@ -73,6 +78,17 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
             y = (long) event.getY();
             return false;
         });
+        setControlPoint();
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void setControlPoint(){
+        AppDatabase db = App.getInstance(this).getDatabase();
+        objectControlWithControlPointDAO = db.objectControlWithControlPointDAO();
+        objectControlControlPoint = objectControlWithControlPointDAO.selectId(Math.toIntExact(getId));
+        setButtons();
     }
 
     @Override
@@ -97,10 +113,13 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
             this.finishAffinity();
         }  else if (id == R.id.myObjet) {
             startActivity(new Intent(this, MyObject.class));
+        } else if (id == android.R.id.home) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
     private Integer getControlPointByPosition(){
         int returnValue = - 1;
         for (ObjectControlControlPoint cp: objectControlControlPoint){
@@ -120,17 +139,32 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
         Integer poz = getControlPointByPosition();
         if(poz >= 0){
             ObjectControlControlPoint occp = objectControlControlPoint.get(poz);
-            Intent intent = new Intent(this, AddObjectControlWithControlPoint.class);
-            intent.putExtra("id_control", occp.controlPoint.id_control.longValue());
-            intent.putExtra("id_object_point", occp.control_point_id);
-            intent.putExtra("id_object", getId);
-            intent.putExtra("name", occp.controlPoint.name);
-            intent.putExtra("x", x);
-            intent.putExtra("y", y);
-            intent.putExtra("nameObject", objectControl.name);
-           // intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            mStartForResult.launch(intent);
-
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.ask_a_question)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.update, (dialogInterface, i) -> {
+                        Intent intent = new Intent(this, AddObjectControlWithControlPoint.class);
+                        intent.putExtra("id_control", occp.controlPoint.id_control.longValue());
+                        intent.putExtra("id_object_point", occp.control_point_id);
+                        intent.putExtra("id_object", getId);
+                        intent.putExtra("name", occp.controlPoint.name);
+                        intent.putExtra("x", x);
+                        intent.putExtra("y", y);
+                        intent.putExtra("nameObject", objectControl.name);
+                        mStartForResult.launch(intent);
+                    })
+                    .setNegativeButton(R.string.delete, (dialog, id) -> {
+                        objectControlWithControlPointDAO.deleteId(Math.toIntExact(occp.id_object_point));
+                        setControlPoint();
+                        dialog.cancel();
+                    })
+                    .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            alert.setIcon(R.drawable.icons8_question_mark_64);
+            alert.setTitle(R.string.question);
+            alert.show();
         } else {
             Intent intent = new Intent(this, AddObjectControlWithControlPoint.class);
             intent.putExtra("id_control", - 1L);
@@ -159,6 +193,39 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                 intent.putExtra("id", occp.controlPoint.id_control);
                 mStartForResult.launch(intent);
             }
+        }
+    }
+
+    private void setButtons(){
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
+        int i = 1;
+        int delta = getResources().getInteger(R.integer.deltaPosition);
+        relativeLayoutPanorama.removeAllViewsInLayout();
+        String imgUrl = objectControl.picture_url;
+        if (imgUrl != null && !imgUrl.isEmpty()) {
+            Bitmap originalBitmap = BitmapFactory.decodeFile(imgUrl);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 100;
+
+            picture.setImageBitmap(originalBitmap);
+        }
+        relativeLayoutPanorama.addView(picture);
+        for (ObjectControlControlPoint cp: objectControlControlPoint) {
+
+            TextView textView = new TextView(this);
+            textView.setId(200000 + i);
+            textView.setText(cp.controlPoint.name);
+            textView.setTextColor(Color.parseColor("#6CBF0B"));
+            textView.setTextSize(20);
+            textView.setHeight(100);
+            textView.setLayoutParams(param);
+            textView.setPadding(15, 5, 15, 5);
+            textView.setX(cp.position_x);
+            textView.setY(cp.position_y);
+
+            relativeLayoutPanorama.addView(textView);
+            i++;
         }
     }
 }
