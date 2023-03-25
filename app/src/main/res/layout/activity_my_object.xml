@@ -24,16 +24,19 @@
         android:orientation="vertical"
         android:layout_marginTop="@dimen/layout_marginTop"
         android:layout_marginBottom="@dimen/layout_marginTop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_object">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listObject"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_height"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/list_item" />
 
         <FrameLayout
             android:id="@+id/frameLayoutMyObject"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:id="@+id/frameLayoutMyObjectButton"

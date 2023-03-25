@@ -125,6 +125,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.hannesa2:paho.mqtt.android:3.3.5@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.work:work-runtime:2.8.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.startup:startup-runtime:1.1.1@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: de.hdodenhof:circleimageview:3.1.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.room:room-testing:2.5.0@aar" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="My_Dacha_2.app.main" />

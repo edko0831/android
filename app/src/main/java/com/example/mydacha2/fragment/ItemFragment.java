@@ -29,20 +29,13 @@ public class ItemFragment extends Fragment implements MyClickListener, MyChecked
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     public  List<MyListObjectControl> myListData;
-    public List<Long> getSelectObjectControl() {
-        return selectObjectControl;
-    }
-    private List<Long> selectObjectControl  = new ArrayList<>();
+    private final List<Long> selectObjectControl  = new ArrayList<>();
     MyListAdapter adapter;
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if(result.getResultCode() == Activity.RESULT_OK){
                     Intent intent = result.getData();
                     assert intent != null;
-                    long id = intent.getLongExtra("id", -1);
-                    if (id != - 1 ){
-
-                    }
                 }
             });
 
@@ -102,7 +95,4 @@ public class ItemFragment extends Fragment implements MyClickListener, MyChecked
         }
     }
 
-    public void setSelectObjectControl(List<Long> selectObject) {
-        this.selectObjectControl = selectObject;
-    }
 }

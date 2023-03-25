@@ -21,27 +21,32 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mydacha2.DAO.ObjectControlsDAO;
 import com.example.mydacha2.Entity.ObjectControl;
 import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
-import com.example.mydacha2.fragment.ItemFragment;
 import com.example.mydacha2.fragment.RoundButton;
 import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
+import com.example.mydacha2.supportclass.MyCheckedChangeListener;
+import com.example.mydacha2.supportclass.MyClickListener;
+import com.example.mydacha2.supportclass.MyListAdapter;
 import com.example.mydacha2.supportclass.MyListObjectControl;
 import com.example.mydacha2.supportclass.OnSelectedButtonListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RequiresApi(api = 33)
-public class MyObject extends AppCompatActivity implements OnSelectedButtonListener {
+public class MyObject extends AppCompatActivity implements OnSelectedButtonListener, MyClickListener, MyCheckedChangeListener {
     private static final String LOG_TAG = "MyObject";
     FrameLayout frameLayout;
-    ItemFragment itemFragment;
+    MyListAdapter adapter;
     RoundButton roundButton;
     TextView textView;
     ObjectControlsDAO objectControlsDAO;
@@ -92,11 +97,11 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
         AppDatabase db = App.getInstance(this).getDatabase();
         objectControlsDAO = db.ObjectControlsDAO();
         objectControlList = new ArrayList<>();
-      //  selectObjectControlList = new ArrayList<>();
-
         builder = new AlertDialog.Builder(this);
 
         setFragment();
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
@@ -154,12 +159,15 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
             // Toast.makeText(this, getString(R.string.object_control), Toast.LENGTH_LONG).show();
         }  else if (id == R.id.action_close) {
             this.finishAffinity();
+        }  else if (id == android.R.id.home) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     public void setFragment() {
+
         textView.setText(R.string.object_control);
 
         if(objectControlsDAO.count() != 0){
@@ -174,17 +182,12 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
             }
         }
 
-        itemFragment = new ItemFragment();
-
-        if (selectObject.size() > 0) {
-            itemFragment.setSelectObjectControl(selectObject);
-        }
-
-        itemFragment.myListData = myListData;
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayoutMyObject, itemFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listObject);
+        recyclerView.scrollToPosition(0);
+        adapter = new MyListAdapter(myListData, this, this);
+        adapter.setSelectObject(selectObject);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction2.replace(R.id.frameLayoutMyObjectButton, roundButton);
@@ -192,10 +195,13 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
         fragmentTransaction2.addToBackStack(null);
         fragmentTransaction2.commit();
     }
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 
     public void onButtonSelected(int buttonIndex) {
         if (buttonIndex == R.id.button_round_add) {
-            selectObject = itemFragment.getSelectObjectControl();
             if (selectObject.size() != 0) {
                 builder.setMessage(R.string.ask_a_question)
                         .setCancelable(false)
@@ -237,7 +243,28 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
              Intent intent = new Intent(this, AddObjectActivity.class);
              intent.putExtra("id", selectObject.get(i).longValue());
              mStartForResult.launch(intent);
-             //startActivityForResult(intent,1);
          }
      }
- }
+
+    @Override
+    public void onCheckedChange(Long position, boolean b) {
+        if(b){
+            selectObject.add(position);
+        }else {
+            selectObject.remove(position);
+        }
+    }
+
+    @Override
+    public void onItemClick(Long position) {
+        selectObject.remove(position);
+        Intent managementObjectActivity = new Intent(this, ManagementObject.class);
+        managementObjectActivity.putExtra("id", position);
+        mStartForResult.launch(managementObjectActivity);
+    }
+
+    @Override
+    public void onItemLongClick(Long position) {
+
+    }
+}

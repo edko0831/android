@@ -200,7 +200,7 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
         int i = 1;
-        int delta = getResources().getInteger(R.integer.deltaPosition);
+        int delta = getResources().getInteger(R.integer.deltaPicture);
         relativeLayoutPanorama.removeAllViewsInLayout();
         String imgUrl = objectControl.picture_url;
         if (imgUrl != null && !imgUrl.isEmpty()) {
@@ -221,8 +221,8 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
             textView.setHeight(100);
             textView.setLayoutParams(param);
             textView.setPadding(15, 5, 15, 5);
-            textView.setX(cp.position_x);
-            textView.setY(cp.position_y);
+            textView.setX(cp.position_x - delta);
+            textView.setY(cp.position_y - delta);
 
             relativeLayoutPanorama.addView(textView);
             i++;

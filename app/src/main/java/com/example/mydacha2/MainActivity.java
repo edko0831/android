@@ -225,6 +225,11 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     public void onItemLongClick(Long position) {
 
     }
