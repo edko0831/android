@@ -29,7 +29,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listObject"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/card_height"
+            android:layout_height="@dimen/list_card_height"
             app:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/list_item" />
 

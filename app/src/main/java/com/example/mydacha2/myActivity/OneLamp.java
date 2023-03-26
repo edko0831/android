@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mydacha2.ActionsJason.MySwitch;
 import com.example.mydacha2.DAO.ControlPointDAO;
 import com.example.mydacha2.Entity.ControlPoint;
 import com.example.mydacha2.R;
@@ -21,6 +22,8 @@ import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.example.mydacha2.supportclass.MyMQTTClient;
 import com.example.mydacha2.supportclass.MyMqttConnectOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
@@ -39,6 +42,7 @@ public class OneLamp extends AppCompatActivity {
     private String topic;
     private MyMQTTClient myMQTTClient;
     private MyMqttConnectOptions myMqttConnectOptions;
+    private MySwitch mySwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,15 @@ public class OneLamp extends AppCompatActivity {
         textViewPoint.setText(controlPoint.name);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mySwitch = new MySwitch();
+     //   controlPoint.executable_code = "{'on':'Мурзик', 'off':'Мурзик2', 'tameOn':-16777216,'tameOff':8}";
+
+        if(!controlPoint.executable_code.isEmpty()) {
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+
+            mySwitch = gson.fromJson(controlPoint.executable_code, MySwitch.class);
+        }
 
         topic = controlPoint.topic;
         myMqttConnectOptions = new MyMqttConnectOptions();

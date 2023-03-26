@@ -4,12 +4,12 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="65dp"
+    android:layout_height="@dimen/item_card_height"
     android:background="@drawable/icons8_show_48_1_background">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/card_height"
         android:layout_gravity="center_horizontal"
         app:cardElevation="5dp"
         app:cardBackgroundColor="@color/loginPageBackgroundColor"

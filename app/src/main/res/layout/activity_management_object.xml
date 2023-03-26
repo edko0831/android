@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginEnd="@dimen/base_margin"
     android:layout_marginStart="@dimen/base_margin"
+    android:layout_marginBottom="@dimen/base_margin"
     android:id="@+id/relativeLayoutManagement"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -30,6 +31,7 @@
             android:id="@+id/relativeLayoutPanorama"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="left"
             app:layout_constraintTop_toBottomOf="@+id/textView">
 
             <ImageView

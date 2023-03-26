@@ -28,7 +28,7 @@
                 <LinearLayout
                     android:id="@+id/fragment_properties"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/list_card_height"
                     android:orientation="vertical" />
 
         </ScrollView>
