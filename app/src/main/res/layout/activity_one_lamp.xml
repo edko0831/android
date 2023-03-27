@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    tools:context=".myActivity.OneLamp">
+    tools:context=".myActivity.OneSwitch">
 
         <TextView
             android:id="@+id/textView_point"
@@ -49,6 +49,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonSet" />
+
 </LinearLayout>
 
 

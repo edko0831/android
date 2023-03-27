@@ -22,8 +22,11 @@ public interface ObjectControlsDAO {
     void insert(ObjectControl items);
     @Update
     void update(ObjectControl items);
+
     @Delete
-    void delete(ObjectControl item);
+    default void delete(ObjectControl item) {
+
+    }
 
     @Query("DELETE FROM object_control Where id = :id_object")
     void deleteId(int id_object);

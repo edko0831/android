@@ -186,11 +186,18 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
         if(poz >= 0){
             ObjectControlControlPoint occp = objectControlControlPoint.get(poz);
             String type_point = occp.controlPoint.type_point;
-            String l = getResources().getString(R.string.lamp);
-            if(type_point.equals(l)){
-              //  startActivity(new Intent(this, OneLamp.class));
-                Intent intent = new Intent(this, OneLamp.class);
+
+            if(type_point.equals(getResources().getString(R.string.lamp))){
+                Intent intent = new Intent(this, OneSwitch.class);
                 intent.putExtra("id", occp.controlPoint.id_control);
+                intent.putExtra("on", R.drawable.lamp_on);
+                intent.putExtra("off", R.drawable.lamp_off);
+                mStartForResult.launch(intent);
+            } else if(type_point.equals(getResources().getString(R.string.socket))){
+                Intent intent = new Intent(this, OneSwitch.class);
+                intent.putExtra("id", occp.controlPoint.id_control);
+                intent.putExtra("on", R.mipmap.elektricheskaya_rozetka_foreground);
+                intent.putExtra("off", R.mipmap.elektricheskaya_rozetka_foreground);
                 mStartForResult.launch(intent);
             }
         }

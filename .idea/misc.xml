@@ -8,6 +8,7 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/button_main.xml" value="0.109" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/button_main_shape.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/button_main_shape_pressed.xml" value="0.109" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/clock.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/eye_icon_background.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/eye_icon_foreground.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/free-icon-font-eye-3917052_24.xml" value="0.1" />
@@ -15,16 +16,21 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/free_icon_font_eye_3917052_25.xml" value="0.12" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/free_icon_font_eye_3917104_24.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/home_icon_background.xml" value="0.105" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/ic__075650.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/ic_baseline_remove_red_eye_24.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/ic_eye_24.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/ic_launcher1_background.xml" value="0.1" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/ic_launcher1_foreground.xml" value="0.184" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_gear_94_background.xml" value="0.105" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_not_show_48_1_background.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_object_controls_94_background.xml" value="0.1" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_off_94_background.xml" value="0.184" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_on_94_background.xml" value="0.184" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_plus_94_2_background.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_plus_94_background.xml" value="0.1" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_search_satellites_94_background.xml" value="0.184" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_show_48_1_background.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/icons8_three_dots_94_background.xml" value="0.105" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/lamp_off_background.xml" value="0.1" />
@@ -83,6 +89,7 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/menu_my_object.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/menu_my_object2.xml" value="0.1796875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/menu_my_setting.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/mipmap-anydpi-v26/elektricheskaya_rozetka.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/mipmap-anydpi-v26/eye_icon.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/mipmap-anydpi-v26/eye_icon_round.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/mipmap-anydpi-v26/home_icon_round.xml" value="0.1" />

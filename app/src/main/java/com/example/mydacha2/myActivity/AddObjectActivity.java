@@ -117,6 +117,7 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
         name.addTextChangedListener(textWatcher);
 
         LinearLayout linearButton = findViewById(R.id.linearLayoutButton);
+        @SuppressLint("InflateParams")
         View viewButton = getLayoutInflater().inflate(R.layout.buttonlayout, null);
         linearButton.addView(viewButton);
 

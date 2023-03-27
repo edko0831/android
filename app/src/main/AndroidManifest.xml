@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name=".myActivity.OneLamp"
+            android:name=".myActivity.OneSwitch"
             android:exported="false" />
         <activity
             android:name=".myActivity.ListControlPointActivity"

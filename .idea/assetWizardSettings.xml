@@ -8,6 +8,17 @@
             <PersistentState>
               <option name="children">
                 <map>
+                  <entry key="confirmationStep">
+                    <value>
+                      <PersistentState>
+                        <option name="values">
+                          <map>
+                            <entry key="resourceDirectory" value="debug" />
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
                   <entry key="imageAssetPanel">
                     <value>
                       <PersistentState>
@@ -81,6 +92,7 @@
                                                 <entry key="color" value="f60ebc" />
                                                 <entry key="imagePath" value="C:\Users\edko\AppData\Local\Temp\baseline_timer_24.xml" />
                                                 <entry key="scalingPercent" value="106" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -103,8 +115,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="E:\Загрузки Firefox\icons8ru\icons8_on_94.png" />
-                                                <entry key="scalingPercent" value="96" />
+                                                <entry key="imagePath" value="E:\Загрузки Firefox\icons8ru\element.jpg" />
+                                                <entry key="scalingPercent" value="98" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -117,6 +129,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -128,6 +141,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -137,7 +151,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="icons8_on_94" />
+                                      <entry key="outputName" value="elements" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -341,8 +355,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_eye_24" />
-                            <entry key="sourceFile" value="C:\Users\edko\AndroidStudioProjects\MyDacha2" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="autoMirrored" value="true" />
+                            <entry key="outputName" value="ic__075650" />
+                            <entry key="sourceFile" value="F:\Дача\3075650.svg" />
                           </map>
                         </option>
                       </PersistentState>

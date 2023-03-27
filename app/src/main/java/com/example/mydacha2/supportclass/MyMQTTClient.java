@@ -20,11 +20,9 @@ import info.mqtt.android.service.MqttAndroidClient;
 public class MyMQTTClient {
     public MqttAndroidClient mqttAndroidClient;
     private final MqttConnectOptions mqttConnectOptions;
-    private final Context context;
     private final String subscriptionTopic;
 
     public MyMQTTClient(Context context, MyMqttConnectOptions myMqttConnectOptions){
-        this.context = context;
         mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);

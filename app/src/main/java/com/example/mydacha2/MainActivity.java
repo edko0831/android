@@ -221,6 +221,9 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
         } else if (position == 1) {
             Intent intent1 = new Intent(this, MyObject.class);
             startActivity(intent1);
+        } else if (position == 4) {
+            Intent intent1 = new Intent(this, ListControlPointActivity.class);
+            startActivity(intent1);
         }
     }
 
@@ -239,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
                 new MyListMain(1L, getString(R.string.object_control), R.mipmap.icons8_object_controls_94_foreground),
                 new MyListMain(2L, getString(R.string.connectWiFi), R.mipmap.icons8_search_satellites_94_foreground),
                 new MyListMain(3L, getString(R.string.action_settings), R.mipmap.icons8_gear_94_foreground),
-    //            new MyListMain(4L, "Dialer", android.R.drawable.ic_dialog_dialer),
+                new MyListMain(4L, getString(R.string.action_point), R.mipmap.elements_foreground),
     //            new MyListMain(5L, "Alert", android.R.drawable.ic_dialog_alert),
     //            new MyListMain(6L, "Map", android.R.drawable.ic_dialog_map)
         };
