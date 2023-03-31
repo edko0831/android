@@ -22,6 +22,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mydacha2.DAO.ObjectControlWithControlPointDAO;
 import com.example.mydacha2.DAO.ObjectControlsDAO;
@@ -34,15 +35,11 @@ import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.example.mydacha2.supportclass.MyListTypePoint;
 import com.example.mydacha2.supportclass.weathers.MyWeather;
-
-import org.reactivestreams.Subscription;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Objects;
 
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 public class  ManagementObject extends AppCompatActivity implements View.OnLongClickListener, View.OnClickListener {
     private List<ObjectControlControlPoint> objectControlControlPoint;
@@ -250,31 +247,29 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
             i++;
             String name = MyListTypePoint.getListTypePoint(this)[3].getPoint();
             if (cp.controlPoint.type_point.equals(name)) {
-
-                Observer<List<WeatherDay>> subscriber = new Observer<List<WeatherDay>>() {
-                     @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
+                MyWeather mViewModel;
+                mViewModel = new ViewModelProvider(this).get(MyWeather.class);
+                mViewModel.getText().observe(this, weatherDayList -> {
+                    WeatherDay weatherDay = weatherDayList.get(0);
+                    String temper = weatherDay.temperature.metric.Value + " " + weatherDay.temperature.metric.unit;
+                    textView.setText(temper);
+                    String icon;
+                    if(weatherDay.weatherIcon.length() == 1){
+                         icon = "0" + weatherDay.weatherIcon;
+                    } else {
+                         icon =  weatherDay.weatherIcon;
                     }
+                    String imageUrl ="https://developer.accuweather.com/sites/default/files/" + icon + "-s.png";
+                    ImageView imageView = new ImageView(this);
+                    imageView.setX(cp.position_x - delta);
+                    imageView.setY(cp.position_y + delta);
 
-                    @Override
-                    public void onNext(List<WeatherDay> weatherDayList) {
-                        WeatherDay weatherDay = weatherDayList.get(0);
-                        String temper = weatherDay.temperature.metric.Value + " " + weatherDay.temperature.metric.unit;
-                        textView.setText(temper);
-                    }
+                    Picasso.get().load(imageUrl).into(imageView);
+                    relativeLayoutPanorama.addView(imageView);
+                });
 
-                    @Override
-                    public void onError(Throwable e) {
-                        // Обработка ошибки
-                    }
+                MyWeather.getClient("322722");
 
-                    @Override
-                    public void onComplete() {
-                        // Завершение потока данных
-                    }
-                };
-                MyWeather.getClient("322722", subscriber);
             }
 
             relativeLayoutPanorama.addView(textView);
