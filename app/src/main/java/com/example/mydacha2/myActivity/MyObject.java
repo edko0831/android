@@ -182,7 +182,7 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
             }
         }
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listObject);
+        RecyclerView recyclerView = findViewById(R.id.listObject);
         recyclerView.scrollToPosition(0);
         adapter = new MyListAdapter(myListData, this, this);
         adapter.setSelectObject(selectObject);

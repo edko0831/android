@@ -31,6 +31,7 @@
         android:roundIcon="@drawable/point_mac_logo_12332"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyDacha2"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
 

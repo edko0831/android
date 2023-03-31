@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,15 +25,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mydacha2.DAO.ObjectControlWithControlPointDAO;
 import com.example.mydacha2.DAO.ObjectControlsDAO;
+import com.example.mydacha2.DataClasses.WeatherDay;
 import com.example.mydacha2.Entity.ObjectControl;
 import com.example.mydacha2.Entity.ObjectControlControlPoint;
 import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
 import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
+import com.example.mydacha2.supportclass.MyListTypePoint;
+import com.example.mydacha2.supportclass.weathers.MyWeather;
+
+import org.reactivestreams.Subscription;
 
 import java.util.List;
 import java.util.Objects;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class  ManagementObject extends AppCompatActivity implements View.OnLongClickListener, View.OnClickListener {
     private List<ObjectControlControlPoint> objectControlControlPoint;
@@ -61,6 +71,9 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
         scrollView = findViewById(R.id.scrollView);
         relativeLayoutPanorama = findViewById(R.id.relativeLayoutPanorama);
 
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
         Bundle arguments = getIntent().getExtras();
         getId = arguments.getLong("id");
         AppDatabase db = App.getInstance(this).getDatabase();
@@ -82,6 +95,9 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void setControlPoint(){
@@ -231,8 +247,37 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
             textView.setX(cp.position_x - delta);
             textView.setY(cp.position_y - delta);
 
-            relativeLayoutPanorama.addView(textView);
             i++;
+            String name = MyListTypePoint.getListTypePoint(this)[3].getPoint();
+            if (cp.controlPoint.type_point.equals(name)) {
+
+                Observer<List<WeatherDay>> subscriber = new Observer<List<WeatherDay>>() {
+                     @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<WeatherDay> weatherDayList) {
+                        WeatherDay weatherDay = weatherDayList.get(0);
+                        String temper = weatherDay.temperature.metric.Value + " " + weatherDay.temperature.metric.unit;
+                        textView.setText(temper);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // Обработка ошибки
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // Завершение потока данных
+                    }
+                };
+                MyWeather.getClient("322722", subscriber);
+            }
+
+            relativeLayoutPanorama.addView(textView);
         }
     }
 }
