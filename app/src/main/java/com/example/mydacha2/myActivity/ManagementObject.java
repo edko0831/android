@@ -22,11 +22,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mydacha2.DAO.ObjectControlWithControlPointDAO;
 import com.example.mydacha2.DAO.ObjectControlsDAO;
-import com.example.mydacha2.DataClasses.WeatherDay;
 import com.example.mydacha2.Entity.ObjectControl;
 import com.example.mydacha2.Entity.ObjectControlControlPoint;
 import com.example.mydacha2.MainActivity;
@@ -34,8 +32,6 @@ import com.example.mydacha2.R;
 import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.example.mydacha2.supportclass.MyListTypePoint;
-import com.example.mydacha2.supportclass.weathers.MyWeather;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Objects;
@@ -246,31 +242,6 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
 
             i++;
             String name = MyListTypePoint.getListTypePoint(this)[3].getPoint();
-            if (cp.controlPoint.type_point.equals(name)) {
-                MyWeather mViewModel;
-                mViewModel = new ViewModelProvider(this).get(MyWeather.class);
-                mViewModel.getText().observe(this, weatherDayList -> {
-                    WeatherDay weatherDay = weatherDayList.get(0);
-                    String temper = weatherDay.temperature.metric.Value + " " + weatherDay.temperature.metric.unit;
-                    textView.setText(temper);
-                    String icon;
-                    if(weatherDay.weatherIcon.length() == 1){
-                         icon = "0" + weatherDay.weatherIcon;
-                    } else {
-                         icon =  weatherDay.weatherIcon;
-                    }
-                    String imageUrl ="https://developer.accuweather.com/sites/default/files/" + icon + "-s.png";
-                    ImageView imageView = new ImageView(this);
-                    imageView.setX(cp.position_x - delta);
-                    imageView.setY(cp.position_y + delta);
-
-                    Picasso.get().load(imageUrl).into(imageView);
-                    relativeLayoutPanorama.addView(imageView);
-                });
-
-                MyWeather.getClient("322722");
-
-            }
 
             relativeLayoutPanorama.addView(textView);
         }

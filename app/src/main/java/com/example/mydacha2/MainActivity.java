@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -17,13 +20,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.mydacha2.DataClasses.City;
+import com.example.mydacha2.DataClasses.WeatherDay;
 import com.example.mydacha2.fragment.MainActivityNewFragment;
 import com.example.mydacha2.myActivity.ConnectWiFi;
 import com.example.mydacha2.myActivity.ListControlPointActivity;
@@ -31,24 +39,62 @@ import com.example.mydacha2.myActivity.MyObject;
 import com.example.mydacha2.myActivity.SettingActivity;
 import com.example.mydacha2.supportclass.MyClickListener;
 import com.example.mydacha2.supportclass.MyListMain;
+import com.example.mydacha2.supportclass.weathers.MyLocations;
+import com.example.mydacha2.supportclass.weathers.MyWeather;
+import com.squareup.picasso.Picasso;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 
 public class MainActivity extends AppCompatActivity implements MyClickListener {
     private static final int PERMISSIONS_REQUEST_CODE = 1234;
+    private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1; // in Meters
+    private static final long MINIMUM_TIME_BETWEEN_UPDATES = 1000; // in Milliseconds
+    protected LocationManager locationManager;
+    ImageView imageView2;
+    TextView textViewWeather;
+    TextView textCity;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                MINIMUM_TIME_BETWEEN_UPDATES,
+                MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
+                new MyLocationListener()
+        );
+        locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                MINIMUM_TIME_BETWEEN_UPDATES,
+                MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
+                new MyLocationListener());
 
         setContentView(R.layout.activity_main_new);
         MainActivityNewFragment mainActivityNewFragment = new MainActivityNewFragment(this, setMyListMain());
 
         TextView textView = findViewById(R.id.textView_object);
+        imageView2 = findViewById(R.id.imageView2);
+        textViewWeather = findViewById(R.id.textView5);
+        textCity = findViewById(R.id.textView6);
+
         textView.setText(R.string.main_page);
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_properties, mainActivityNewFragment);
         fragmentTransaction.addToBackStack(null);
@@ -246,5 +292,71 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
     //            new MyListMain(5L, "Alert", android.R.drawable.ic_dialog_alert),
     //            new MyListMain(6L, "Map", android.R.drawable.ic_dialog_map)
         };
+    }
+
+    private class MyLocationListener implements LocationListener {
+
+        public void onLocationChanged(Location location) {
+            if (location == null)
+                return;
+            BigDecimal latitude = new BigDecimal(location.getLatitude())
+                                   .setScale(2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal longitude = new BigDecimal(location.getLongitude())
+                                          .setScale(2, BigDecimal.ROUND_HALF_UP);
+            getWeather("" + latitude.toString() + "," + longitude.toString());
+          //  Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+        }
+
+        public void onStatusChanged(String s, int i, Bundle b) {
+            Toast.makeText(MainActivity.this, "Provider status changed",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        public void onProviderDisabled(String s) {
+            Toast.makeText(MainActivity.this,
+                    "Provider disabled by the user. GPS turned off",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        public void onProviderEnabled(String s) {
+            Toast.makeText(MainActivity.this,
+                    "Provider enabled by the user. GPS turned on",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        private void  getWeather(String q){
+            MyLocations myLocations;
+
+            myLocations = new ViewModelProvider(MainActivity.this).get(MyLocations.class);
+            myLocations.getText().observe(MainActivity.this, myCity ->{
+                City city = myCity.get(0);
+                textCity.setText(city.localizedName);
+
+                MyWeather mViewModel;
+                mViewModel = new ViewModelProvider(MainActivity.this).get(MyWeather.class);
+                mViewModel.getText().observe(MainActivity.this, weatherDayList -> {
+                    WeatherDay weatherDay = weatherDayList.get(0);
+                    String temper = weatherDay.temperature.metric.Value + "\u00B0" + weatherDay.temperature.metric.unit;
+                    textViewWeather.setText(temper);
+                    String icon;
+                    if (weatherDay.weatherIcon.length() == 1) {
+                        icon = "0" + weatherDay.weatherIcon;
+                    } else {
+                        icon = weatherDay.weatherIcon;
+                    }
+                    String imageUrl = "https://developer.accuweather.com/sites/default/files/" + icon + "-s.png";
+
+                    Picasso.get().load(imageUrl).into(imageView2);
+
+
+                });
+                MyWeather.getClient(city.key);
+            });
+           MyLocations.getLocations(q);
+
+
+        }
+
+
     }
 }

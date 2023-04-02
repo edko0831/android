@@ -115,9 +115,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="E:\Загрузки Firefox\icons8ru\element.jpg" />
+                                                <entry key="imagePath" value="C:\Users\edko\AndroidStudioProjects\MyDacha2\app\src\main\res\Images\pogoda.jpg" />
                                                 <entry key="scalingPercent" value="98" />
-                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -151,7 +150,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="elements" />
+                                      <entry key="outputName" value="pogoda" />
                                     </map>
                                   </option>
                                 </PersistentState>

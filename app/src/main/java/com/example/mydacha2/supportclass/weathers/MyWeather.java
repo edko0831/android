@@ -36,9 +36,6 @@ public class MyWeather extends ViewModel {
 
 //            OkHttpClient okHttpClient = new OkHttpClient.Builder().readTimeout(300, TimeUnit.SECONDS).addInterceptor(new BasicAuthInterceptor(user, pwd)).build();
 
-        // todo ОПРЕДЕЛЕНИЕ города по GPS
-        // http://dataservice.accuweather.com/locations/v1/search.json?q=48.46,35.04&apikey=iG0jvsX5oOAQZi0huyOOUG3mt0VOLZ3j
-
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("http://dataservice.accuweather.com/currentconditions/v1/")
                     .addConverterFactory(GsonConverterFactory.create())

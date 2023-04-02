@@ -96,6 +96,7 @@
     <string name="add_point">Дабавить элемент</string>
     <string name="topic">Topic</string>
     <string name="port">Порт</string>
+    <string name="weather">Погода</string>
 
 
 </resources>
