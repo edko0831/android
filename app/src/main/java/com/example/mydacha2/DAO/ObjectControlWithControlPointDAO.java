@@ -28,8 +28,16 @@ public interface ObjectControlWithControlPointDAO {
     @Delete
     void delete(ObjectControlWithControlPoint item);
 
-    @Query("DELETE FROM object_control_with_control_point Where id_object_point = :id_object_point")
+    @Query("DELETE FROM object_control_with_control_point " +
+            " Where id_object_point = :id_object_point")
     void deleteId(int id_object_point);
+
+    @Query("Update object_control_with_control_point Set " +
+            " control_point_id = :control_point_id," +
+            " position_x = :position_x," +
+            " position_y = :position_y" +
+            " Where id_object_point = :id_object_point")
+    void updateId( long control_point_id, long position_x, long position_y, long id_object_point);
 
     @Query("Select count(*) From object_control_with_control_point ")
     int count();

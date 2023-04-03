@@ -180,8 +180,8 @@ public class AddObjectControlWithControlPoint extends AppCompatActivity implemen
             Intent intentResult = new Intent();
             setResult(RESULT_OK, intentResult);
         } else {
-            objectControlWithControlPointDAO.update(objectControlWithControlPoint);
-         }
+            objectControlWithControlPointDAO.updateId(controlPoint.id_control,x, y, id_object_point);
+        }
 
         return true;
     }

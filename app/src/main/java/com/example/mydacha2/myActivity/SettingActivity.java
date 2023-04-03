@@ -1,5 +1,6 @@
 package com.example.mydacha2.myActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,11 +23,13 @@ import com.example.mydacha2.R;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener{
     private CheckBox checkBox;
+    private CheckBox checkCity;
     private EditText editTextPassword;
     private EditText editTexIP;
     private EditText editPort;
     private EditText editTextWifiNet;
     private EditText editUserName;
+    private EditText editCity;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -35,7 +38,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_setting2);
 
         LinearLayout linearButton = findViewById(R.id.linearLayoutButton);
-        View viewButton = getLayoutInflater().inflate(R.layout.buttonlayout, null);
+        @SuppressLint("InflateParams") View viewButton = getLayoutInflater().inflate(R.layout.buttonlayout, null);
         linearButton.addView(viewButton);
 
         Button buttonSave = findViewById(R.id.buttonSave);
@@ -45,10 +48,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         editTextWifiNet = findViewById(R.id.editText_wifi_net);
         editUserName = findViewById(R.id.editUserName);
         editPort = findViewById(R.id.editPort);
+        editCity = findViewById(R.id.editTextCity);
 
         buttonSave.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
         checkBox = findViewById(R.id.onpass);
+        checkCity = findViewById(R.id.checkCity);
 
         TextView textView = findViewById(R.id.textView_object);
         textView.setText(R.string.setting_page);
@@ -143,7 +148,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         editor.putString("port", editPort.getText().toString());
-
+        editor.putString("city", editCity.getText().toString());
+        editor.putBoolean("checkCity", checkCity.isChecked());
         editor.apply();
         return true;
     }
@@ -159,11 +165,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         String userNodeServer = sharedPreferences.getString("userNodeServer", "");
         String passwordNodeServer = sharedPreferences.getString("passwordNodeServer", "");
         String port = sharedPreferences.getString("port", "");
+        String city = sharedPreferences.getString("city", "");
+        boolean mCheckCity = sharedPreferences.getBoolean("checkCity", false);
 
         editTextWifiNet.setText(nameNodeServer);
         editTexIP.setText(ipNodeServer);
         editPort.setText(port);
         editUserName.setText(userNodeServer);
         editTextPassword.setText(passwordNodeServer);
+        editCity.setText(city);
+        checkCity.setChecked(mCheckCity);
     }
 }

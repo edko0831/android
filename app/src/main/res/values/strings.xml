@@ -97,6 +97,9 @@
     <string name="topic">Topic</string>
     <string name="port">Порт</string>
     <string name="weather">Погода</string>
+    <string name="kode_city">Код города</string>
+    <string name="city">Днепр</string>
+
 
 
 </resources>

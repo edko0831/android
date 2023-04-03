@@ -53,9 +53,12 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
     private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1; // in Meters
     private static final long MINIMUM_TIME_BETWEEN_UPDATES = 1000; // in Milliseconds
     protected LocationManager locationManager;
+    private String myLocation = "";
     ImageView imageView2;
     TextView textViewWeather;
     TextView textCity;
+    String city;
+    boolean mCheckCity;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -84,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
                 MINIMUM_TIME_BETWEEN_UPDATES,
                 MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
                 new MyLocationListener());
+
+        SharedPreferences sharedPreferences =  getSharedPreferences("myDacha", MODE_PRIVATE);
+        city = sharedPreferences.getString("city", "");
+        mCheckCity = sharedPreferences.getBoolean("checkCity", false);
 
         setContentView(R.layout.activity_main_new);
         MainActivityNewFragment mainActivityNewFragment = new MainActivityNewFragment(this, setMyListMain());
@@ -296,14 +303,21 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
 
     private class MyLocationListener implements LocationListener {
 
-        public void onLocationChanged(Location location) {
+         public void onLocationChanged(Location location) {
             if (location == null)
                 return;
             BigDecimal latitude = new BigDecimal(location.getLatitude())
                                    .setScale(2, BigDecimal.ROUND_HALF_UP);
             BigDecimal longitude = new BigDecimal(location.getLongitude())
                                           .setScale(2, BigDecimal.ROUND_HALF_UP);
-            getWeather("" + latitude.toString() + "," + longitude.toString());
+
+            if(!mCheckCity && city.equals("")) {
+                if (myLocation.equals("")) {
+                    getLocation("" + latitude.toString() + "," + longitude.toString());
+                }
+            } else {
+                getWeather(city);
+            }
           //  Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
         }
 
@@ -324,14 +338,22 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
                     Toast.LENGTH_LONG).show();
         }
 
-        private void  getWeather(String q){
+        private void  getLocation(String q){
             MyLocations myLocations;
 
             myLocations = new ViewModelProvider(MainActivity.this).get(MyLocations.class);
             myLocations.getText().observe(MainActivity.this, myCity ->{
                 City city = myCity.get(0);
-                textCity.setText(city.localizedName);
+                if( !myLocation.equals(city.key)) {
+                    textCity.setText(city.localizedName);
+                    myLocation = city.key;
+                    getWeather(city.key);
+                }
+            });
+           MyLocations.getLocations(q);
+        }
 
+        private void  getWeather(String cityKey){
                 MyWeather mViewModel;
                 mViewModel = new ViewModelProvider(MainActivity.this).get(MyWeather.class);
                 mViewModel.getText().observe(MainActivity.this, weatherDayList -> {
@@ -350,13 +372,8 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
 
 
                 });
-                MyWeather.getClient(city.key);
-            });
-           MyLocations.getLocations(q);
-
-
+                MyWeather.getClient(cityKey);
         }
-
 
     }
 }

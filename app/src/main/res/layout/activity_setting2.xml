@@ -113,6 +113,45 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextCity"
+                    android:layout_marginTop="3dp">
+
+                    <EditText
+                        android:id="@+id/editTextCity"
+                        android:layout_width="223dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:hint="@string/kode_city"
+                        android:inputType="text"
+                        android:minHeight="48dp"
+                        android:singleLine="true"
+                        android:textColorHint="#546E7A"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/checkCity"
+                    android:layout_width="73dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:accessibilityLiveRegion="polite"
+                    android:checked="false"
+                    android:gravity="left|bottom"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/linearLayout4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -150,9 +189,9 @@
                     android:checked="false"
                     android:gravity="left|top"
                     tools:ignore="TouchTargetSizeCheck" />
-
-
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:id="@+id/linearLayoutButton"
