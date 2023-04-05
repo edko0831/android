@@ -155,7 +155,7 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                     .setPositiveButton(R.string.update, (dialogInterface, i) -> {
                         Intent intent = new Intent(this, AddObjectControlWithControlPoint.class);
                         intent.putExtra("id_control", occp.controlPoint.id_control.longValue());
-                        intent.putExtra("id_object_point", occp.control_point_id);
+                        intent.putExtra("id_object_point", occp.point_id);
                         intent.putExtra("id_object", getId);
                         intent.putExtra("name", occp.controlPoint.name);
                         intent.putExtra("x", x);
@@ -201,15 +201,23 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                 intent.putExtra("id", occp.controlPoint.id_control);
                 intent.putExtra("on", R.drawable.lamp_on);
                 intent.putExtra("off", R.drawable.lamp_off);
+                intent.putExtra("basicTopic", objectControl.basicTopic);
                 mStartForResult.launch(intent);
             } else if(type_point.equals(getResources().getString(R.string.socket))){
                 Intent intent = new Intent(this, OneSwitch.class);
                 intent.putExtra("id", occp.controlPoint.id_control);
                 intent.putExtra("on", R.mipmap.elektricheskaya_rozetka_foreground);
                 intent.putExtra("off", R.mipmap.elektricheskaya_rozetka_foreground);
+                intent.putExtra("basicTopic", objectControl.basicTopic);
+                mStartForResult.launch(intent);
+            } else if(type_point.equals(getResources().getString(R.string.two_lamp))){
+                Intent intent = new Intent(this, TwoSwitch.class);
+                intent.putExtra("id", occp.controlPoint.id_control);
+                intent.putExtra("basicTopic", objectControl.basicTopic);
                 mStartForResult.launch(intent);
             }
         }
+
     }
 
     private void setButtons(){

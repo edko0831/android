@@ -52,6 +52,8 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
     EditText name;
     EditText description;
     EditText picture;
+    EditText basicTopic;
+
     private ObjectControl objectControl = new ObjectControl();
     ObjectControlsDAO objectControlsDAO;
     TextView textView;
@@ -113,6 +115,7 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
         textView = findViewById(R.id.textView_object);
         textView.setText(R.string.object_control_add);
         textName = findViewById(R.id.text_user_name);
+        basicTopic = findViewById(R.id.textEdit_basicTopic);
 
         name.addTextChangedListener(textWatcher);
 
@@ -145,6 +148,7 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
         name.setText(objectControl.name);
         description.setText(objectControl.description);
         picture.setText(objectControl.picture_url);
+        basicTopic.setText(objectControl.basicTopic);
     }
 
     @Override
@@ -196,6 +200,7 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
         objectControl.name = name.getText().toString();
         objectControl.description = description.getText().toString();
         objectControl.picture_url = picture.getText().toString();
+        objectControl.basicTopic = basicTopic.getText().toString();
 
         if (objectControl.id_object == null) {
             objectControlsDAO.insert(objectControl);
@@ -221,8 +226,6 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     MY_REQUEST_CODE_PERMISSION
             );
-
-         //   return;
         }
         doBrowseFile();
     }

@@ -10,7 +10,7 @@ import com.example.mydacha2.roomdatabase.AppDatabase;
 public class App {
 
     public static App instance;
-    String DB_NAME = "db_myDacha";
+    String DB_NAME = "db_myDachaNew";
     private final AppDatabase database;
 
     private App(Context context) {
@@ -21,7 +21,7 @@ public class App {
         //                      AppDatabase.MIGRATION_3_4,
         //                      AppDatabase.MIGRATION_4_5)
                .allowMainThreadQueries()
-               .fallbackToDestructiveMigration()
+        //       .fallbackToDestructiveMigration()
                .build();
     }
 

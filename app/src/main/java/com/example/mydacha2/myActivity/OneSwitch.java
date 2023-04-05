@@ -62,6 +62,8 @@ public class OneSwitch extends AppCompatActivity {
         long getId = arguments.getLong("id");
         my_on  = arguments.getInt("on");
         my_off  = arguments.getInt("off");
+        String basicTopic = arguments.getString("basicTopic", "");
+
         AppDatabase db = App.getInstance(this).getDatabase();
         ControlPointDAO controlPointDAO = db.controlPointDAO();
         ControlPoint controlPoint = controlPointDAO.selectId((int) getId);
@@ -77,7 +79,7 @@ public class OneSwitch extends AppCompatActivity {
             mySwitch = gson.fromJson(controlPoint.executable_code, MySwitch.class);
         }
 
-        topic = controlPoint.topic;
+        topic = basicTopic + controlPoint.topic;
         myMqttConnectOptions = new MyMqttConnectOptions();
         myMqttConnectOptions.setSubscriptionTopic(controlPoint.topic);
         String serverURI = "tcp://" + sharedPreferences.getString("ipNodeServer", "") + ":" + sharedPreferences.getString("port", "");

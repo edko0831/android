@@ -14,6 +14,7 @@ public class ObjectControl {
     public String description;
     public Integer picture_id;
     public String picture_url;
+    public String basicTopic;
 
 }
 

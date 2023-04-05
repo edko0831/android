@@ -99,7 +99,7 @@
     <string name="weather">Погода</string>
     <string name="kode_city">Код города</string>
     <string name="city">Днепр</string>
-
+    <string name="basicTopic">Базовый topic</string>
 
 
 </resources>

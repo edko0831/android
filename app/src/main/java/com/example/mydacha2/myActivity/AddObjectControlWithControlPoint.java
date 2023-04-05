@@ -170,8 +170,8 @@ public class AddObjectControlWithControlPoint extends AppCompatActivity implemen
         ControlPoint controlPoint = controlPointDAO.selectName(cp);
 
         objectControlWithControlPoint.id_object_point = id_object_point;
-        objectControlWithControlPoint.object_control_id = id_object;
-        objectControlWithControlPoint.control_point_id = controlPoint.id_control;
+        objectControlWithControlPoint.object_id = id_object;
+        objectControlWithControlPoint.point_id = controlPoint.id_control;
         objectControlWithControlPoint.position_x = x;
         objectControlWithControlPoint.position_y = y;
 

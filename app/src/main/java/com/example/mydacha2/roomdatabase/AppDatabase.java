@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 @Database(entities = {
         ControlPoint.class,
         ObjectControl.class,
-        ObjectControlWithControlPoint.class}, version = 6, exportSchema = false)
+        ObjectControlWithControlPoint.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase  extends RoomDatabase {
 
     public abstract ControlPointDAO controlPointDAO();

@@ -16,8 +16,8 @@ import java.util.List;
 public interface ObjectControlWithControlPointDAO {
 
     @Transaction
-    @Query(value = "Select * From object_control_with_control_point a " +
-                      " Inner Join control_point c on a.control_point_id = c.id_control Where a.object_control_id = :id_object")
+    @Query(value = "Select * From object_with_point a " +
+                      " Inner Join control_point c on a.point_id = c.id_control Where a.object_id = :id_object")
     List<ObjectControlControlPoint> selectId(int id_object);
 
     @Insert
@@ -28,17 +28,17 @@ public interface ObjectControlWithControlPointDAO {
     @Delete
     void delete(ObjectControlWithControlPoint item);
 
-    @Query("DELETE FROM object_control_with_control_point " +
+    @Query("DELETE FROM object_with_point " +
             " Where id_object_point = :id_object_point")
     void deleteId(int id_object_point);
 
-    @Query("Update object_control_with_control_point Set " +
-            " control_point_id = :control_point_id," +
+    @Query("UPDATE object_with_point SET " +
+            " point_id = :point_id," +
             " position_x = :position_x," +
             " position_y = :position_y" +
-            " Where id_object_point = :id_object_point")
-    void updateId( long control_point_id, long position_x, long position_y, long id_object_point);
+            " WHERE id_object_point = :id_object_point")
+    void updateId( long point_id, long position_x, long position_y, long id_object_point);
 
-    @Query("Select count(*) From object_control_with_control_point ")
+    @Query("Select count(*) From object_with_point ")
     int count();
 }
