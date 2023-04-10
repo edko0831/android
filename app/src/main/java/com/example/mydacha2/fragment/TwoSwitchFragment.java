@@ -88,7 +88,7 @@ public class TwoSwitchFragment extends Fragment {
             myTwoSwitch = gson.fromJson(controlPoint.executable_code, MyTwoSwitch.class);
         }
 
-        topic = controlPoint.topic;
+
         myMqttConnectOptions = new MyMqttConnectOptions();
         myMqttConnectOptions.setSubscriptionTopic(controlPoint.topic);
         Bundle bundle = this.getArguments();
@@ -97,9 +97,10 @@ public class TwoSwitchFragment extends Fragment {
         String basicTopic = bundle.getString("basicTopic", "");
         myMqttConnectOptions.setServerUri(serverURI);
         myMqttConnectOptions.setUsername(bundle.getString("userNodeServer", ""));
-        myMqttConnectOptions.setPassword(bundle.getString("passwordNodeServer", ""));
+        myMqttConnectOptions.setPassword(bundle.getString("passwordMQTT", ""));
 
-        myMqttConnectOptions.setSubscriptionTopic(basicTopic + topic);
+        topic = basicTopic + controlPoint.topic;
+        myMqttConnectOptions.setSubscriptionTopic(topic);
 
         startMqtt();
     }
@@ -147,7 +148,8 @@ public class TwoSwitchFragment extends Fragment {
                 }
                 setImage1(action);
 
-                myMQTTClient.published(action, topic);
+                String messege = "{\"on\"=\"on\"}";
+                myMQTTClient.published(messege, topic);
                 if (null != myTwoSwitch.tameOff){
                     long set_timer = myTwoSwitch.tameOff * 64000;
                     long step_timer = getResources().getInteger(R.integer.step_timer);
@@ -168,7 +170,8 @@ public class TwoSwitchFragment extends Fragment {
                                 action ="off";
                             }
                             setImage1(action);
-                            myMQTTClient.published(action, topic);
+                            String messege = "{\"off\"=\"off\"}";
+                            myMQTTClient.published(messege, topic);
                         }
                     }.start();
                 }
@@ -181,7 +184,9 @@ public class TwoSwitchFragment extends Fragment {
                     action ="off";
                 }
                 setImage1(action);
-                myMQTTClient.published(action, topic);
+
+                String messege = "{\"off\"=\"off\"}";
+                myMQTTClient.published(messege, topic);
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
                 }
@@ -199,7 +204,9 @@ public class TwoSwitchFragment extends Fragment {
                     action ="on";
                 }
                 setImage2(action);
-                myMQTTClient.published(action, topic);
+
+                String messege = "{\"on_2\"=\"on\"}";
+                myMQTTClient.published(messege, topic);
                 if (null != myTwoSwitch.tameOff_2){
                     long set_timer = myTwoSwitch.tameOff_2 * 64000;
                     long step_timer = getResources().getInteger(R.integer.step_timer);
@@ -220,7 +227,8 @@ public class TwoSwitchFragment extends Fragment {
                                 action ="off";
                             }
                             setImage1(action);
-                            myMQTTClient.published(action, topic);
+                            String messege = "{\"off_2\"=\"off\"}";
+                            myMQTTClient.published(messege, topic);
                         }
                     }.start();
                 }
@@ -233,7 +241,8 @@ public class TwoSwitchFragment extends Fragment {
                     action ="off";
                 }
                 setImage2(action);
-                myMQTTClient.published(action, topic);
+                String messege = "{\"off_2\"=\"off\"}";
+                myMQTTClient.published(messege, topic);
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
                 }

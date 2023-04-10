@@ -14,10 +14,11 @@
     <color name="textInputOutlineColor">#FBB8AC</color>
     <color name="colorPrimary">#E0E0E0</color>
     <color name="colorPrimaryDark">#FBB8AC</color>
-    <color name="colorAccent">#FEDBD0</color>
+    <color name="colorAccent">#FF4141</color>
     <color name="textColorPrimary">#442C2E</color>
     <color name="toolbarIconColor">@color/textColorPrimary</color>
     <color name="loginPageBackgroundColor">#FFFFFF</color>
     <color name="productGridBackgroundColor">#FFFFFF</color>
+    <color name="productGridBackgroundColor1">#0072FF</color>
 
 </resources>

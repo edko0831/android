@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.mydacha2.DAO.ControlPointDAO;
 import com.example.mydacha2.Entity.ControlPoint;
 import com.example.mydacha2.R;
+import com.example.mydacha2.fragment.ThermometerFragment;
 import com.example.mydacha2.fragment.TwoSwitchFragment;
 import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
@@ -44,10 +45,22 @@ public class TwoSwitch extends AppCompatActivity {
         fragmentTransaction.addToBackStack(null);
 
         String type_point = controlPoint.type_point;
-        if(type_point.equals(getResources().getString(R.string.lamp))){
-            Intent intent = new Intent(this, OneSwitch.class);
+        if(type_point.equals(getResources().getString(R.string.thermometer)) ||
+           type_point.equals(getResources().getString(R.string.barometer))){
+            Intent intent = new Intent(this, TwoSwitch.class);
             intent.putExtra("id", controlPoint.id_control);
+            SharedPreferences sharedPreferences = getSharedPreferences("myDacha", MODE_PRIVATE);
 
+            ThermometerFragment thermometerFragment = new ThermometerFragment(controlPoint);
+            String serverURI = "tcp://" + sharedPreferences.getString("ipNodeServer", "") + ":" + sharedPreferences.getString("port", "");
+
+            Bundle bundle = new Bundle();
+            bundle.putString("serverURI", serverURI);
+            bundle.putString("basicTopic", basicTopic);
+            bundle.putString("userNodeServer",sharedPreferences.getString("userNodeServer", ""));
+            bundle.putString("passwordMQTT",sharedPreferences.getString("passwordMQTT", ""));
+            thermometerFragment.setArguments(bundle);
+            fragmentTransaction.replace(R.id.frameLayoutTwoSwitch, thermometerFragment);
 
         } else if(type_point.equals(getResources().getString(R.string.socket))){
             Intent intent = new Intent(this, OneSwitch.class);
@@ -64,7 +77,7 @@ public class TwoSwitch extends AppCompatActivity {
             bundle.putString("serverURI", serverURI);
             bundle.putString("basicTopic", basicTopic);
             bundle.putString("userNodeServer",sharedPreferences.getString("userNodeServer", ""));
-            bundle.putString("passwordNodeServer",sharedPreferences.getString("passwordNodeServer", ""));
+            bundle.putString("passwordMQTT",sharedPreferences.getString("passwordMQTT", ""));
             twoSwitchFragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.frameLayoutTwoSwitch, twoSwitchFragment);
         }

@@ -210,7 +210,9 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                 intent.putExtra("off", R.mipmap.elektricheskaya_rozetka_foreground);
                 intent.putExtra("basicTopic", objectControl.basicTopic);
                 mStartForResult.launch(intent);
-            } else if(type_point.equals(getResources().getString(R.string.two_lamp))){
+            } else if(type_point.equals(getResources().getString(R.string.two_lamp)) ||
+                    type_point.equals(getResources().getString(R.string.thermometer)) ||
+                    type_point.equals(getResources().getString(R.string.barometer))){
                 Intent intent = new Intent(this, TwoSwitch.class);
                 intent.putExtra("id", occp.controlPoint.id_control);
                 intent.putExtra("basicTopic", objectControl.basicTopic);

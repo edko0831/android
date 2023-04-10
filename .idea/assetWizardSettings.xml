@@ -8,17 +8,6 @@
             <PersistentState>
               <option name="children">
                 <map>
-                  <entry key="confirmationStep">
-                    <value>
-                      <PersistentState>
-                        <option name="values">
-                          <map>
-                            <entry key="resourceDirectory" value="debug" />
-                          </map>
-                        </option>
-                      </PersistentState>
-                    </value>
-                  </entry>
                   <entry key="imageAssetPanel">
                     <value>
                       <PersistentState>
@@ -115,8 +104,9 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\edko\AndroidStudioProjects\MyDacha2\app\src\main\res\Images\pogoda.jpg" />
-                                                <entry key="scalingPercent" value="98" />
+                                                <entry key="imagePath" value="E:\Загрузки Firefox\icons8ru\temperatura_Cold.jpg" />
+                                                <entry key="scalingPercent" value="109" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -150,7 +140,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="pogoda" />
+                                      <entry key="outputName" value="temperatura_cold" />
                                     </map>
                                   </option>
                                 </PersistentState>

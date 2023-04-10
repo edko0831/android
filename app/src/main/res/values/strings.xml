@@ -11,8 +11,10 @@
     <string name="wifi_net">Имя сети</string>
     <string name="user_name">Пользователь</string>
     <string name="password">Пароль</string>
+    <string name="password_mqtt">Пароль MQTT</string>
     <string name="bt_save">Сохранить</string>
     <string name="ip_name">IP адрес</string>
+    <string name="ip_name_mqtt">IP адрес MQTT</string>
     <string name="bt_cancel">Отмена</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lamp_blank_fragment">Включение лампа</string>
@@ -90,6 +92,7 @@
     <string name="two_lamp">Две лампочки</string>
     <string name="socket">Розетка</string>
     <string name="thermometer">Термометр</string>
+    <string name="barometer">Барометр</string>
     <string name="tv">Телевизор</string>
     <string name="conditioner">Кондиционер</string>
     <string name="not_picture">Нет картинкки</string>

@@ -85,7 +85,7 @@ public class OneSwitch extends AppCompatActivity {
         String serverURI = "tcp://" + sharedPreferences.getString("ipNodeServer", "") + ":" + sharedPreferences.getString("port", "");
         myMqttConnectOptions.setServerUri(serverURI);
         myMqttConnectOptions.setUsername(sharedPreferences.getString("userNodeServer", ""));
-        myMqttConnectOptions.setPassword(sharedPreferences.getString("passwordNodeServer", ""));
+        myMqttConnectOptions.setPassword(sharedPreferences.getString("passwordMQTT", ""));
         myMqttConnectOptions.setSubscriptionTopic(topic);
 
         startMqtt();
@@ -102,7 +102,10 @@ public class OneSwitch extends AppCompatActivity {
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) {
-                setImage(mqttMessage.toString());
+                GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
+                MySwitch mySwitchTemp = gson.fromJson(mqttMessage.toString(), MySwitch.class);
+                setImageMQTT(mySwitchTemp);
             }
 
             @Override
@@ -120,7 +123,8 @@ public class OneSwitch extends AppCompatActivity {
                     action ="on";
                 }
                 setImage(action);
-                myMQTTClient.published(action, topic);
+                String messege = "{\"on\"=\"on\"}";
+                myMQTTClient.published(messege, topic);
                 if (null != mySwitch.tameOff){
                     long set_timer = mySwitch.tameOff * 64000;
                     long step_timer = getResources().getInteger(R.integer.step_timer);
@@ -141,7 +145,8 @@ public class OneSwitch extends AppCompatActivity {
                                 action ="off";
                             }
                             setImage(action);
-                            myMQTTClient.published(action, topic);
+                            String messege = "{\"off\"=\"off\"}";
+                            myMQTTClient.published(messege, topic);
                        }
                     }.start();
                 }
@@ -154,7 +159,8 @@ public class OneSwitch extends AppCompatActivity {
                     action ="off";
                 }
                 setImage(action);
-                myMQTTClient.published(action, topic);
+                String messege = "{\"off\"=\"off\"}";
+                myMQTTClient.published(messege, topic);
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
                 }
@@ -162,19 +168,36 @@ public class OneSwitch extends AppCompatActivity {
         }
     }
 
-    private void setImage(String action){
-        if(action.equals("on")){
+    private void setImageMQTT(MySwitch mySwitchTemp){
+
+        if(mySwitchTemp.on != null){
             on_off = false;
             imageButton.setImageResource(R.mipmap.icons8_on_94_foreground);
             imageViewLamp.setImageResource(my_on);
 
-        } else if (action.equals("off")){
+        } else if (mySwitchTemp.off != null){
             textViewTamer.setText("");
             imageButton.setImageResource(R.mipmap.icons8_off_94_foreground);
             imageViewLamp.setImageResource(my_off);
             on_off = true;
         }
     }
+
+    private void setImage(String message){
+
+        if(message.equals("on")){
+            on_off = false;
+            imageButton.setImageResource(R.mipmap.icons8_on_94_foreground);
+            imageViewLamp.setImageResource(my_on);
+
+        } else if (message.equals("off")){
+            textViewTamer.setText("");
+            imageButton.setImageResource(R.mipmap.icons8_off_94_foreground);
+            imageViewLamp.setImageResource(my_off);
+            on_off = true;
+        }
+    }
+
 
     @Override
     protected void onStart() {

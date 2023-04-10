@@ -37,7 +37,7 @@
                 <EditText
                     android:id="@+id/editText_wifi_net"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/wifi_net"
@@ -83,7 +83,7 @@
                     android:layout_height="match_parent"
                      android:autofillHints=""
                     android:ems="10"
-                    android:hint="@string/ip_name"
+                    android:hint="@string/ip_name_mqtt"
                     android:inputType="text"
                     android:minHeight="48dp"
                     android:singleLine="true"
@@ -181,6 +181,46 @@
 
                 <CheckBox
                     android:id="@+id/onpass"
+                    android:layout_width="73dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:accessibilityLiveRegion="polite"
+                    android:button="@mipmap/icons8_not_show_48_1_foreground"
+                    android:checked="false"
+                    android:gravity="left|top"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_password_mqtt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextPasswordMQTT"
+                    android:layout_marginTop="3dp">
+
+                    <EditText
+                        android:id="@+id/editTextPasswordMQTT"
+                        android:layout_width="223dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:hint="@string/password_mqtt"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        android:singleLine="true"
+                        android:textColorHint="#546E7A"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxMQTT"
                     android:layout_width="73dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

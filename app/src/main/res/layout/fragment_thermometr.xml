@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.TwoSwitchFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/layout_marginTop"
+        android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/textView_point"
+                style="@style/header_style"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textAllCaps="false"
+                tools:ignore="TextViewEdits" />
+
+        <ImageView
+            android:id="@+id/imageTemperatura"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/images_height"
+            android:layout_marginTop="@dimen/layout_marginTop"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/not_picture" />
+
+        <ImageView
+            android:id="@+id/imageBarometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_marginTop"
+            android:scaleType="centerInside"
+             />
+
+        <TextView
+            android:id="@+id/textViewTemperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_marginTop"
+            android:textAlignment="center"
+            android:textColor="#0307F3"
+            android:text="@string/not_text"
+            android:textSize="50sp" />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

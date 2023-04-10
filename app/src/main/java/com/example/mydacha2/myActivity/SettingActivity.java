@@ -23,8 +23,10 @@ import com.example.mydacha2.R;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener{
     private CheckBox checkBox;
+    private CheckBox checkBoxMQTT;
     private CheckBox checkCity;
     private EditText editTextPassword;
+    private EditText editTextPasswordMQTT;
     private EditText editTexIP;
     private EditText editPort;
     private EditText editTextWifiNet;
@@ -44,6 +46,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         Button buttonSave = findViewById(R.id.buttonSave);
         Button buttonCancel = findViewById(R.id.buttonCancel);
         editTextPassword = findViewById(R.id.editTextTextPassword);
+        editTextPasswordMQTT = findViewById(R.id.editTextPasswordMQTT);
         editTexIP = findViewById(R.id.editTexIP);
         editTextWifiNet = findViewById(R.id.editText_wifi_net);
         editUserName = findViewById(R.id.editUserName);
@@ -53,6 +56,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         buttonSave.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
         checkBox = findViewById(R.id.onpass);
+        checkBoxMQTT = findViewById(R.id.checkBoxMQTT);
         checkCity = findViewById(R.id.checkCity);
 
         TextView textView = findViewById(R.id.textView_object);
@@ -71,6 +75,17 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
             }
             editTextPassword.setSelection(editTextPassword.length());
+        });
+        checkBoxMQTT.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                editTextPasswordMQTT.setTransformationMethod(null);
+                checkBoxMQTT.setButtonDrawable(R.mipmap.icons8_show_48_1_foreground);
+            }
+            else {
+                checkBoxMQTT.setButtonDrawable(R.mipmap.icons8_not_show_48_1_foreground);
+                editTextPasswordMQTT.setTransformationMethod(new PasswordTransformationMethod());
+            }
+            editTextPasswordMQTT.setSelection(editTextPasswordMQTT.length());
         });
     }
 
@@ -147,6 +162,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             editor.putString("passwordNodeServer", editTextPassword.getText().toString());
         }
 
+        if(editTextPasswordMQTT.getText().toString().isEmpty()){
+            sendMessege("Пароль MQTT");
+            return false;
+        }
+        else {
+            editor.putString("passwordMQTT", editTextPasswordMQTT.getText().toString());
+        }
+
         editor.putString("port", editPort.getText().toString());
         editor.putString("city", editCity.getText().toString());
         editor.putBoolean("checkCity", checkCity.isChecked());
@@ -164,6 +187,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         String ipNodeServer = sharedPreferences.getString("ipNodeServer", "");
         String userNodeServer = sharedPreferences.getString("userNodeServer", "");
         String passwordNodeServer = sharedPreferences.getString("passwordNodeServer", "");
+        String passwordMQTT = sharedPreferences.getString("passwordMQTT", "");
         String port = sharedPreferences.getString("port", "");
         String city = sharedPreferences.getString("city", "");
         boolean mCheckCity = sharedPreferences.getBoolean("checkCity", false);
@@ -173,6 +197,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         editPort.setText(port);
         editUserName.setText(userNodeServer);
         editTextPassword.setText(passwordNodeServer);
+        editTextPasswordMQTT.setText(passwordMQTT);
         editCity.setText(city);
         checkCity.setChecked(mCheckCity);
     }
