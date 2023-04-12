@@ -104,6 +104,8 @@
     <string name="kode_city">Код города</string>
     <string name="city">Днепр</string>
     <string name="basicTopic">Базовый topic</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 </resources>

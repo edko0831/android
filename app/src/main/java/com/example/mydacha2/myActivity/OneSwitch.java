@@ -1,7 +1,6 @@
 package com.example.mydacha2.myActivity;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -19,7 +18,7 @@ import com.example.mydacha2.Entity.ControlPoint;
 import com.example.mydacha2.R;
 import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
-import com.example.mydacha2.supportclass.MyMQTTClient;
+import com.example.mydacha2.supportclass.MyMQTTClientNew;
 import com.example.mydacha2.supportclass.MyMqttConnectOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,9 +35,7 @@ public class OneSwitch extends AppCompatActivity {
     private ImageButton imageButton;
     private ImageView imageViewLamp;
     private boolean on_off;
-    private String topic;
-    private MyMQTTClient myMQTTClient;
-    private MyMqttConnectOptions myMqttConnectOptions;
+    private String myTopic;
     private MySwitch mySwitch;
     private int my_on;
     private int my_off;
@@ -54,7 +51,6 @@ public class OneSwitch extends AppCompatActivity {
 
         textViewTamer = findViewById(R.id.textViewTamer);
         TextView textViewPoint = findViewById(R.id.textView_point);
-        SharedPreferences sharedPreferences = getSharedPreferences("myDacha", MODE_PRIVATE);
 
         imageButton.setOnClickListener(this::onClickButton);
 
@@ -78,42 +74,38 @@ public class OneSwitch extends AppCompatActivity {
             Gson gson = builder.create();
             mySwitch = gson.fromJson(controlPoint.executable_code, MySwitch.class);
         }
+        MyMqttConnectOptions myMqttConnectOptions = new MyMqttConnectOptions();
+        myTopic = basicTopic + controlPoint.topic;
+        MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
+                .setCallback(new MqttCallbackExtended() {
+                    @Override
+                    public void connectComplete(boolean b, String s) {}
 
-        topic = basicTopic + controlPoint.topic;
-        myMqttConnectOptions = new MyMqttConnectOptions();
-        myMqttConnectOptions.setSubscriptionTopic(controlPoint.topic);
-        String serverURI = "tcp://" + sharedPreferences.getString("ipNodeServer", "") + ":" + sharedPreferences.getString("port", "");
-        myMqttConnectOptions.setServerUri(serverURI);
-        myMqttConnectOptions.setUsername(sharedPreferences.getString("userNodeServer", ""));
-        myMqttConnectOptions.setPassword(sharedPreferences.getString("passwordMQTT", ""));
-        myMqttConnectOptions.setSubscriptionTopic(topic);
+                    @Override
+                    public void connectionLost(Throwable throwable) {}
 
-        startMqtt();
+                    @Override
+                    public void messageArrived(String topic, MqttMessage mqttMessage) {
+                        if(myTopic.equals(topic)) {
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            MySwitch mySwitchTemp = gson.fromJson(mqttMessage.toString(), MySwitch.class);
+                            setImageMQTT(mySwitchTemp);
+                        }
+                    }
+
+                    @Override
+                    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
+                });
+
+        MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+                .published("{\"value\":\"get value\"}", myTopic);
+        MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+                .subscribeToTopic(myTopic);
+
     }
 
-    private void startMqtt(){
-        myMQTTClient = new MyMQTTClient(getApplicationContext(), myMqttConnectOptions);
-        myMQTTClient.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean b, String s) {}
-
-            @Override
-            public void connectionLost(Throwable throwable) {}
-
-            @Override
-            public void messageArrived(String topic, MqttMessage mqttMessage) {
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
-                MySwitch mySwitchTemp = gson.fromJson(mqttMessage.toString(), MySwitch.class);
-                setImageMQTT(mySwitchTemp);
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
-        });
-    }
-
-     public void onClickButton(View v) {
+    public void onClickButton(View v) {
         if (v.getId() == R.id.imageButtonSet) {
             if (on_off) {
                 String action;
@@ -124,7 +116,8 @@ public class OneSwitch extends AppCompatActivity {
                 }
                 setImage(action);
                 String messege = "{\"on\"=\"on\"}";
-                myMQTTClient.published(messege, topic);
+                MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+                        .published(messege, myTopic);
                 if (null != mySwitch.tameOff){
                     long set_timer = mySwitch.tameOff * 64000;
                     long step_timer = getResources().getInteger(R.integer.step_timer);
@@ -146,7 +139,8 @@ public class OneSwitch extends AppCompatActivity {
                             }
                             setImage(action);
                             String messege = "{\"off\"=\"off\"}";
-                            myMQTTClient.published(messege, topic);
+                            MyMQTTClientNew.getInstance(OneSwitch.this, new MyMqttConnectOptions())
+                                    .published(messege, myTopic);
                        }
                     }.start();
                 }
@@ -160,7 +154,8 @@ public class OneSwitch extends AppCompatActivity {
                 }
                 setImage(action);
                 String messege = "{\"off\"=\"off\"}";
-                myMQTTClient.published(messege, topic);
+                MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+                        .published(messege, myTopic);
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
                 }
@@ -207,7 +202,6 @@ public class OneSwitch extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myMQTTClient.disconnect();
     }
 
     @Override

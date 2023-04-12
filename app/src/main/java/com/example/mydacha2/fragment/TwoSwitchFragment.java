@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.mydacha2.ActionsJason.MyTwoSwitch;
 import com.example.mydacha2.Entity.ControlPoint;
 import com.example.mydacha2.R;
-import com.example.mydacha2.supportclass.MyMQTTClient;
+import com.example.mydacha2.supportclass.MyMQTTClientNew;
 import com.example.mydacha2.supportclass.MyMqttConnectOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,17 +38,14 @@ public class TwoSwitchFragment extends Fragment {
     private ImageView imageViewLamp2;
     private final int my_on;
     private final int my_off;
-    private String topic;
+    public String myTopic;
     private MyTwoSwitch myTwoSwitch = new MyTwoSwitch();
-    ControlPoint controlPoint;
-    private MyMQTTClient myMQTTClient;
-    private MyMqttConnectOptions myMqttConnectOptions;
+    private final ControlPoint controlPoint;
 
     public TwoSwitchFragment(ControlPoint controlPoint, int my_on, int my_of) {
         this.my_off = my_of;
         this.my_on = my_on;
         this.controlPoint = controlPoint;
-
      }
 
     @Override
@@ -88,53 +85,49 @@ public class TwoSwitchFragment extends Fragment {
             myTwoSwitch = gson.fromJson(controlPoint.executable_code, MyTwoSwitch.class);
         }
 
-
-        myMqttConnectOptions = new MyMqttConnectOptions();
-        myMqttConnectOptions.setSubscriptionTopic(controlPoint.topic);
+        MyMqttConnectOptions myMqttConnectOptions = new MyMqttConnectOptions();
         Bundle bundle = this.getArguments();
         assert bundle != null;
-        String serverURI = bundle.getString("serverURI", "");
+
         String basicTopic = bundle.getString("basicTopic", "");
-        myMqttConnectOptions.setServerUri(serverURI);
-        myMqttConnectOptions.setUsername(bundle.getString("userNodeServer", ""));
-        myMqttConnectOptions.setPassword(bundle.getString("passwordMQTT", ""));
+        myTopic = basicTopic + controlPoint.topic;
 
-        topic = basicTopic + controlPoint.topic;
-        myMqttConnectOptions.setSubscriptionTopic(topic);
+        MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
+                .setCallback(new MqttCallbackExtended() {
+                    @Override
+                    public void connectComplete(boolean b, String s) {}
 
-        startMqtt();
-    }
+                    @Override
+                    public void connectionLost(Throwable throwable) {}
 
-    private void startMqtt() {
-        myMQTTClient = new MyMQTTClient(getActivity(), myMqttConnectOptions);
-        myMQTTClient.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean b, String s) {}
+                    @Override
+                    public void messageArrived(String topic, MqttMessage mqttMessage) {
+                        if(myTopic.equals(topic)) {
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            MyTwoSwitch myTwoSwitchTemp = gson.fromJson(mqttMessage.toString(), MyTwoSwitch.class);
+                            if (myTwoSwitchTemp.off != null) {
+                                setImage1(myTwoSwitchTemp.off);
+                            } else if (myTwoSwitchTemp.on != null) {
+                                setImage1(myTwoSwitchTemp.on);
+                            }
 
-            @Override
-            public void connectionLost(Throwable throwable) {}
+                            if (myTwoSwitchTemp.off_2 != null) {
+                                setImage2(myTwoSwitchTemp.off_2);
+                            } else if (myTwoSwitchTemp.on_2 != null) {
+                                setImage2(myTwoSwitchTemp.on_2);
+                            }
+                        }
+                    }
 
-            @Override
-            public void messageArrived(String topic, MqttMessage mqttMessage) {
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
-                MyTwoSwitch myTwoSwitchTemp = gson.fromJson(mqttMessage.toString(), MyTwoSwitch.class);
-                if (myTwoSwitchTemp.off != null ){
-                    setImage1(myTwoSwitchTemp.off);
-                } else if(myTwoSwitchTemp.on != null){
-                    setImage1(myTwoSwitchTemp.on);
-                }
+                    @Override
+                    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
+                });
 
-                if (myTwoSwitchTemp.off_2 != null){
-                    setImage2(myTwoSwitchTemp.off_2);
-                } else if(myTwoSwitchTemp.on_2 != null){
-                    setImage2(myTwoSwitchTemp.on_2);
-                }
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
-        });
+        MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                .published("{\"value\":\"get value\"}", myTopic);
+        MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                .subscribeToTopic(myTopic);
     }
 
     public void onClickButton1(View v) {
@@ -149,7 +142,8 @@ public class TwoSwitchFragment extends Fragment {
                 setImage1(action);
 
                 String messege = "{\"on\"=\"on\"}";
-                myMQTTClient.published(messege, topic);
+                MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                        .published(messege, myTopic);
                 if (null != myTwoSwitch.tameOff){
                     long set_timer = myTwoSwitch.tameOff * 64000;
                     long step_timer = getResources().getInteger(R.integer.step_timer);
@@ -171,7 +165,8 @@ public class TwoSwitchFragment extends Fragment {
                             }
                             setImage1(action);
                             String messege = "{\"off\"=\"off\"}";
-                            myMQTTClient.published(messege, topic);
+                            MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                                    .published(messege, myTopic);
                         }
                     }.start();
                 }
@@ -186,7 +181,8 @@ public class TwoSwitchFragment extends Fragment {
                 setImage1(action);
 
                 String messege = "{\"off\"=\"off\"}";
-                myMQTTClient.published(messege, topic);
+                MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                        .published(messege, myTopic);
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
                 }
@@ -206,7 +202,8 @@ public class TwoSwitchFragment extends Fragment {
                 setImage2(action);
 
                 String messege = "{\"on_2\"=\"on\"}";
-                myMQTTClient.published(messege, topic);
+                MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                        .published(messege, myTopic);
                 if (null != myTwoSwitch.tameOff_2){
                     long set_timer = myTwoSwitch.tameOff_2 * 64000;
                     long step_timer = getResources().getInteger(R.integer.step_timer);
@@ -228,7 +225,8 @@ public class TwoSwitchFragment extends Fragment {
                             }
                             setImage1(action);
                             String messege = "{\"off_2\"=\"off\"}";
-                            myMQTTClient.published(messege, topic);
+                            MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                                    .published(messege, myTopic);
                         }
                     }.start();
                 }
@@ -242,7 +240,8 @@ public class TwoSwitchFragment extends Fragment {
                 }
                 setImage2(action);
                 String messege = "{\"off_2\"=\"off\"}";
-                myMQTTClient.published(messege, topic);
+                MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                        .published(messege, myTopic);
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
                 }

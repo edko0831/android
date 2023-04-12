@@ -145,7 +145,7 @@ public class ThermometerFragment extends Fragment {
 
              Drawable drawable = Drawable.createFromStream(inputStream, null);
              imageTemperatura.setImageDrawable(drawable);
-             imageTemperatura.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+             imageTemperatura.setScaleType(ImageView.ScaleType.CENTER_CROP);
          }
          catch (IOException | NullPointerException e){
              e.printStackTrace();

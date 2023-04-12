@@ -145,6 +145,11 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                                 mySubscribes.textView.setText(myValue);
                                 mySubscribes.textView.setTextColor(Color.parseColor("#FF000000"));
                                 mySubscribes.setValue(myValueControl.value);
+                            } else if (mySubscribes.controlPoint.type_point.equals(getResources().getString(R.string.gas_sensor)) && mySubscribes.topic.equals(topic)) {
+                                String myValue = myValueControl.value + " dB";
+                                mySubscribes.textView.setText(myValue);
+                                mySubscribes.textView.setTextColor(Color.parseColor("#FF000000"));
+                                mySubscribes.setValue(myValueControl.value);
                             }
                         }
                     }
@@ -280,7 +285,9 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                 mStartForResult.launch(intent);
             } else if(type_point.equals(getResources().getString(R.string.two_lamp)) ||
                     type_point.equals(getResources().getString(R.string.thermometer)) ||
-                    type_point.equals(getResources().getString(R.string.barometer))){
+                    type_point.equals(getResources().getString(R.string.barometer)) ||
+                    type_point.equals(getResources().getString(R.string.tv)) ||
+                    type_point.equals(getResources().getString(R.string.gas_sensor))){
                 Intent intent = new Intent(this, TwoSwitch.class);
                 intent.putExtra("id", occp.controlPoint.id_control);
                 intent.putExtra("basicTopic", objectControl.basicTopic);
@@ -325,7 +332,9 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
             textView.setY(cp.position_y - delta);
 
             if (cp.controlPoint.type_point.equals(getResources().getString(R.string.thermometer)) ||
-                cp.controlPoint.type_point.equals(getResources().getString(R.string.barometer))) {
+                cp.controlPoint.type_point.equals(getResources().getString(R.string.barometer)) ||
+                cp.controlPoint.type_point.equals(getResources().getString(R.string.gas_sensor))
+            ) {
                 String topic = objectControl.basicTopic + cp.controlPoint.topic;
                 mySubscribesList.add(new MySubscribes(topic, textView, cp.controlPoint));
             }

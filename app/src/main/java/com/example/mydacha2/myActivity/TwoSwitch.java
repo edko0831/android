@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.mydacha2.DAO.ControlPointDAO;
 import com.example.mydacha2.Entity.ControlPoint;
 import com.example.mydacha2.R;
+import com.example.mydacha2.fragment.TV_remoteFragment;
 import com.example.mydacha2.fragment.ThermometerFragment;
 import com.example.mydacha2.fragment.TwoSwitchFragment;
 import com.example.mydacha2.repository.App;
@@ -81,7 +82,24 @@ public class TwoSwitch extends AppCompatActivity {
 
             twoSwitchFragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.frameLayoutTwoSwitch, twoSwitchFragment);
+
+        }  else if(type_point.equals(getResources().getString(R.string.tv))) {
+            Intent intent = new Intent(this, TwoSwitch.class);
+            intent.putExtra("id", controlPoint.id_control);
+            intent.putExtra("value", value);
+
+            TV_remoteFragment tv_remoteFragment = new TV_remoteFragment(controlPoint);
+
+            Bundle bundle = new Bundle();
+
+            bundle.putString("basicTopic", basicTopic);
+            bundle.putFloat("id", controlPoint.id_control);
+            bundle.putFloat("value", value);
+
+            tv_remoteFragment.setArguments(bundle);
+            fragmentTransaction.replace(R.id.frameLayoutTwoSwitch, tv_remoteFragment);
         }
+
         fragmentTransaction.commit();
     }
 
