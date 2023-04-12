@@ -39,11 +39,14 @@ import com.example.mydacha2.myActivity.MyObject;
 import com.example.mydacha2.myActivity.SettingActivity;
 import com.example.mydacha2.supportclass.MyClickListener;
 import com.example.mydacha2.supportclass.MyListMain;
+import com.example.mydacha2.supportclass.MyMQTTClientNew;
+import com.example.mydacha2.supportclass.MyMqttConnectOptions;
 import com.example.mydacha2.supportclass.weathers.MyLocations;
 import com.example.mydacha2.supportclass.weathers.MyWeather;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
     TextView textCity;
     String city;
     boolean mCheckCity;
+    private MyMqttConnectOptions myMqttConnectOptions;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -107,6 +111,14 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         onConnectWiFi();
+
+        myMqttConnectOptions = new MyMqttConnectOptions();
+        String serverURI = "tcp://" + sharedPreferences.getString("ipNodeServer", "") + ":" + sharedPreferences.getString("port", "");
+        myMqttConnectOptions.setServerUri(serverURI);
+        myMqttConnectOptions.setUsername(sharedPreferences.getString("userNodeServer", ""));
+        myMqttConnectOptions.setPassword(sharedPreferences.getString("passwordMQTT", ""));
+        MyMQTTClientNew.getInstance(this, myMqttConnectOptions);
+
     }
 
     private void onConnectWiFi(){
@@ -224,6 +236,13 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
       }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
+                .disconnect();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -306,10 +325,10 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
          public void onLocationChanged(Location location) {
             if (location == null)
                 return;
-            BigDecimal latitude = new BigDecimal(location.getLatitude())
-                                   .setScale(2, BigDecimal.ROUND_HALF_UP);
-            BigDecimal longitude = new BigDecimal(location.getLongitude())
-                                          .setScale(2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal latitude = BigDecimal.valueOf(location.getLatitude())
+                                   .setScale(2, RoundingMode.HALF_UP);
+            BigDecimal longitude = BigDecimal.valueOf(location.getLongitude())
+                                          .setScale(2, RoundingMode.HALF_UP);
 
             if(!mCheckCity && city.equals("")) {
                 if (myLocation.equals("")) {

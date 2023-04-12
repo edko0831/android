@@ -95,6 +95,7 @@
     <string name="barometer">Барометр</string>
     <string name="tv">Телевизор</string>
     <string name="conditioner">Кондиционер</string>
+    <string name="gas_sensor">Датчик газа</string>
     <string name="not_picture">Нет картинкки</string>
     <string name="add_point">Дабавить элемент</string>
     <string name="topic">Topic</string>

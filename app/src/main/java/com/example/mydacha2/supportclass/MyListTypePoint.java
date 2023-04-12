@@ -23,7 +23,8 @@ public class MyListTypePoint {
                 new MyListTypePoint(4L, context.getString(R.string.thermometer), android.R.drawable.ic_dialog_dialer),
                 new MyListTypePoint(5L, context.getString(R.string.barometer), android.R.drawable.ic_dialog_dialer),
                 new MyListTypePoint(6L, context.getString(R.string.tv), android.R.drawable.ic_dialog_alert),
-                new MyListTypePoint(7L, context.getString(R.string.conditioner), android.R.drawable.ic_dialog_map)
+                new MyListTypePoint(7L, context.getString(R.string.conditioner), android.R.drawable.ic_dialog_map),
+                new MyListTypePoint(8L, context.getString(R.string.gas_sensor), android.R.drawable.ic_dialog_map),
         };
 
     }

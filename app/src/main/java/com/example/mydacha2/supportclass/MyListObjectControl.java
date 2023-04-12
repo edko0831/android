@@ -15,9 +15,7 @@ public class MyListObjectControl {
         return ObjectControl.name;
     }
 
-    public int getImgId() {
-        return ObjectControl.picture_id;
-    }
+   // public int getImgId() { return ObjectControl.picture_id;}
 
     public String getImgUrl() {
         return ObjectControl.picture_url;

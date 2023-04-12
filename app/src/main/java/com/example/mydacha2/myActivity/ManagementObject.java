@@ -23,16 +23,26 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mydacha2.ActionsJason.MyValueControl;
 import com.example.mydacha2.DAO.ObjectControlWithControlPointDAO;
 import com.example.mydacha2.DAO.ObjectControlsDAO;
+import com.example.mydacha2.Entity.ControlPoint;
 import com.example.mydacha2.Entity.ObjectControl;
 import com.example.mydacha2.Entity.ObjectControlControlPoint;
 import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
 import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
-import com.example.mydacha2.supportclass.MyListTypePoint;
+import com.example.mydacha2.supportclass.MyMQTTClientNew;
+import com.example.mydacha2.supportclass.MyMqttConnectOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,6 +57,8 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
     Long getId;
     Long x;
     Long y;
+    List<MySubscribes> mySubscribesList = new ArrayList<>();
+
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if(result.getResultCode() == Activity.RESULT_OK){
@@ -57,7 +69,7 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
             });
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_management_object);
         picture = findViewById(R.id.panorama);
@@ -91,6 +103,62 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
 
 
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+                .setCallback(new MqttCallbackExtended() {
+                    @Override
+                    public void connectComplete(boolean b, String s) {}
+
+                    @Override
+                    public void connectionLost(Throwable throwable) {}
+
+                    @Override
+                    public void messageArrived(String topic, MqttMessage mqttMessage) {
+                        GsonBuilder builder = new GsonBuilder();
+                        Gson gson = builder.create();
+                        MyValueControl myValueControl = gson.fromJson(mqttMessage.toString(), MyValueControl.class);
+                        for (MySubscribes mySubscribes: mySubscribesList) {
+                            if (mySubscribes.controlPoint.type_point.equals(getResources().getString(R.string.thermometer)) && mySubscribes.topic.equals(topic)) {
+                                Float value = myValueControl.value;
+                                String temper = myValueControl.value + " \u00B0C";
+                                mySubscribes.setValue(value);
+                                if(value <= - 10){
+                                    mySubscribes.textView.setText(temper);
+                                    mySubscribes.textView.setTextColor(Color.parseColor("#FF3700B3"));
+                                } else if (value > - 10 && value <= 10){
+                                    mySubscribes.textView.setTextColor(Color.parseColor("#FF0072FF"));
+                                    mySubscribes.textView.setText(temper);
+                                } else if (value > 10 && value <= 27){
+                                    mySubscribes.textView.setText(temper);
+                                    mySubscribes.textView.setTextColor(Color.parseColor("#FF40F100"));
+                                } else if (value > 27){
+                                    mySubscribes.textView.setText(temper);
+                                    mySubscribes.textView.setTextColor(Color.parseColor("#FFFF0000"));
+                                }
+                            } else if (mySubscribes.controlPoint.type_point.equals(getResources().getString(R.string.barometer)) && mySubscribes.topic.equals(topic)) {
+                                String myValue = myValueControl.value + " hPa";
+                                mySubscribes.textView.setText(myValue);
+                                mySubscribes.textView.setTextColor(Color.parseColor("#FF000000"));
+                                mySubscribes.setValue(myValueControl.value);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
+                });
+
+        for (MySubscribes mySubscribes: mySubscribesList) {
+            MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+                    .published("{\"value\":\"get value\"}", mySubscribes.topic);
+            MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+                    .subscribeToTopic(mySubscribes.topic);
+        }
     }
 
     private void setControlPoint(){
@@ -158,8 +226,8 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                         intent.putExtra("id_object_point", occp.point_id);
                         intent.putExtra("id_object", getId);
                         intent.putExtra("name", occp.controlPoint.name);
-                        intent.putExtra("x", x);
-                        intent.putExtra("y", y);
+                        intent.putExtra("x", occp.position_x);
+                        intent.putExtra("y", occp.position_y);
                         intent.putExtra("nameObject", objectControl.name);
                         mStartForResult.launch(intent);
                     })
@@ -216,6 +284,12 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                 Intent intent = new Intent(this, TwoSwitch.class);
                 intent.putExtra("id", occp.controlPoint.id_control);
                 intent.putExtra("basicTopic", objectControl.basicTopic);
+                for (MySubscribes mySubscribes: mySubscribesList) {
+                    if(type_point.equals(mySubscribes.controlPoint.type_point)){
+                        intent.putExtra("value", mySubscribes.getValue());
+                    }
+                }
+
                 mStartForResult.launch(intent);
             }
         }
@@ -250,11 +324,34 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
             textView.setX(cp.position_x - delta);
             textView.setY(cp.position_y - delta);
 
-            i++;
-            String name = MyListTypePoint.getListTypePoint(this)[3].getPoint();
+            if (cp.controlPoint.type_point.equals(getResources().getString(R.string.thermometer)) ||
+                cp.controlPoint.type_point.equals(getResources().getString(R.string.barometer))) {
+                String topic = objectControl.basicTopic + cp.controlPoint.topic;
+                mySubscribesList.add(new MySubscribes(topic, textView, cp.controlPoint));
+            }
+             i++;
+            //String name = MyListTypePoint.getListTypePoint(this)[3].getPoint();
 
             relativeLayoutPanorama.addView(textView);
         }
+    }
+
+    public static class MySubscribes {
+        public String topic;
+        public TextView textView;
+        public ControlPoint controlPoint;
+        public Float value;
+
+        public MySubscribes(String topic, TextView view, ControlPoint controlPoint) {
+            this.topic = topic;
+            this.textView = view;
+            this.controlPoint = controlPoint;
+        }
+
+        public void setValue(Float value) { this.value = value; }
+
+        public Float getValue(){ return this.value;}
+
     }
 }
 

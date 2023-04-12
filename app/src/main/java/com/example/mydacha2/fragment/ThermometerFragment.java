@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.mydacha2.ActionsJason.MyValueControl;
 import com.example.mydacha2.Entity.ControlPoint;
 import com.example.mydacha2.R;
-import com.example.mydacha2.supportclass.MyMQTTClient;
+import com.example.mydacha2.supportclass.MyMQTTClientNew;
 import com.example.mydacha2.supportclass.MyMqttConnectOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,9 +32,9 @@ import java.io.InputStream;
 public class ThermometerFragment extends Fragment {
     private TextView textViewTemperature;
     private ImageView imageTemperatura;
+    String myTopic;
 
     ControlPoint controlPoint;
-    private MyMqttConnectOptions myMqttConnectOptions;
 
     public ThermometerFragment(ControlPoint controlPoint) {
         this.controlPoint = controlPoint;
@@ -61,54 +61,58 @@ public class ThermometerFragment extends Fragment {
         textViewTemperature= view.findViewById(R.id.textViewTemperature);
         imageTemperatura = view.findViewById(R.id.imageTemperatura);
 
-        myMqttConnectOptions = new MyMqttConnectOptions();
+        MyMqttConnectOptions myMqttConnectOptions = new MyMqttConnectOptions();
         Bundle bundle = this.getArguments();
         assert bundle != null;
-        String serverURI = bundle.getString("serverURI", "");
         String basicTopic = bundle.getString("basicTopic", "");
-        myMqttConnectOptions.setServerUri(serverURI);
-        myMqttConnectOptions.setUsername(bundle.getString("userNodeServer", ""));
-        myMqttConnectOptions.setPassword(bundle.getString("passwordMQTT", ""));
 
-        String topic = basicTopic + controlPoint.topic;
-        myMqttConnectOptions.setSubscriptionTopic(topic);
+        Float value =  bundle.getFloat("value", 0);
+        myTopic = basicTopic + controlPoint.topic;
+
+        MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
+                .setCallback(new MqttCallbackExtended() {
+                    @Override
+                    public void connectComplete(boolean b, String s) {}
+
+                    @Override
+                    public void connectionLost(Throwable throwable) {}
+
+                    @Override
+                    public void messageArrived(String topic, MqttMessage mqttMessage) throws IOException {
+                        GsonBuilder builder = new GsonBuilder();
+                        Gson gson = builder.create();
+                        MyValueControl myValueControl = gson.fromJson(mqttMessage.toString(), MyValueControl.class);
+
+                        if (controlPoint.type_point.equals(getResources().getString(R.string.thermometer)) && myTopic.equals(topic)) {
+                            setImage(myValueControl.value);
+                        } else if (controlPoint.type_point.equals(getResources().getString(R.string.barometer)) && myTopic.equals(topic)) {
+                            setImageBarometer(myValueControl.value);
+                        } else if (controlPoint.type_point.equals(getResources().getString(R.string.gas_sensor)) && myTopic.equals(topic)) {
+                            setImageGasSensor(myValueControl.value);
+                        }
+                    }
+
+                    @Override
+                    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
+                });
+
         try {
             if (controlPoint.type_point.equals(getResources().getString(R.string.thermometer))) {
-                    setImage(20F);
+                    setImage(value);
             } else if (controlPoint.type_point.equals(getResources().getString(R.string.barometer))) {
-                    setImageBarometer(1000F);
+                    setImageBarometer(value);
+            } else if (controlPoint.type_point.equals(getResources().getString(R.string.gas_sensor))) {
+                setImageGasSensor(value);
             }
         } catch (IOException e) {
         e.printStackTrace();
     }
 
-        startMqtt();
-    }
+    MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+            .published("{\"value\":\"get value\"}", myTopic);
+    MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+            .subscribeToTopic(myTopic);
 
-     private void startMqtt() {
-        MyMQTTClient myMQTTClient = new MyMQTTClient(getActivity(), myMqttConnectOptions);
-        myMQTTClient.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean b, String s) {}
-
-            @Override
-            public void connectionLost(Throwable throwable) {}
-
-            @Override
-            public void messageArrived(String topic, MqttMessage mqttMessage) throws IOException {
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
-                MyValueControl myValueControl = gson.fromJson(mqttMessage.toString(), MyValueControl.class);
-                if (controlPoint.type_point.equals(getResources().getString(R.string.thermometer))) {
-                    setImage(myValueControl.value);
-                } else if (controlPoint.type_point.equals(getResources().getString(R.string.barometer))) {
-                    setImageBarometer(myValueControl.value);
-                }
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
-        });
     }
 
      @SuppressLint("SetTextI18n")
@@ -133,6 +137,7 @@ public class ThermometerFragment extends Fragment {
             filename = "temperatura_hot.jpg";
         }
 
+         assert getActivity() != null;
          try(InputStream inputStream = getActivity()
                                          .getApplicationContext()
                                          .getAssets()
@@ -142,20 +147,23 @@ public class ThermometerFragment extends Fragment {
              imageTemperatura.setImageDrawable(drawable);
              imageTemperatura.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
          }
-         catch (IOException e){
+         catch (IOException | NullPointerException e){
              e.printStackTrace();
          }
 
+
      }
 
+    @SuppressLint("SetTextI18n")
     private void setImageBarometer(Float value) throws IOException {
-        String filename = "temperatura_cold.png";
+        String filename;
         String degree = " hPa";
 
         textViewTemperature.setText(value + degree);
         textViewTemperature.setTextColor(Color.parseColor("#FF000000"));
         filename = "barometer.jpg";
 
+        assert getActivity() != null;
         try(InputStream inputStream = getActivity()
                 .getApplicationContext()
                 .getAssets()
@@ -170,4 +178,33 @@ public class ThermometerFragment extends Fragment {
         }
 
     }
+    @SuppressLint("SetTextI18n")
+    private void setImageGasSensor(Float value) {
+        String filename;
+        String degree = " dB";
+
+        textViewTemperature.setText(value + degree);
+        textViewTemperature.setTextColor(Color.parseColor("#FF000000"));
+        filename = "gas_sensor.jpg";
+
+        assert getActivity() != null;
+        try(InputStream inputStream = getActivity()
+                .getApplicationContext()
+                .getAssets()
+                .open(filename)) {
+
+            Drawable drawable = Drawable.createFromStream(inputStream, null);
+            imageTemperatura.setImageDrawable(drawable);
+            imageTemperatura.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onStart() {
+       super.onStart();
+    }
+
 }

@@ -32,33 +32,35 @@ public class TwoSwitch extends AppCompatActivity {
         Bundle arguments = getIntent().getExtras();
         long getId = arguments.getLong("id");
         basicTopic  = arguments.getString("basicTopic");
+        Float value  = arguments.getFloat("value", 0F);
         AppDatabase db = App.getInstance(this).getDatabase();
         ControlPointDAO controlPointDAO = db.controlPointDAO();
         ControlPoint controlPoint = controlPointDAO.selectId((int) getId);
 
-        selectionFragment(controlPoint);
+        selectionFragment(controlPoint, value);
 
     }
 
-    private void selectionFragment(ControlPoint controlPoint) {
+    private void selectionFragment(ControlPoint controlPoint, Float value) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.addToBackStack(null);
 
         String type_point = controlPoint.type_point;
         if(type_point.equals(getResources().getString(R.string.thermometer)) ||
-           type_point.equals(getResources().getString(R.string.barometer))){
+           type_point.equals(getResources().getString(R.string.barometer)) ||
+           type_point.equals(getResources().getString(R.string.gas_sensor))){
             Intent intent = new Intent(this, TwoSwitch.class);
             intent.putExtra("id", controlPoint.id_control);
-            SharedPreferences sharedPreferences = getSharedPreferences("myDacha", MODE_PRIVATE);
+            intent.putExtra("value", value);
 
             ThermometerFragment thermometerFragment = new ThermometerFragment(controlPoint);
-            String serverURI = "tcp://" + sharedPreferences.getString("ipNodeServer", "") + ":" + sharedPreferences.getString("port", "");
 
             Bundle bundle = new Bundle();
-            bundle.putString("serverURI", serverURI);
+
             bundle.putString("basicTopic", basicTopic);
-            bundle.putString("userNodeServer",sharedPreferences.getString("userNodeServer", ""));
-            bundle.putString("passwordMQTT",sharedPreferences.getString("passwordMQTT", ""));
+            bundle.putFloat("id", controlPoint.id_control);
+            bundle.putFloat("value", value);
+
             thermometerFragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.frameLayoutTwoSwitch, thermometerFragment);
 
@@ -76,8 +78,7 @@ public class TwoSwitch extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putString("serverURI", serverURI);
             bundle.putString("basicTopic", basicTopic);
-            bundle.putString("userNodeServer",sharedPreferences.getString("userNodeServer", ""));
-            bundle.putString("passwordMQTT",sharedPreferences.getString("passwordMQTT", ""));
+
             twoSwitchFragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.frameLayoutTwoSwitch, twoSwitchFragment);
         }
