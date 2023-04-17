@@ -41,6 +41,7 @@ public class TwoSwitchFragment extends Fragment {
     public String myTopic;
     private MyTwoSwitch myTwoSwitch = new MyTwoSwitch();
     private final ControlPoint controlPoint;
+    private MyMqttConnectOptions myMqttConnectOptions;
 
     public TwoSwitchFragment(ControlPoint controlPoint, int my_on, int my_of) {
         this.my_off = my_of;
@@ -85,7 +86,7 @@ public class TwoSwitchFragment extends Fragment {
             myTwoSwitch = gson.fromJson(controlPoint.executable_code, MyTwoSwitch.class);
         }
 
-        MyMqttConnectOptions myMqttConnectOptions = new MyMqttConnectOptions();
+        myMqttConnectOptions = MyMqttConnectOptions.getMqttConnectOptions("","","");
         Bundle bundle = this.getArguments();
         assert bundle != null;
 
@@ -124,9 +125,9 @@ public class TwoSwitchFragment extends Fragment {
                     public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
                 });
 
-        MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+        MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                 .published("{\"value\":\"get value\"}", myTopic);
-        MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+        MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                 .subscribeToTopic(myTopic);
     }
 
@@ -142,7 +143,7 @@ public class TwoSwitchFragment extends Fragment {
                 setImage1(action);
 
                 String messege = "{\"on\"=\"on\"}";
-                MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (null != myTwoSwitch.tameOff){
                     long set_timer = myTwoSwitch.tameOff * 64000;
@@ -165,7 +166,7 @@ public class TwoSwitchFragment extends Fragment {
                             }
                             setImage1(action);
                             String messege = "{\"off\"=\"off\"}";
-                            MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                            MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                                     .published(messege, myTopic);
                         }
                     }.start();
@@ -181,7 +182,7 @@ public class TwoSwitchFragment extends Fragment {
                 setImage1(action);
 
                 String messege = "{\"off\"=\"off\"}";
-                MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
@@ -202,7 +203,7 @@ public class TwoSwitchFragment extends Fragment {
                 setImage2(action);
 
                 String messege = "{\"on_2\"=\"on\"}";
-                MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                MyMQTTClientNew.getInstance(getActivity(),myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (null != myTwoSwitch.tameOff_2){
                     long set_timer = myTwoSwitch.tameOff_2 * 64000;
@@ -225,7 +226,7 @@ public class TwoSwitchFragment extends Fragment {
                             }
                             setImage1(action);
                             String messege = "{\"off_2\"=\"off\"}";
-                            MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                            MyMQTTClientNew.getInstance(getActivity(),myMqttConnectOptions)
                                     .published(messege, myTopic);
                         }
                     }.start();
@@ -240,7 +241,7 @@ public class TwoSwitchFragment extends Fragment {
                 }
                 setImage2(action);
                 String messege = "{\"off_2\"=\"off\"}";
-                MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+                MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (countDownTimer != null) {
                     countDownTimer.cancel();

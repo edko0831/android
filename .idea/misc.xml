@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/TV_remote_background.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/border.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/button_main.xml" value="0.109" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/button_main_shape.xml" value="0.1" />
@@ -65,7 +66,7 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/fragment_add_object.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/fragment_connect.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/fragment_first.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/fragment_item.xml" value="0.1" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/fragment_item.xml" value="0.22" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/fragment_item_list.xml" value="0.1796875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/fragment_item_main.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/fragment_lamp.xml" value="0.1" />
@@ -86,6 +87,7 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/ltoolbar.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/round_button.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/settings_activity.xml" value="0.1796875" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1796875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/menu_add_object.xml" value="0.1796875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/menu_list_control_point.xml" value="0.1796875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/menu_main.xml" value="0.17447916666666666" />
@@ -95,6 +97,7 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/menu_my_object.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/menu_my_object2.xml" value="0.1796875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/menu/menu_my_setting.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/mipmap-anydpi-v26/TV_remote.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/mipmap-anydpi-v26/elektricheskaya_rozetka.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/mipmap-anydpi-v26/eye_icon.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/mipmap-anydpi-v26/eye_icon_round.xml" value="0.1" />

@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,7 +70,14 @@ public class MyControlPointAdapter extends  RecyclerView.Adapter<MyControlPointA
             }
         }
 
-        holder.checkBox.setOnCheckedChangeListener((compoundButton, b) -> myCheckedChangeListener.onCheckedChange(controlPoints.get(position).getId(), b));
+        holder.checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
+                if (!holder.checkBox.isChecked()){
+                    holder.button.setVisibility(Button.INVISIBLE);
+                } else {
+                    holder.button.setVisibility(Button.VISIBLE);
+                }
+                myCheckedChangeListener.onCheckedChange(controlPoints.get(position).getId(), b);
+          });
 
     }
 
@@ -83,6 +92,7 @@ public class MyControlPointAdapter extends  RecyclerView.Adapter<MyControlPointA
         public RecyclerView recyclerView;
         public EditText editText;
         public CheckBox checkBox;
+        public ImageButton button;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,7 +100,12 @@ public class MyControlPointAdapter extends  RecyclerView.Adapter<MyControlPointA
             this.textView = itemView.findViewById(R.id.textView);
             this.editText = itemView.findViewById(R.id.id_object);
             this.checkBox = itemView.findViewById(R.id.checkBox);
+            this.button = itemView.findViewById(R.id.imageButtonUpdate);
+
+            button.setVisibility(Button.INVISIBLE);
             editText.setVisibility(EditText.INVISIBLE);
+
+            button.setOnClickListener(v -> myClickListener.onItemClick(controlPoints.get(getBindingAdapterPosition()).getId()));
 
             recyclerView = itemView.findViewById(R.id.recyclerViewListControlPoint);
 
@@ -114,6 +129,7 @@ public class MyControlPointAdapter extends  RecyclerView.Adapter<MyControlPointA
         public boolean onLongClick(View v) {
             checkBox.setVisibility(CheckBox.VISIBLE);
             checkBox.setChecked(true);
+            button.setVisibility(Button.VISIBLE);
             myClickListener.onItemLongClick(controlPoints.get(getBindingAdapterPosition()).getId());
             return true;
         }

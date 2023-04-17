@@ -80,35 +80,30 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
     }
 
     private void openAddControlPointActivity(){
-        if(selectControlPoint.size() > 0){
-            AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.ask_a_question)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.update, (dialogInterface, i) -> setAddControlPointActivity(selectControlPoint))
-                    .setNegativeButton(R.string.delete, (dialog, id) -> {
-                        deleteControlPoint(selectControlPoint);
-                        dialog.cancel();
-                    })
-                    .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
-            //Creating dialog box
-            AlertDialog alert = builder.create();
-            alert.setIcon(R.drawable.icons8_question_mark_64);
-            alert.setTitle(R.string.question);
-            alert.show();
-        } else {
-            Intent controlPointActivity = new Intent(this, AddControlPointActivity.class);
-            mStartForResult.launch(controlPointActivity);
-        }
-     }
+        Intent controlPointActivity = new Intent(this, AddControlPointActivity.class);
+        mStartForResult.launch(controlPointActivity);
+    }
 
     private void deleteControlPoint(List<Long> selectControlPoint) {
-        for (int i = 0; i<selectControlPoint.size(); i++ ) {
-            controlPointDAO.delete(controlPointDAO.selectId(selectControlPoint.get(i).intValue()));
-            selectControlPoint.remove(selectControlPoint.get(i));
-        }
-        selectControlPoint.clear();
-        setAdapter();
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.ask_a_question)
+                .setCancelable(false)
+                .setNegativeButton(R.string.delete, (dialog, id) -> {
+                    for (int i = 0; i<selectControlPoint.size(); i++ ) {
+                        controlPointDAO.delete(controlPointDAO.selectId(selectControlPoint.get(i).intValue()));
+                    }
+                    selectControlPoint.clear();
+                    setAdapter();
+                    dialog.cancel();
+                })
+                .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        alert.setIcon(R.drawable.icons8_question_mark_64);
+        alert.setTitle(R.string.question);
+        alert.show();
+
     }
 
     private void setAddControlPointActivity(List<Long> selectControlPoint) {
@@ -120,6 +115,7 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
         selectControlPoint.clear();
         setAdapter();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_list_control_point, menu);
@@ -155,7 +151,23 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
 
     @Override
     public void onItemClick(Long position) {
-
+        if(selectControlPoint.size() > 0){
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.ask_a_question)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.update, (dialogInterface, i) -> setAddControlPointActivity(selectControlPoint))
+                    .setNegativeButton(R.string.delete, (dialog, id) -> {
+                        deleteControlPoint(selectControlPoint);
+                        dialog.cancel();
+                    })
+                    .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            alert.setIcon(R.drawable.icons8_question_mark_64);
+            alert.setTitle(R.string.question);
+            alert.show();
+        }
     }
 
     @Override
@@ -186,4 +198,5 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
             selectControlPoint.remove(position);
         }
     }
+
 }

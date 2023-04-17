@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
     private final List<MyListObjectControl> listData;
     private final MyClickListener myClickListener;
     private final MyCheckedChangeListener myCheckedChangeListener;
+    private final MyButtonClickListener myButtonClickListener;
     private List<Long> selectObject = new ArrayList<>();
     View parent;
 
@@ -35,10 +38,14 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
     }
 
     // RecyclerView recyclerView;
-    public MyListAdapter(List<MyListObjectControl> listData, MyClickListener myClickListener, MyCheckedChangeListener myCheckedChangeListener) {
+    public MyListAdapter(List<MyListObjectControl> listData,
+                         MyClickListener myClickListener,
+                         MyCheckedChangeListener myCheckedChangeListener,
+                         MyButtonClickListener myButtonClickListener) {
         this.listData = listData;
         this.myClickListener = myClickListener;
         this.myCheckedChangeListener = myCheckedChangeListener;
+        this.myButtonClickListener = myButtonClickListener;
     }
 
     @Override
@@ -73,9 +80,19 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
                 holder.checkBox.setChecked(true);
                 holder.checkBox.setVisibility(CheckBox.VISIBLE);
             }
+        } else {
+            holder.checkBox.setChecked(false);
+            holder.checkBox.setVisibility(CheckBox.INVISIBLE);
         }
 
-        holder.checkBox.setOnCheckedChangeListener((compoundButton, b) -> myCheckedChangeListener.onCheckedChange(listData.get(position).getId(), b));
+        holder.checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
+            myCheckedChangeListener.onCheckedChange(listData.get(position).getId(), b);
+            if (!holder.checkBox.isChecked()){
+                holder.button.setVisibility(Button.INVISIBLE);
+            } else {
+                holder.button.setVisibility(Button.VISIBLE);
+            }
+        });
         holder.linearLayout.setOnClickListener(view -> {
           if (myClickListener != null) {
                 final Animation animAlpha = AnimationUtils.loadAnimation(view.getContext(), R.anim.alpha);
@@ -86,6 +103,12 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
                 }
           }
         });
+        holder.button.setOnClickListener(view -> {
+            if (myButtonClickListener != null) {
+                myButtonClickListener.onButtonClick(listData.get(position).getId());
+            }
+        });
+
         holder.linearLayout.setOnLongClickListener(view -> {
             if (myClickListener != null) {
                 holder.checkBox.setVisibility(CheckBox.VISIBLE);
@@ -108,6 +131,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         public LinearLayout linearLayout;
         public EditText editText;
         public CheckBox checkBox;
+        public ImageButton button;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -116,6 +140,9 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
             this.textView = itemView.findViewById(R.id.textView);
             this.editText = itemView.findViewById(R.id.id_object);
             this.checkBox = itemView.findViewById(R.id.checkBox);
+            this.button = itemView.findViewById(R.id.imageButtonUpdate);
+
+            button.setVisibility(Button.INVISIBLE);
             editText.setVisibility(EditText.INVISIBLE);
 
             linearLayout = itemView.findViewById(R.id.linearLayout);

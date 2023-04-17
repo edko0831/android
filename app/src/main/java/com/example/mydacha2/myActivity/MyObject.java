@@ -31,6 +31,7 @@ import com.example.mydacha2.R;
 import com.example.mydacha2.fragment.RoundButton;
 import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
+import com.example.mydacha2.supportclass.MyButtonClickListener;
 import com.example.mydacha2.supportclass.MyCheckedChangeListener;
 import com.example.mydacha2.supportclass.MyClickListener;
 import com.example.mydacha2.supportclass.MyListAdapter;
@@ -43,7 +44,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RequiresApi(api = 33)
-public class MyObject extends AppCompatActivity implements OnSelectedButtonListener, MyClickListener, MyCheckedChangeListener {
+public class MyObject extends AppCompatActivity implements MyButtonClickListener, OnSelectedButtonListener, MyClickListener, MyCheckedChangeListener {
     private static final String LOG_TAG = "MyObject";
     FrameLayout frameLayout;
     MyListAdapter adapter;
@@ -51,7 +52,7 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
     TextView textView;
     ObjectControlsDAO objectControlsDAO;
     List<ObjectControl> objectControlList;
-    AlertDialog.Builder builder;
+
     List<Long> selectObject = new ArrayList<>();
     private static final int MY_REQUEST_CODE_PERMISSION = 0;
     private static final int REQUEST_EXTERNAL_STORAGE = 4;
@@ -97,7 +98,6 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
         AppDatabase db = App.getInstance(this).getDatabase();
         objectControlsDAO = db.ObjectControlsDAO();
         objectControlList = new ArrayList<>();
-        builder = new AlertDialog.Builder(this);
 
         setFragment();
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -184,7 +184,7 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
 
         RecyclerView recyclerView = findViewById(R.id.listObject);
         recyclerView.scrollToPosition(0);
-        adapter = new MyListAdapter(myListData, this, this);
+        adapter = new MyListAdapter(myListData, this, this, this);
         adapter.setSelectObject(selectObject);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -201,24 +201,8 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
     }
 
     public void onButtonSelected(int buttonIndex) {
-        if (buttonIndex == R.id.button_round_add) {
-            if (selectObject.size() != 0) {
-                builder.setMessage(R.string.ask_a_question)
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.update, (dialogInterface, i) -> setFragmentUpdate(selectObject))
-                        .setNegativeButton(R.string.delete, (dialog, id) -> {
-                            deleteObject(selectObject);
-                            dialog.cancel();
-                        })
-                        .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
-                //Creating dialog box
-                AlertDialog alert = builder.create();
-                alert.setIcon(R.drawable.icons8_question_mark_64);
-                alert.setTitle(R.string.question);
-                alert.show();
-            } else {
+        if (buttonIndex == R.id.button_round_add){
                 setFragmentAdd();
-            }
         } else if (buttonIndex == R.id.buttonSave) {
             setFragment();
         } else if (buttonIndex == R.id.buttonCancel) {//  selectObject.clear();
@@ -227,10 +211,23 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
     }
 
     private void deleteObject(List<Long> selectObject) {
-       for (int i = 0; i<selectObject.size(); i++ ) {
-           objectControlsDAO.deleteId(selectObject.get(i).intValue());
-       }
-       setFragment();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.ask_a_question)
+                .setCancelable(false)
+                .setNegativeButton(R.string.delete, (dialog, id) -> {
+                     for (int i = 0; i<selectObject.size(); i++ ) {
+                         objectControlsDAO.deleteId(selectObject.get(i).intValue());
+                     }
+                     selectObject.clear();
+                     setFragment();
+                    dialog.cancel();
+                })
+                .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        alert.setIcon(R.drawable.icons8_question_mark_64);
+        alert.setTitle(R.string.question);
+        alert.show();
      }
 
     public void setFragmentAdd() {
@@ -257,7 +254,7 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
 
     @Override
     public void onItemClick(Long position) {
-        selectObject.remove(position);
+      //  selectObject.remove(position);
         Intent managementObjectActivity = new Intent(this, ManagementObject.class);
         managementObjectActivity.putExtra("id", position);
         mStartForResult.launch(managementObjectActivity);
@@ -266,5 +263,26 @@ public class MyObject extends AppCompatActivity implements OnSelectedButtonListe
     @Override
     public void onItemLongClick(Long position) {
 
+    }
+
+    @Override
+    public void onButtonClick(Long position) {
+        if (selectObject.size() != 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.ask_a_question)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.update, (dialogInterface, i) -> setFragmentUpdate(selectObject))
+                    .setNegativeButton(R.string.delete, (dialog, id) -> {
+                        deleteObject(selectObject);
+                        dialog.cancel();
+                    })
+                    .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            alert.setIcon(R.drawable.icons8_question_mark_64);
+            alert.setTitle(R.string.question);
+            alert.show();
+
+        }
     }
 }

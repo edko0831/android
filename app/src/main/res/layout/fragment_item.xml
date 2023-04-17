@@ -17,4 +17,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="151dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="Button" />
 </LinearLayout>

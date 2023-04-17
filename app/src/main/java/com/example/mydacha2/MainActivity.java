@@ -112,20 +112,16 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
         fragmentTransaction.commit();
         onConnectWiFi();
 
-        myMqttConnectOptions = new MyMqttConnectOptions();
+
         String server = sharedPreferences.getString("ipNodeServer", "");
         String port = sharedPreferences.getString("port", "");
         if(!server.equals("") && !port.equals("")) {
             String serverURI = "tcp://" + server + ":" + port;
-            myMqttConnectOptions.setServerUri(serverURI);
-            myMqttConnectOptions.setUsername(sharedPreferences.getString("userNodeServer", ""));
-            myMqttConnectOptions.setPassword(sharedPreferences.getString("passwordMQTT", ""));
+            myMqttConnectOptions =  MyMqttConnectOptions.getMqttConnectOptions(serverURI,
+                                           sharedPreferences.getString("userNodeServer", ""),
+                                           sharedPreferences.getString("passwordMQTT", ""));
             MyMQTTClientNew.getInstance(this, myMqttConnectOptions);
-        } else {
-            // TODO: 12.04.2023  
-           // Toast.makeText(this, getString(R.string.lamp_blank_fragment), Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void onConnectWiFi(){

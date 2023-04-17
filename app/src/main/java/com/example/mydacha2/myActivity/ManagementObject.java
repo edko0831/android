@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -58,6 +59,7 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
     Long x;
     Long y;
     List<MySubscribes> mySubscribesList = new ArrayList<>();
+    MyMqttConnectOptions myMqttConnectOptions;
 
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -101,6 +103,13 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        SharedPreferences sharedPreferences =  getSharedPreferences("myDacha", MODE_PRIVATE);
+        String server = sharedPreferences.getString("ipNodeServer", "");
+        String port = sharedPreferences.getString("port", "");
+        String serverURI = "tcp://" + server + ":" + port;
+        myMqttConnectOptions =  MyMqttConnectOptions.getMqttConnectOptions(serverURI,
+                sharedPreferences.getString("userNodeServer", ""),
+                sharedPreferences.getString("passwordMQTT", ""));
 
         progressBar.setVisibility(View.INVISIBLE);
     }
@@ -109,7 +118,7 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
     protected void onStart() {
         super.onStart();
 
-        MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+        MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                 .setCallback(new MqttCallbackExtended() {
                     @Override
                     public void connectComplete(boolean b, String s) {}
@@ -159,9 +168,9 @@ public class  ManagementObject extends AppCompatActivity implements View.OnLongC
                 });
 
         for (MySubscribes mySubscribes: mySubscribesList) {
-            MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+            MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                     .published("{\"value\":\"get value\"}", mySubscribes.topic);
-            MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+            MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                     .subscribeToTopic(mySubscribes.topic);
         }
     }

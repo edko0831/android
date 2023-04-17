@@ -39,6 +39,7 @@ public class OneSwitch extends AppCompatActivity {
     private MySwitch mySwitch;
     private int my_on;
     private int my_off;
+    MyMqttConnectOptions myMqttConnectOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class OneSwitch extends AppCompatActivity {
             Gson gson = builder.create();
             mySwitch = gson.fromJson(controlPoint.executable_code, MySwitch.class);
         }
-        MyMqttConnectOptions myMqttConnectOptions = new MyMqttConnectOptions();
+        myMqttConnectOptions = MyMqttConnectOptions.getMqttConnectOptions("","","");
         myTopic = basicTopic + controlPoint.topic;
         MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                 .setCallback(new MqttCallbackExtended() {
@@ -98,9 +99,9 @@ public class OneSwitch extends AppCompatActivity {
                     public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
                 });
 
-        MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+        MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                 .published("{\"value\":\"get value\"}", myTopic);
-        MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+        MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                 .subscribeToTopic(myTopic);
 
     }
@@ -116,7 +117,7 @@ public class OneSwitch extends AppCompatActivity {
                 }
                 setImage(action);
                 String messege = "{\"on\"=\"on\"}";
-                MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+                MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (null != mySwitch.tameOff){
                     long set_timer = mySwitch.tameOff * 64000;
@@ -139,7 +140,7 @@ public class OneSwitch extends AppCompatActivity {
                             }
                             setImage(action);
                             String messege = "{\"off\"=\"off\"}";
-                            MyMQTTClientNew.getInstance(OneSwitch.this, new MyMqttConnectOptions())
+                            MyMQTTClientNew.getInstance(OneSwitch.this, myMqttConnectOptions)
                                     .published(messege, myTopic);
                        }
                     }.start();
@@ -154,7 +155,7 @@ public class OneSwitch extends AppCompatActivity {
                 }
                 setImage(action);
                 String messege = "{\"off\"=\"off\"}";
-                MyMQTTClientNew.getInstance(this, new MyMqttConnectOptions())
+                MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (countDownTimer != null) {
                     countDownTimer.cancel();

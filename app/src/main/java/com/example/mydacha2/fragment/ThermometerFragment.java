@@ -1,6 +1,8 @@
 package com.example.mydacha2.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -32,9 +34,8 @@ import java.io.InputStream;
 public class ThermometerFragment extends Fragment {
     private TextView textViewTemperature;
     private ImageView imageTemperatura;
-    String myTopic;
-
-    ControlPoint controlPoint;
+    private String myTopic;
+    private final ControlPoint controlPoint;
 
     public ThermometerFragment(ControlPoint controlPoint) {
         this.controlPoint = controlPoint;
@@ -61,7 +62,7 @@ public class ThermometerFragment extends Fragment {
         textViewTemperature= view.findViewById(R.id.textViewTemperature);
         imageTemperatura = view.findViewById(R.id.imageTemperatura);
 
-        MyMqttConnectOptions myMqttConnectOptions = new MyMqttConnectOptions();
+        MyMqttConnectOptions myMqttConnectOptions = MyMqttConnectOptions.getMqttConnectOptions("", "", "");
         Bundle bundle = this.getArguments();
         assert bundle != null;
         String basicTopic = bundle.getString("basicTopic", "");
@@ -108,9 +109,9 @@ public class ThermometerFragment extends Fragment {
         e.printStackTrace();
     }
 
-    MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+    MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
             .published("{\"value\":\"get value\"}", myTopic);
-    MyMQTTClientNew.getInstance(getActivity(), new MyMqttConnectOptions())
+    MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
             .subscribeToTopic(myTopic);
 
     }
@@ -143,9 +144,12 @@ public class ThermometerFragment extends Fragment {
                                          .getAssets()
                                          .open(filename)) {
 
-             Drawable drawable = Drawable.createFromStream(inputStream, null);
-             imageTemperatura.setImageDrawable(drawable);
-             imageTemperatura.setScaleType(ImageView.ScaleType.CENTER_CROP);
+             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+             Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, getResources().getInteger(R.integer.wight_termometr),
+                     getResources().getInteger(R.integer.height_termometr), true);
+             imageTemperatura.setImageBitmap(scaledBitmap);
+
          }
          catch (IOException | NullPointerException e){
              e.printStackTrace();

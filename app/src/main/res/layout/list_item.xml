@@ -47,12 +47,20 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:layout_width="256dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_toEndOf="@id/imageView"
                 android:gravity="center_vertical"
                 android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/imageButtonUpdate"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                app:srcCompat="@mipmap/dots_foreground" />
 
         </LinearLayout>
 
