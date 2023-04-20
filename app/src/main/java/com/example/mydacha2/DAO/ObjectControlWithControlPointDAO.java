@@ -16,7 +16,9 @@ import java.util.List;
 public interface ObjectControlWithControlPointDAO {
 
     @Transaction
-    @Query(value = "Select * From object_with_point a " +
+    @Query(value = "Select a.id_object_point, a.object_id, a.point_id, a.position_x, a.position_y," +
+            " c.id_control, c.name, c.description, c.type_point, c.picture_url, c.topic, c.executable_code " +
+            "  From object_with_point a " +
                       " Inner Join control_point c on a.point_id = c.id_control Where a.object_id = :id_object")
     List<ObjectControlControlPoint> selectId(int id_object);
 

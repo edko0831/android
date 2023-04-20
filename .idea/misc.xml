@@ -42,8 +42,10 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/temperatura_сold_background.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/drawable/three_points_background.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout-w1240dp/activity_control_point1.xml" value="0.11546184738955824" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.11546184738955824" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout-w936dp/activity_add_object_control_with_control_point.xml" value="0.11015625" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout-w936dp/activity_control_point2.xml" value="0.134765625" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout-w936dp/activity_login.xml" value="0.134765625" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout-w936dp/add_object_control2.xml" value="0.134765625" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_add_object.xml" value="0.1796875" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_add_object_control_with_control_point.xml" value="0.146875" />
@@ -51,6 +53,7 @@
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_control_point.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_control_point2.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_list_control_point.xml" value="0.1796875" />
+        <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_main_new.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/edko/AndroidStudioProjects/MyDacha2/app/src/main/res/layout/activity_management_object.xml" value="0.1" />

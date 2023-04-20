@@ -16,7 +16,6 @@
     <string name="ip_name">IP адрес</string>
     <string name="ip_name_mqtt">IP адрес MQTT</string>
     <string name="bt_cancel">Отмена</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lamp_blank_fragment">Включение лампа</string>
     <string name="connectWiFi">Подключение к WiFi</string>
     <string name="on_lamp">Включение лампы</string>
@@ -51,22 +50,19 @@
     <string name="connectWiFi_page">Подключение к сети</string>
     <string name="title_activity_control_point">ControlPointActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Войти</string>
+    <string name="action_registration">Регистрация</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_username">Такого пользователя нет. Зарегистрируйтесь.</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="login_failed">"Ошибка входа"</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -84,6 +80,8 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="action_point">Элементы</string>
     <string name="not_name">"Не заполнено поле наименование"</string>
+    <string name="not_user">"Не заполнено поле пользователь"</string>
+    <string name="not_password">"Не заполнено поле пароль"</string>
     <string name="not_type_point">"Не заполнено поле тип элемента"</string>
     <string name="type_point">"Тип элемента"</string>
     <string name="executable_code">"Выпоняемый код"</string>
