@@ -37,6 +37,7 @@ import com.example.mydacha2.myActivity.ConnectWiFi;
 import com.example.mydacha2.myActivity.ListControlPointActivity;
 import com.example.mydacha2.myActivity.MyObject;
 import com.example.mydacha2.myActivity.SettingActivity;
+import com.example.mydacha2.myActivity.UsersActivity;
 import com.example.mydacha2.supportclass.MyClickListener;
 import com.example.mydacha2.supportclass.MyListMain;
 import com.example.mydacha2.supportclass.MyMQTTClientNew;
@@ -297,8 +298,9 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
             Intent intent1 = new Intent(this, MyObject.class);
             startActivity(intent1);
         } else if (position == 4) {
-            Intent intent1 = new Intent(this, ListControlPointActivity.class);
-            startActivity(intent1);
+            startActivity(new Intent(this, ListControlPointActivity.class));
+        } else if (position == 5) {
+            startActivity(new Intent(this, UsersActivity.class));
         }
     }
 
@@ -318,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements MyClickListener {
                 new MyListMain(2L, getString(R.string.connectWiFi), R.mipmap.icons8_search_satellites_94_foreground),
                 new MyListMain(3L, getString(R.string.action_settings), R.mipmap.icons8_gear_94_foreground),
                 new MyListMain(4L, getString(R.string.action_point), R.mipmap.elements_foreground),
-    //            new MyListMain(5L, "Alert", android.R.drawable.ic_dialog_alert),
+                new MyListMain(5L, getString(R.string.button_users), R.mipmap.people_foreground),
     //            new MyListMain(6L, "Map", android.R.drawable.ic_dialog_map)
         };
     }

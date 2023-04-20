@@ -24,4 +24,10 @@ public interface UsersDAO {
     void update(Users items);
     @Delete
     void delete(Users item);
+
+    @Query(value = "Select * From users Where userId = :intValue;")
+    Users selectId(int intValue);
+
+    @Query(value = "Select * From users Where roleId = :roleId;")
+    List<Users> selectRole(int roleId);
 }

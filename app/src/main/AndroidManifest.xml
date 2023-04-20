@@ -34,6 +34,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".myActivity.UsersActivity"
+            android:exported="false" />
+        <activity
             android:name=".myActivity.TwoSwitch"
             android:exported="false" />
         <activity
@@ -73,9 +76,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".myActivity.ui.login.LoginActivity"
             android:exported="true"

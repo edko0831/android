@@ -125,8 +125,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\edko\AndroidStudioProjects\MyDacha2\app\src\main\res\dots.png" />
-                                                <entry key="scalingPercent" value="50" />
+                                                <entry key="imagePath" value="E:\Загрузки Firefox\icons8ru\people.png" />
+                                                <entry key="scalingPercent" value="98" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -161,7 +161,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="dots" />
+                                      <entry key="outputName" value="people" />
                                     </map>
                                   </option>
                                 </PersistentState>

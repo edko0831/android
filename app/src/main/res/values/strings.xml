@@ -34,6 +34,7 @@
     <string name="picture_id">Картинка</string>
 
     <string name="ask_a_question">Вы хотите изменить или удалить выбранные объекты</string>
+    <string name="ask_a_question_users">Вы хотите изменить или удалить выбранных пользователей</string>
     <string name="update">Изменить</string>
     <string name="delete">Удалить</string>
     <string name="cancel">Отмена</string>
@@ -53,7 +54,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Авторизация</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Войти</string>
@@ -86,6 +87,7 @@
     <string name="type_point">"Тип элемента"</string>
     <string name="executable_code">"Выпоняемый код"</string>
     <string name="list_control_point_page">Список элементов</string>
+    <string name="list_users_page">Список пользователей</string>
     <string name="lamp">Лампочка</string>
     <string name="two_lamp">Две лампочки</string>
     <string name="socket">Розетка</string>
@@ -102,7 +104,7 @@
     <string name="kode_city">Код города</string>
     <string name="city">Днепр</string>
     <string name="basicTopic">Базовый topic</string>
-    <string name="dummy_button">Dummy Button</string>
+    <string name="button_users">Пользователи</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
