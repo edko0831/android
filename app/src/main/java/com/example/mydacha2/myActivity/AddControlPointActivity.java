@@ -125,7 +125,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         AppDatabase db = App.getInstance(this).getDatabase();
         controlPointDAO = db.controlPointDAO();
 
-       Bundle arguments = getIntent().getExtras();
+        Bundle arguments = getIntent().getExtras();
 
         for (MyListTypePoint myListTypePoint: MyListTypePoint.getListTypePoint(this)){
             spinnerList.add(myListTypePoint.getPoint());
@@ -142,7 +142,6 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
     }
 
     private void askPermissionAndBrowseFile()  {
-
         int permisson = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
 
@@ -155,6 +154,7 @@ public class AddControlPointActivity extends AppCompatActivity implements View.O
         }
         doBrowseFile();
     }
+
     private void doBrowseFile() {
         Intent chooseFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
         chooseFileIntent.setType("image/*");

@@ -81,6 +81,7 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="action_point">Элементы</string>
     <string name="not_name">"Не заполнено поле наименование"</string>
+    <string name="not_name_user">"Не заполнено поле имя"</string>
     <string name="not_user">"Не заполнено поле пользователь"</string>
     <string name="not_password">"Не заполнено поле пароль"</string>
     <string name="not_type_point">"Не заполнено поле тип элемента"</string>
@@ -105,6 +106,7 @@
     <string name="city">Днепр</string>
     <string name="basicTopic">Базовый topic</string>
     <string name="button_users">Пользователи</string>
+    <string name="user_name_name">Имя</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
 

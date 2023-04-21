@@ -11,7 +11,7 @@ public class MyListTypePoint {
 
     public MyListTypePoint(long id, String point, int icons) {
         this.id = id;
-        this.point =point;
+        this.point = point;
         this.icons = icons;
     }
 

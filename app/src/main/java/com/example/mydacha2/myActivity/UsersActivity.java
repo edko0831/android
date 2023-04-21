@@ -16,26 +16,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mydacha2.DAO.ControlPointDAO;
-import com.example.mydacha2.Entity.ControlPoint;
+import com.example.mydacha2.DAO.UsersDAO;
+import com.example.mydacha2.Entity.Users;
 import com.example.mydacha2.MainActivity;
 import com.example.mydacha2.R;
 import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.example.mydacha2.supportclass.MyCheckedChangeListener;
 import com.example.mydacha2.supportclass.MyClickListener;
-import com.example.mydacha2.supportclass.MyControlPointAdapter;
-import com.example.mydacha2.supportclass.MyListControlPoint;
+import com.example.mydacha2.supportclass.MyDataAdapter;
+import com.example.mydacha2.supportclass.MyListData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ListControlPointActivity extends AppCompatActivity implements MyClickListener, MyCheckedChangeListener {
-    ControlPointDAO controlPointDAO;
-    public final List<Long> selectControlPoint = new ArrayList<>();
+public class UsersActivity extends AppCompatActivity implements MyClickListener, MyCheckedChangeListener {
     RecyclerView recyclerView;
-    MyControlPointAdapter adapter;
+    public final List<Long> selectData = new ArrayList<>();
 
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -44,27 +42,27 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
                     assert intent != null;
                     long id = intent.getLongExtra("id", -1);
                     if (id != - 1 ){
-                        selectControlPoint.remove(id);
-                       }
-                     setAdapter();
+                        selectData.remove(id);
+                    }
+                    setAdapter();
                 }
             });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_control_point);
+        setContentView(R.layout.activity_users);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         TextView textView = findViewById(R.id.textView_object);
-        textView.setText(R.string.list_control_point_page);
+        textView.setText(R.string.list_users_page);
 
         ImageButton button = findViewById(R.id.imageButton_add);
-        button.setOnClickListener(v -> openAddControlPointActivity());
+        button.setOnClickListener(v -> openAddUsers());
 
-        recyclerView = findViewById(R.id.recyclerViewListControlPoint);
+        recyclerView = findViewById(R.id.recyclerViewListUsers);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -72,48 +70,11 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
         setAdapter();
     }
 
-    private void setAdapter(){
-        adapter = new MyControlPointAdapter(setMyControlPoint(), this, this);
+    private void setAdapter() {
+        MyDataAdapter adapter = new MyDataAdapter(setMyUsers(), this, this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-    }
-
-    private void openAddControlPointActivity(){
-        Intent controlPointActivity = new Intent(this, AddControlPointActivity.class);
-        mStartForResult.launch(controlPointActivity);
-    }
-
-    private void deleteControlPoint(List<Long> selectControlPoint) {
-        AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.ask_a_question)
-                .setCancelable(false)
-                .setNegativeButton(R.string.delete, (dialog, id) -> {
-                    for (int i = 0; i<selectControlPoint.size(); i++ ) {
-                        controlPointDAO.delete(controlPointDAO.selectId(selectControlPoint.get(i).intValue()));
-                    }
-                    selectControlPoint.clear();
-                    setAdapter();
-                    dialog.cancel();
-                })
-                .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
-        //Creating dialog box
-        AlertDialog alert = builder.create();
-        alert.setIcon(R.drawable.icons8_question_mark_64);
-        alert.setTitle(R.string.question);
-        alert.show();
-
-    }
-
-    private void setAddControlPointActivity(List<Long> selectControlPoint) {
-        for (int i = 0; i<selectControlPoint.size(); i++ ) {
-            Intent controlPointActivity = new Intent(this, AddControlPointActivity.class);
-            controlPointActivity.putExtra("id", selectControlPoint.get(i).longValue());
-            mStartForResult.launch(controlPointActivity);
-        }
-        selectControlPoint.clear();
-        setAdapter();
     }
 
     @Override
@@ -145,25 +106,32 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
         return super.onOptionsItemSelected(item);
     }
 
+    private void openAddUsers() {
+        mStartForResult.launch(new Intent(this, AddUserActivity.class));
+    }
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onCheckedChange(Long position, boolean b) {
+        if (b) {
+            selectData.add(position);
+        } else {
+            selectData.remove(position);
+        }
     }
 
     @Override
     public void onItemClick(Long position) {
-        if(selectControlPoint.size() > 0){
+        if(selectData.size() > 0){
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.ask_a_question)
+            builder.setMessage(R.string.ask_a_question_users)
                     .setCancelable(false)
-                    .setPositiveButton(R.string.update, (dialogInterface, i) -> setAddControlPointActivity(selectControlPoint))
+                    .setPositiveButton(R.string.update, (dialogInterface, i) -> setUpdateUser(selectData))
                     .setNegativeButton(R.string.delete, (dialog, id) -> {
-                        deleteControlPoint(selectControlPoint);
+                        deleteUser(selectData);
                         dialog.cancel();
                     })
                     .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
-            //Creating dialog box
             AlertDialog alert = builder.create();
             alert.setIcon(R.drawable.icons8_question_mark_64);
             alert.setTitle(R.string.question);
@@ -171,33 +139,63 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
         }
     }
 
-    @Override
-    public void onItemLongClick(Long position) {
+    private void deleteUser(List<Long> selectData) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.ask_a_question_users)
+                .setCancelable(false)
+                .setNegativeButton(R.string.delete, (dialog, id) -> {
+                    UsersDAO usersDAO;
+                    AppDatabase db = App.getInstance(this).getDatabase();
+                    usersDAO = db.usersDAO();
+                    for (int i = 0; i<selectData.size(); i++ ) {
+                        Users users = usersDAO.selectId(selectData.get(i).intValue());
+                        if(users.roleId == 1) {
+                            List<Users> listUsers = usersDAO.selectRole(1);
+                            if(listUsers.size() == 1){
+                                continue;
+                            }
+                        }
+                        usersDAO.delete(users);
+                    }
+                    selectData.clear();
+                    setAdapter();
+                    dialog.cancel();
+                })
+                .setNeutralButton(R.string.cancel, (dialog, id) -> dialog.cancel());
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        alert.setIcon(R.drawable.icons8_question_mark_64);
+        alert.setTitle(R.string.question);
+        alert.show();
 
     }
 
-    private List<MyListControlPoint> setMyControlPoint() {
+    private void setUpdateUser(List<Long> selectData) {
+        for (int i = 0; i<selectData.size(); i++ ) {
+            Intent addUserActivity = new Intent(this, AddUserActivity.class);
+            addUserActivity.putExtra("id", selectData.get(i).longValue());
+            mStartForResult.launch(addUserActivity);
+        }
+        selectData.clear();
+    }
+
+    @Override
+    public void onItemLongClick(Long position) {}
+
+    private List<MyListData> setMyUsers() {
+        UsersDAO usersDAO;
         AppDatabase db = App.getInstance(this).getDatabase();
-        controlPointDAO = db.controlPointDAO();
-        List<ControlPoint> listControlPointDAO = controlPointDAO.select();
+        usersDAO = db.usersDAO();
+        List<Users> lisUsers = usersDAO.select();
 
-        List<MyListControlPoint> myListControlPoint = new ArrayList<>();
+        List<MyListData> myListData = new ArrayList<>();
 
-        for (ControlPoint cp : listControlPointDAO) {
-            if (cp.name != null){
-                myListControlPoint.add(new MyListControlPoint(cp));
+        for (Users cp : lisUsers) {
+            if (cp.displayName != null){
+                myListData.add(new MyListData(cp.userId, cp.displayName, null, null));
             }
         }
-        return myListControlPoint;
+        return myListData;
     }
-
-    @Override
-    public void onCheckedChange(Long position, boolean b) {
-        if (b) {
-            selectControlPoint.add(position);
-        } else {
-            selectControlPoint.remove(position);
-        }
-    }
-
 }

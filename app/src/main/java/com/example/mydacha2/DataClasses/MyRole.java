@@ -1,10 +1,10 @@
 package com.example.mydacha2.DataClasses;
 
 public class MyRole {
-    long l;
-    String name;
-    private MyRole(long l, String name) {
-        this.l = l;
+    private long roleId;
+    private String name;
+    private MyRole(long roleId, String name) {
+        this.roleId = roleId;
         this.name = name;
     }
 
@@ -15,5 +15,13 @@ public class MyRole {
           //      new MyRole(3L, getString(R.string.action_settings)),
 
         };
+    }
+
+    public long getRoleId() {
+        return roleId;
+    }
+
+    public String getName() {
+        return name;
     }
 }

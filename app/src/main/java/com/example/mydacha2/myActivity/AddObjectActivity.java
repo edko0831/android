@@ -170,6 +170,8 @@ public class AddObjectActivity extends AppCompatActivity implements View.OnClick
             // Toast.makeText(this, getString(R.string.object_control), Toast.LENGTH_LONG).show();
         }  else if (id == R.id.action_close) {
             this.finishAffinity();
+        }  else if (id == android.R.id.home) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
