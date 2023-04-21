@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="@dimen/base_margin"
+    android:layout_marginEnd="@dimen/base_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".myActivity.AddControlPointActivity">
+
+    <TextView
+        android:id="@+id/textView_object"
+        style="@style/header_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textAllCaps="false"
+        tools:ignore="TextViewEdits" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/textView_object">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_id"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="#090909" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp">
+
+                <EditText
+                    android:id="@+id/textEdit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/user_name_name"
+                    android:imeOptions="actionGo"
+                    android:inputType="text"
+                    android:minHeight="48dp"
+                    android:singleLine="true"
+                    android:textColorHint="@color/textColorHint"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinner_type_point"
+                style="@style/CustomDropDownTilStyle"
+                android:hint="@string/type_point"
+                android:textColorHint="@color/textColorHint"
+                app:met_floatingLabel="highlight" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextTextPassword"
+                    android:layout_marginTop="3dp">
+
+                    <EditText
+                        android:id="@+id/editTextTextPassword"
+                        android:layout_width="223dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        android:singleLine="true"
+                        android:textColorHint="#546E7A"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/onpass"
+                    android:layout_width="73dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:accessibilityLiveRegion="polite"
+                    android:button="@mipmap/icons8_not_show_48_1_foreground"
+                    android:checked="false"
+                    android:gravity="left"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_marginTop="30dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                app:layout_constraintVertical_bias="0.0" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
