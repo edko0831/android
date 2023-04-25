@@ -107,16 +107,16 @@ public class TwoSwitchFragment extends Fragment {
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             MyTwoSwitch myTwoSwitchTemp = gson.fromJson(mqttMessage.toString(), MyTwoSwitch.class);
-                            if (myTwoSwitchTemp.off != null) {
-                                setImage1(myTwoSwitchTemp.off);
-                            } else if (myTwoSwitchTemp.on != null) {
-                                setImage1(myTwoSwitchTemp.on);
+                            if (myTwoSwitchTemp.action != null) {
+                                setImage1(myTwoSwitchTemp.action);
+                            } else {
+                                setImage1("off");
                             }
 
-                            if (myTwoSwitchTemp.off_2 != null) {
-                                setImage2(myTwoSwitchTemp.off_2);
-                            } else if (myTwoSwitchTemp.on_2 != null) {
-                                setImage2(myTwoSwitchTemp.on_2);
+                            if (myTwoSwitchTemp.action_2 != null) {
+                                setImage2(myTwoSwitchTemp.action_2);
+                            } else {
+                                setImage2("off");
                             }
                         }
                     }
@@ -135,14 +135,14 @@ public class TwoSwitchFragment extends Fragment {
         if (v.getId() == R.id.imageButtonSet1) {
             if (on_off1) {
                 String action;
-                if (myTwoSwitch.on != null){
-                    action = myTwoSwitch.on;
+                if (myTwoSwitch.action != null){
+                    action = myTwoSwitch.action;
                 } else {
                     action ="on";
                 }
                 setImage1(action);
 
-                String messege = "{\"on\"=\"on\"}";
+                String messege = "{\"action\"=\"on\"}";
                 MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (null != myTwoSwitch.tameOff){
@@ -159,13 +159,13 @@ public class TwoSwitchFragment extends Fragment {
                         @Override
                         public void onFinish() {
                             String action;
-                            if (myTwoSwitch.off != null){
-                                action = myTwoSwitch.off;
+                            if (myTwoSwitch.action != null){
+                                action = myTwoSwitch.action;
                             } else {
                                 action ="off";
                             }
                             setImage1(action);
-                            String messege = "{\"off\"=\"off\"}";
+                            String messege = "{\"action\"=\"off\"}";
                             MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                                     .published(messege, myTopic);
                         }
@@ -174,14 +174,14 @@ public class TwoSwitchFragment extends Fragment {
 
             } else {
                 String action;
-                if (myTwoSwitch.off != null){
-                    action = myTwoSwitch.off;
+                if (myTwoSwitch.action != null){
+                    action = myTwoSwitch.action;
                 } else {
                     action ="off";
                 }
                 setImage1(action);
 
-                String messege = "{\"off\"=\"off\"}";
+                String messege = "{\"action\"=\"off\"}";
                 MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (countDownTimer != null) {
@@ -195,14 +195,14 @@ public class TwoSwitchFragment extends Fragment {
         if (v.getId() == R.id.imageButtonSet2) {
             if (on_off2) {
                 String action;
-                if (myTwoSwitch.on_2 != null){
-                    action = myTwoSwitch.on_2;
+                if (myTwoSwitch.action_2 != null){
+                    action = myTwoSwitch.action_2;
                 } else {
                     action ="on";
                 }
                 setImage2(action);
 
-                String messege = "{\"on_2\"=\"on\"}";
+                String messege = "{\"action_2\"=\"on\"}";
                 MyMQTTClientNew.getInstance(getActivity(),myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (null != myTwoSwitch.tameOff_2){
@@ -219,13 +219,13 @@ public class TwoSwitchFragment extends Fragment {
                         @Override
                         public void onFinish() {
                             String action;
-                            if (myTwoSwitch.off_2 != null){
-                                action = myTwoSwitch.off_2;
+                            if (myTwoSwitch.action_2 != null){
+                                action = myTwoSwitch.action_2;
                             } else {
                                 action ="off";
                             }
                             setImage1(action);
-                            String messege = "{\"off_2\"=\"off\"}";
+                            String messege = "{\"action_2\"=\"off\"}";
                             MyMQTTClientNew.getInstance(getActivity(),myMqttConnectOptions)
                                     .published(messege, myTopic);
                         }
@@ -234,13 +234,13 @@ public class TwoSwitchFragment extends Fragment {
 
             } else {
                 String action;
-                if (myTwoSwitch.off_2 != null){
-                    action = myTwoSwitch.off_2;
+                if (myTwoSwitch.action_2 != null){
+                    action = myTwoSwitch.action_2;
                 } else {
                     action ="off";
                 }
                 setImage2(action);
-                String messege = "{\"off_2\"=\"off\"}";
+                String messege = "{\"action_2\"=\"off\"}";
                 MyMQTTClientNew.getInstance(getActivity(), myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (countDownTimer != null) {

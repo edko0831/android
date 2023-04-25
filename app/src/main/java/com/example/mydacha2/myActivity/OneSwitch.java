@@ -110,13 +110,13 @@ public class OneSwitch extends AppCompatActivity {
         if (v.getId() == R.id.imageButtonSet) {
             if (on_off) {
                 String action;
-                if (mySwitch.on != null){
-                    action = mySwitch.on;
+                if (mySwitch.action != null){
+                    action = mySwitch.action;
                 } else {
                     action ="on";
                 }
                 setImage(action);
-                String messege = "{\"on\"=\"on\"}";
+                String messege = "{\"action\"=\"on\"}";
                 MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (null != mySwitch.tameOff){
@@ -133,13 +133,13 @@ public class OneSwitch extends AppCompatActivity {
                         @Override
                         public void onFinish() {
                             String action;
-                            if (mySwitch.off != null){
-                                action = mySwitch.off;
+                            if (mySwitch.action != null){
+                                action = mySwitch.action;
                             } else {
                                 action ="off";
                             }
                             setImage(action);
-                            String messege = "{\"off\"=\"off\"}";
+                            String messege = "{\"action\"=\"off\"}";
                             MyMQTTClientNew.getInstance(OneSwitch.this, myMqttConnectOptions)
                                     .published(messege, myTopic);
                        }
@@ -148,13 +148,13 @@ public class OneSwitch extends AppCompatActivity {
 
             } else {
                 String action;
-                if (mySwitch.off != null){
-                    action = mySwitch.off;
+                if (mySwitch.action != null){
+                    action = mySwitch.action;
                 } else {
                     action ="off";
                 }
                 setImage(action);
-                String messege = "{\"off\"=\"off\"}";
+                String messege = "{\"action\"=\"off\"}";
                 MyMQTTClientNew.getInstance(this, myMqttConnectOptions)
                         .published(messege, myTopic);
                 if (countDownTimer != null) {
@@ -166,16 +166,17 @@ public class OneSwitch extends AppCompatActivity {
 
     private void setImageMQTT(MySwitch mySwitchTemp){
 
-        if(mySwitchTemp.on != null){
-            on_off = false;
-            imageButton.setImageResource(R.mipmap.icons8_on_94_foreground);
-            imageViewLamp.setImageResource(my_on);
-
-        } else if (mySwitchTemp.off != null){
-            textViewTamer.setText("");
-            imageButton.setImageResource(R.mipmap.icons8_off_94_foreground);
-            imageViewLamp.setImageResource(my_off);
-            on_off = true;
+        if(mySwitchTemp.action != null ){
+            if (mySwitchTemp.action.equals("on")){
+                on_off = false;
+                imageButton.setImageResource(R.mipmap.icons8_on_94_foreground);
+                imageViewLamp.setImageResource(my_on);
+            } else{
+                textViewTamer.setText("");
+                imageButton.setImageResource(R.mipmap.icons8_off_94_foreground);
+                imageViewLamp.setImageResource(my_off);
+                on_off = true;
+            }
         }
     }
 

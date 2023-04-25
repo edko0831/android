@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RoomWarnings;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
@@ -12,10 +13,12 @@ import com.example.mydacha2.Entity.ObjectControlWithControlPoint;
 
 import java.util.List;
 
+
 @Dao
 public interface ObjectControlWithControlPointDAO {
 
     @Transaction
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query(value = "Select a.id_object_point, a.object_id, a.point_id, a.position_x, a.position_y," +
             " c.id_control, c.name, c.description, c.type_point, c.picture_url, c.topic, c.executable_code " +
             "  From object_with_point a " +
