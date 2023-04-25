@@ -125,7 +125,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="E:\Загрузки Firefox\icons8ru\people.png" />
+                                                <entry key="imagePath" value="E:\Загрузки Firefox\icons8ru\tow_lamp.jpeg" />
                                                 <entry key="scalingPercent" value="98" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
@@ -161,7 +161,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="people" />
+                                      <entry key="outputName" value="two_lamp_icn" />
                                     </map>
                                   </option>
                                 </PersistentState>

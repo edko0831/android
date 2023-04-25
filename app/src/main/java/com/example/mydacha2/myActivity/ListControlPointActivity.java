@@ -24,8 +24,8 @@ import com.example.mydacha2.repository.App;
 import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.example.mydacha2.supportclass.MyCheckedChangeListener;
 import com.example.mydacha2.supportclass.MyClickListener;
-import com.example.mydacha2.supportclass.MyControlPointAdapter;
-import com.example.mydacha2.supportclass.MyListControlPoint;
+import com.example.mydacha2.supportclass.MyDataAdapter;
+import com.example.mydacha2.supportclass.MyListData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
     ControlPointDAO controlPointDAO;
     public final List<Long> selectControlPoint = new ArrayList<>();
     RecyclerView recyclerView;
-    MyControlPointAdapter adapter;
+    MyDataAdapter adapter;
 
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -73,7 +73,7 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
     }
 
     private void setAdapter(){
-        adapter = new MyControlPointAdapter(setMyControlPoint(), this, this);
+        adapter = new MyDataAdapter(setMyControlPoint(), this, this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -176,19 +176,19 @@ public class ListControlPointActivity extends AppCompatActivity implements MyCli
 
     }
 
-    private List<MyListControlPoint> setMyControlPoint() {
+    private List<MyListData> setMyControlPoint() {
         AppDatabase db = App.getInstance(this).getDatabase();
         controlPointDAO = db.controlPointDAO();
         List<ControlPoint> listControlPointDAO = controlPointDAO.select();
 
-        List<MyListControlPoint> myListControlPoint = new ArrayList<>();
+        List<MyListData> myListData = new ArrayList<>();
 
         for (ControlPoint cp : listControlPointDAO) {
             if (cp.name != null){
-                myListControlPoint.add(new MyListControlPoint(cp));
+                myListData.add(new MyListData(cp.id_control, cp.name, cp.picture_url, cp.description));
             }
         }
-        return myListControlPoint;
+        return myListData;
     }
 
     @Override

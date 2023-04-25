@@ -3,6 +3,7 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_vertical">350dp</dimen>
     <dimen name="ic_clear_margin">56dp</dimen>
     <dimen name="login_margin">150dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
@@ -12,8 +13,8 @@
 
     <dimen name="shr_product_grid_spacing">16dp</dimen>
     <dimen name="shr_product_grid_spacing_small">4dp</dimen>
-    <dimen name="list_card_height">350dp</dimen>
+    <dimen name="list_card_height">450dp</dimen>
     <dimen name="images_height">350dp</dimen>
-    <dimen name="item_card_height">65dp</dimen>
-    <dimen name="card_height">60dp</dimen>
+    <dimen name="item_card_height">80dp</dimen>
+    <dimen name="card_height">75dp</dimen>
  </resources>

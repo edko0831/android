@@ -4,4 +4,6 @@
     <dimen name="list_card_height">600dp</dimen>
     <dimen name="item_card_height">140dp</dimen>
     <dimen name="card_height">130dp</dimen>
+    <dimen name="activity_vertical">350dp</dimen>
+
 </resources>

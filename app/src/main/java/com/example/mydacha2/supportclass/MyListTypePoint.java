@@ -17,14 +17,14 @@ public class MyListTypePoint {
 
     public static MyListTypePoint[] getListTypePoint(Context context){
         return new MyListTypePoint[]{
-                new MyListTypePoint(1L, context.getString(R.string.lamp), R.mipmap.icons8_object_controls_94_foreground),
-                new MyListTypePoint(2L, context.getString(R.string.two_lamp), R.mipmap.icons8_search_satellites_94_foreground),
-                new MyListTypePoint(3L, context.getString(R.string.socket), R.mipmap.icons8_gear_94_foreground),
-                new MyListTypePoint(4L, context.getString(R.string.thermometer), android.R.drawable.ic_dialog_dialer),
-                new MyListTypePoint(5L, context.getString(R.string.barometer), android.R.drawable.ic_dialog_dialer),
-                new MyListTypePoint(6L, context.getString(R.string.tv), android.R.drawable.ic_dialog_alert),
-                new MyListTypePoint(7L, context.getString(R.string.conditioner), android.R.drawable.ic_dialog_map),
-                new MyListTypePoint(8L, context.getString(R.string.gas_sensor), android.R.drawable.ic_dialog_map),
+                new MyListTypePoint(1L, context.getString(R.string.lamp), R.mipmap.lamp_off_foreground),
+                new MyListTypePoint(2L, context.getString(R.string.two_lamp), R.mipmap.two_lamp_icn_foreground),
+                new MyListTypePoint(3L, context.getString(R.string.socket), R.mipmap.elektricheskaya_rozetka_foreground),
+                new MyListTypePoint(4L, context.getString(R.string.thermometer), R.mipmap.temperatura_ic_foreground),
+                new MyListTypePoint(5L, context.getString(R.string.barometer), R.mipmap.baromet_ic_foreground),
+                new MyListTypePoint(6L, context.getString(R.string.tv), R.mipmap.television_foreground),
+                new MyListTypePoint(7L, context.getString(R.string.conditioner), R.mipmap.kondicioner_icn_foreground),
+                new MyListTypePoint(8L, context.getString(R.string.gas_sensor), R.mipmap.gas_ic_foreground),
         };
 
     }

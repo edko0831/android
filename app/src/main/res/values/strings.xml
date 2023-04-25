@@ -88,7 +88,7 @@
     <string name="type_point">"Тип элемента"</string>
     <string name="executable_code">"Выпоняемый код"</string>
     <string name="list_control_point_page">Список элементов</string>
-    <string name="list_users_page">Список пользователей</string>
+    <string name="list_users_page">Пользователи</string>
     <string name="lamp">Лампочка</string>
     <string name="two_lamp">Две лампочки</string>
     <string name="socket">Розетка</string>

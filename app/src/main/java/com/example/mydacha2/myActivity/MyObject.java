@@ -34,8 +34,8 @@ import com.example.mydacha2.roomdatabase.AppDatabase;
 import com.example.mydacha2.supportclass.MyButtonClickListener;
 import com.example.mydacha2.supportclass.MyCheckedChangeListener;
 import com.example.mydacha2.supportclass.MyClickListener;
-import com.example.mydacha2.supportclass.MyListAdapter;
-import com.example.mydacha2.supportclass.MyListObjectControl;
+import com.example.mydacha2.supportclass.MyDataAdapter;
+import com.example.mydacha2.supportclass.MyListData;
 import com.example.mydacha2.supportclass.OnSelectedButtonListener;
 
 import java.io.Serializable;
@@ -47,7 +47,7 @@ import java.util.Objects;
 public class MyObject extends AppCompatActivity implements MyButtonClickListener, OnSelectedButtonListener, MyClickListener, MyCheckedChangeListener {
     private static final String LOG_TAG = "MyObject";
     FrameLayout frameLayout;
-    MyListAdapter adapter;
+    MyDataAdapter adapter;
     RoundButton roundButton;
     TextView textView;
     ObjectControlsDAO objectControlsDAO;
@@ -174,18 +174,18 @@ public class MyObject extends AppCompatActivity implements MyButtonClickListener
             objectControlList = objectControlsDAO.select();
         }
 
-        List<MyListObjectControl> myListData = new ArrayList<>();
+        List<MyListData> myListData = new ArrayList<>();
 
         for (ObjectControl oc : objectControlList) {
             if (oc.name != null){
-                myListData.add(new MyListObjectControl(oc));
+                myListData.add(new MyListData(oc.id_object, oc.name, oc.picture_url, oc.description));
             }
         }
 
         RecyclerView recyclerView = findViewById(R.id.listObject);
         recyclerView.scrollToPosition(0);
-        adapter = new MyListAdapter(myListData, this, this, this);
-        adapter.setSelectObject(selectObject);
+        adapter = new MyDataAdapter(myListData, this, this);
+      //  adapter.setSelectObject(selectObject);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -254,10 +254,13 @@ public class MyObject extends AppCompatActivity implements MyButtonClickListener
 
     @Override
     public void onItemClick(Long position) {
-      //  selectObject.remove(position);
-        Intent managementObjectActivity = new Intent(this, ManagementObject.class);
-        managementObjectActivity.putExtra("id", position);
-        mStartForResult.launch(managementObjectActivity);
+        if(selectObject.size() == 0) {
+            Intent managementObjectActivity = new Intent(this, ManagementObject.class);
+            managementObjectActivity.putExtra("id", position);
+            mStartForResult.launch(managementObjectActivity);
+        } else {
+            onButtonClick(position);
+        }
     }
 
     @Override

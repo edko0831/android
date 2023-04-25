@@ -19,8 +19,8 @@ import com.example.mydacha2.myActivity.ManagementObject;
 import com.example.mydacha2.supportclass.MyButtonClickListener;
 import com.example.mydacha2.supportclass.MyCheckedChangeListener;
 import com.example.mydacha2.supportclass.MyClickListener;
-import com.example.mydacha2.supportclass.MyListAdapter;
-import com.example.mydacha2.supportclass.MyListObjectControl;
+import com.example.mydacha2.supportclass.MyDataAdapter;
+import com.example.mydacha2.supportclass.MyListData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +29,9 @@ import java.util.List;
 public class ItemFragment extends Fragment implements MyButtonClickListener, MyClickListener, MyCheckedChangeListener {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
-    public  List<MyListObjectControl> myListData;
+    public  List<MyListData> myListData;
     private final List<Long> selectObjectControl  = new ArrayList<>();
-    MyListAdapter adapter;
+
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if(result.getResultCode() == Activity.RESULT_OK){
@@ -65,8 +65,7 @@ public class ItemFragment extends Fragment implements MyButtonClickListener, MyC
         Context context = view.getContext();
         RecyclerView recyclerView = (RecyclerView) view;
         recyclerView.scrollToPosition(0);
-        adapter = new MyListAdapter(myListData, this, this, this);
-        adapter.setSelectObject(selectObjectControl);
+        MyDataAdapter adapter = new MyDataAdapter(myListData, this, this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);

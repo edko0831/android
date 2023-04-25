@@ -41,7 +41,7 @@ public class ConnectFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button buttonSet = view.findViewById(R.id.buttonSet);
-        linearLayoutScanResults = (LinearLayout) view.findViewById(R.id.linearLayout_scanResults);
+        linearLayoutScanResults =  view.findViewById(R.id.linearLayout_scanResults);
      //   textViewScanResults = (TextView) view.findViewById(R.id.textView_scanResults);
         buttonSet.setOnClickListener(myButtonClickListener);
     }

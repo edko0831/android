@@ -60,7 +60,7 @@ public class MyDataAdapter extends  RecyclerView.Adapter<MyDataAdapter.ViewHolde
             holder.imageView.setImageResource(R.mipmap.people_foreground);
         }
         holder.editText.setText(String.valueOf(myListData.get(position).getId()));
-
+        holder.button.setImageResource(R.mipmap.dots_foreground);
         if(selectData.size() > 0){
             if(selectData.contains(myListData.get(position).getId())) {
                 holder.checkBox.setChecked(true);
